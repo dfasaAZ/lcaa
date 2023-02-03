@@ -22,7 +22,7 @@ body{
     .welcome_section{
         display:flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         width:85%;
         height:100%;
@@ -144,7 +144,7 @@ body{
                 font-size:$fontSize*0.8;
                 line-height:$fontSize*1.1;
                 color:$white;
-                letter-spacing: 0.05em;
+                letter-spacing: 0.05ch;
                 text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
                 overflow: hidden;
                 white-space: nowrap;
@@ -152,24 +152,57 @@ body{
                 text-align: center;
                 border-right:10px solid $white;
                 animation: borderFlash 1s step-start infinite, printText 5s steps(19);
+
+                @keyframes borderFlash{
+                    0%{
+                        border-color:$white;
+                    }
+                    50%{
+                        border-color:transparent;
+                    }
+                    100%{
+                        border-color:$white;
+                    }
+                }
+        
+                @keyframes printText{
+                    from{
+                        width:0;
+                    }
+                }
+            }
+        }
+
+        footer{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width:100%;
+            height:130px;
+            font-family: mainFont;
+            font-size:$fontSize*0.20;
+            line-height:$fontSize*0.20;
+            color:$white;
+            letter-spacing: 0.05ch;
+            text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
+
+            .footer_caption{
+                position: absolute;
+                top:calc((130px / 2) - $fontSize*0.20);
+                font-size:$fontSize*0.20;
+                line-height:$fontSize*0.20;
+                text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
             }
 
-            @keyframes borderFlash{
-                0%{
-                    border-color:$white;
-                }
-                50%{
-                    border-color:transparent;
-                }
-                100%{
-                    border-color:$white;
-                }
-            }
-    
-            @keyframes printText{
-                from{
-                    width:0;
-                }
+            .lang_switcher{
+                position: absolute;
+                font-size:$fontSize*0.30;
+                line-height:$fontSize*0.30;
+                color:$white;
+                text-shadow:0px 0px 3px $white;
+                right:0;
+                cursor:pointer;
             }
         }
     }
