@@ -199,6 +199,10 @@ body .welcome_section main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -218,11 +222,21 @@ body .welcome_section main .main_text {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   overflow: hidden;
   white-space: nowrap;
-  width: 19ch;
   text-align: center;
   border-right: 10px solid #E4E4E4;
-  -webkit-animation: borderFlash 1s step-start infinite, printText 5s steps(19);
-          animation: borderFlash 1s step-start infinite, printText 5s steps(19);
+}
+
+body .welcome_section main .main_text.p1 {
+  width: 20ch;
+  -webkit-animation: borderFlash 1s step-start infinite, printText 6s steps(20);
+          animation: borderFlash 1s step-start infinite, printText 6s steps(20);
+}
+
+body .welcome_section main .main_text.p2 {
+  display: none;
+  width: 7.5ch;
+  -webkit-animation: borderFlash 1s step-start infinite, printText 3s steps(8);
+          animation: borderFlash 1s step-start infinite, printText 3s steps(8);
 }
 
 @-webkit-keyframes borderFlash {

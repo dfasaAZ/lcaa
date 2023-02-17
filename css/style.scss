@@ -150,6 +150,7 @@ body{
 
         main{
             display:flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             width:100%;
@@ -163,11 +164,20 @@ body{
                 letter-spacing: 0.05ch;
                 text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
                 overflow: hidden;
-                white-space: nowrap;
-                width:19ch;
+                white-space:nowrap;
                 text-align: center;
                 border-right:10px solid $white;
-                animation: borderFlash 1s step-start infinite, printText 5s steps(19);
+
+                &.p1{
+                    width:20ch;
+                    animation: borderFlash 1s step-start infinite, printText 6s steps(20);
+                }
+
+                &.p2{
+                    display:none;
+                    width:7.5ch;
+                    animation: borderFlash 1s step-start infinite, printText 3s steps(8);
+                }
 
                 @keyframes borderFlash{
                     0%{
