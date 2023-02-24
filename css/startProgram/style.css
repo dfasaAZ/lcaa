@@ -201,6 +201,7 @@ body .welcome_section header > a .header_button > div {
 }
 
 body .welcome_section main {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -230,6 +231,7 @@ body .welcome_section main .firstStepWindow {
           align-items: center;
   position: relative;
   width: 100%;
+  height: 100%;
 }
 
 body .welcome_section main .firstStepWindow .stepNumber {
@@ -238,7 +240,7 @@ body .welcome_section main .firstStepWindow .stepNumber {
   font-family: mainFont;
   font-size: 50px;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
-  left: 15%;
+  left: 20%;
 }
 
 body .welcome_section main .firstStepWindow label {
@@ -269,6 +271,54 @@ body .welcome_section main .firstStepWindow label img {
 
 body .welcome_section main .firstStepWindow label input[type=file] {
   display: none;
+}
+
+body .welcome_section main .firstStepWindow .hint {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 45%;
+  width: 15%;
+  bottom: 0;
+}
+
+body .welcome_section main .firstStepWindow .hint .arrow {
+  width: 40%;
+  border: 2px dashed #E4E4E4;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-animation: arrowSteps infinite 10s steps(8);
+          animation: arrowSteps infinite 10s steps(8);
+}
+
+@-webkit-keyframes arrowSteps {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes arrowSteps {
+  from {
+    width: 0;
+  }
+}
+
+body .welcome_section main .firstStepWindow .hint .text {
+  color: #E4E4E4;
+  font-family: mainFont;
+  font-size: 25px;
+  text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
 
 body .welcome_section footer {
