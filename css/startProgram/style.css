@@ -213,6 +213,11 @@ body .welcome_section main {
   height: 700px;
 }
 
+body .welcome_section main input[type="file"] {
+  color: transparent;
+  overflow: hidden;
+}
+
 body .welcome_section footer {
   position: relative;
   display: -webkit-box;
