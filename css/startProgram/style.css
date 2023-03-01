@@ -235,8 +235,11 @@ body .welcome_section main .slides {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 300%;
+  width: 100%;
   height: 100%;
+  right: 0;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
 }
 
 body .welcome_section main .slides > div {
@@ -250,19 +253,22 @@ body .welcome_section main .slides > div {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  left: 0;
-  width: calc(100% / 3);
+  width: 100%;
   height: 100%;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
 
 body .welcome_section main .slides > div:nth-child(1) {
-  margin-left: calc(100% / 3);
+  left: 0;
 }
 
 body .welcome_section main .slides > div:nth-child(2) {
-  margin-left: calc(100% * 2 / 3);
+  left: calc(100% * 1);
+}
+
+body .welcome_section main .slides > div:nth-child(3) {
+  left: calc(100% * 2);
 }
 
 body .welcome_section main .slides > div .stepNumber {
@@ -371,6 +377,10 @@ body .welcome_section main > div[class^="sliderButton"] {
 
 body .welcome_section main > div[class^="sliderButton"]:hover {
   opacity: 0.8;
+}
+
+body .welcome_section main > div[class^="sliderButton"].active {
+  opacity: 0;
 }
 
 body .welcome_section main div[class$="left"] {
