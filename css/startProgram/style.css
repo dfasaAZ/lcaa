@@ -175,6 +175,7 @@ body .welcome_section main .slides > div:nth-child(2) {
   left: 100%;
 }
 body .welcome_section main .slides > div:nth-child(3) {
+  flex-direction: column;
   left: 200%;
 }
 body .welcome_section main .slides > div .stepNumber {
@@ -235,8 +236,15 @@ body .welcome_section main .slides .firstStepWindow .hint .text {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
 body .welcome_section main .secondStepWindow .viewDataWindow {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   width: 30%;
   height: 40%;
+  color: #E4E4E4;
+  font-family: mainFont;
+  font-size: auto;
+  overflow: auto;
   border: 8px solid #E4E4E4;
 }
 body .welcome_section main .thirdStepWindow .nameObjectWindow {
@@ -248,6 +256,36 @@ body .welcome_section main .thirdStepWindow .nameObjectWindow {
   font-family: mainFont;
   color: #E4E4E4;
   font-size: 20px;
+}
+body .welcome_section main .thirdStepWindow .startButton {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 50px;
+  bottom: 30%;
+  border-radius: 50px;
+  border: 2px solid #E4E4E4;
+  color: #E4E4E4;
+  font-family: BeVietnam-SB;
+  font-size: 25px;
+  text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
+  overflow: hidden;
+  cursor: pointer;
+}
+body .welcome_section main .thirdStepWindow .startButton::before {
+  position: absolute;
+  content: "";
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #E4E4E4;
+  transition: 0.5s;
+}
+body .welcome_section main .thirdStepWindow .startButton:hover::before {
+  width: 100%;
+  background: none;
 }
 body .welcome_section main > div[class^=sliderButton] {
   position: absolute;
