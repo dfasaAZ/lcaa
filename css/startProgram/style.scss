@@ -274,6 +274,21 @@ body{
                 }
             }
 
+            .thirdStepWindow{
+                
+                .nameObjectWindow{
+                    width:30%;
+                    height:10%;
+                    border:5px solid $white;
+                    background: transparent;
+                    padding-left:20px;
+                    font-family:mainFont;
+                    color:$white;
+                    font-size: calc($fontSize * 0.2);
+                }
+            }
+
+
 
             &>div[class^="sliderButton"]{
                 position:absolute;
