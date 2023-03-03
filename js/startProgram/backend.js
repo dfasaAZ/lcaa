@@ -1,17 +1,31 @@
 document.addEventListener("DOMContentLoaded", ()=>{
-    let uploadButton = document.querySelector("#uploadButton");
     let file = document.querySelector("#uploadButton>input");
     let viewDataWindow = document.querySelector(".viewDataWindow");
-    
-    uploadButton.addEventListener("change", function(){
+    let fileContent = [];
+
+    file.addEventListener("change", function(){
         try{
             let fR = new FileReader();
-            let fileContent;
-            fR.readAsText(file.files[0], "UTF-8");
-            fR.onload = ()=>{
-                viewDataWindow.innerHTML = fR.result;
+
+            function getValues(str){
+                str.split(',').map(e=>{
+                    fileContent.push(Number(e));
+                })
+                console.log(fileContent);
             }
+
+            fR.onload = (e)=> {
+                getValues(e.target.result);
+            }
+            fR.readAsText(file.files[0], "UTF-8");
+
         }
-        catch{}
+        catch{
+
+        }
     })
+
+
+
+    
 })
