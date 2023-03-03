@@ -10,15 +10,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
             function getValues(str){
                 str.split(',').map(e=>{
                     fileContent.push(Number(e));
+                    viewDataWindow.innerHTML += `${Number(e)},<br>`;
                 })
-                console.log(fileContent);
             }
 
             fR.onload = (e)=> {
-                getValues(e.target.result);
+                getValues(e.target.result); 
             }
             fR.readAsText(file.files[0], "UTF-8");
-
         }
         catch{
 

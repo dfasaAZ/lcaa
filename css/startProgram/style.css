@@ -238,7 +238,7 @@ body .welcome_section main .slides .firstStepWindow .hint .text {
 body .welcome_section main .secondStepWindow .viewDataWindow {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: 30%;
   height: 40%;
   color: #E4E4E4;
