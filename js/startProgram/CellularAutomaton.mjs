@@ -122,14 +122,3 @@ export class CellularAutomaton {
 
   }
 }
-function main(){
-  var test=`<TICKER>,<PER>,<DATE>,<TIME>,<CLOSE>
-  CBOT.$DJUSNC,M,01/11/13,000000,242.2851800
-  CBOT.$DJUSNC,M,01/12/13,000000,244.4012700
-  CBOT.$DJUSNC,M,01/01/14,000000,230.9347500
-  CBOT.$DJUSNC,M,01/02/14,000000,240.4801200`
-  const qwe = new CellularAutomaton();
- qwe.LoadData(test);
-  console.log(qwe.data);
-}
-main();
