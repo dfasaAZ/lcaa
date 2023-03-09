@@ -369,9 +369,9 @@ body .welcome_section main .secondStepWindow .viewDataWindow {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   width: 30%;
   height: 40%;
   color: #E4E4E4;

@@ -271,7 +271,7 @@ body{
                 .viewDataWindow{
                     display: flex;
                     justify-content: center;
-                    align-items: center;
+                    align-items: flex-start;
                     width:30%;
                     height:40%;
                     color:$white;

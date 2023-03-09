@@ -9,16 +9,17 @@ document.addEventListener("DOMContentLoaded", ()=>{
             let fR = new FileReader();
 
             function getValues(str){
-                for (let key of str){
-                    // viewDataWindow.innerHTML += `${String(st)},<br>`;
-                    console.log(key);
-                }
+                let i=0;
+                str.forEach(e => {
+                    i++;
+                    viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`;
+                });
             }
 
             fR.onload = (e) => {
                 let obj = new CellularAutomaton();
                 obj.LoadData(e.target.result);
-                getValues(obj.rawData); 
+                getValues(obj.data); 
             }
             fR.readAsText(file.files[0], "UTF-8");
         }
