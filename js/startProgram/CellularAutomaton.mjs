@@ -27,7 +27,7 @@ export class CellularAutomaton {
   */
   extractData(csvString) {
     const results = [];
-    csvString=csvString.replace(/\r/g, "");
+    csvString=csvString.replace(/\r\n/g, "\n");
     const rows = csvString.split("\n"); // Split string into rows
     const headers = rows.shift().split(","); // Remove first row and use it as headers
     
@@ -60,14 +60,14 @@ export class CellularAutomaton {
     this.getSequence();
   }
   /**
-   * Сортирует по значению, и помещает в отдельную переменную, затем расставляет уровни
+   * Сортирует по значению, и помещает в отдельную переменную
    */
   sortByValue() {
 
-    this.sortedData = this.data.sort((a, b) => {
+    
+    this.sortedData.sort((a, b) => {
       return a.value - b.value;
     });
-    this.placeLevel();
   }
    /**
    * Сортирует список с уровнями по дате
@@ -83,6 +83,10 @@ export class CellularAutomaton {
    * Расставляет уровень для каждого элемента в отсортированном списке  в соответствии с курсорами
    */
   placeLevel() {
+    this.sortedData!=null?
+    this.sortedData = this.data.sort((a, b) => {
+      return a.value - b.value;
+    }):this.sortByValue();
     this.cursors.sort((a, b) => a.position - b.position);
 
     this.sortedData = this.sortedData.map((data, index) => {
@@ -93,6 +97,7 @@ export class CellularAutomaton {
         level: levelValue
       };
     });
+    this.sortByDate();
   }
   /**
    * Передвинуть курсор указанного уровня на указанное число элементов
