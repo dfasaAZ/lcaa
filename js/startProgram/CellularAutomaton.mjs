@@ -33,7 +33,7 @@ export class CellularAutomaton {
   */
   extractData(csvString) {
     const results = [];
-
+    csvString.replace(/\r/g, "");
     const rows = csvString.split("\n"); // Split string into rows
     const headers = rows.shift().split(","); // Remove first row and use it as headers
     
