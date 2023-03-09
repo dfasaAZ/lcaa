@@ -170,13 +170,13 @@ body{
 
                 &.p1{
                     width:20ch;
-                    animation: borderFlash 1s step-start infinite, printText 6s steps(20);
+                    animation: borderFlash 1s step-start infinite, printText 4s steps(20);
                 }
 
                 &.p2{
                     display:none;
                     width:7.5ch;
-                    animation: borderFlash 1s step-start infinite, printText 3s steps(8);
+                    animation: borderFlash 1s step-start infinite, printText 2s steps(8);
                 }
 
                 @keyframes borderFlash{
