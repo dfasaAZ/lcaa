@@ -6,7 +6,6 @@ export class CellularAutomaton {
 
   /**Строка всех последовательных уровней*/
   sequence="";
-
   /**Курсоры, указывающие на границы коридоров
    * 
    * Все элементы в отсортированном массиве с индексом меньше либо равном position должны иметь аттрибут с соответствующим именем 
@@ -18,7 +17,6 @@ export class CellularAutomaton {
     { 'name': 'high', 'position': 60 }
 
   ];
-
   /**Достать данные в чистом виде из csv файла 
    * 
    * Возвращает список map'ов со всеми столбцами
@@ -29,7 +27,7 @@ export class CellularAutomaton {
   */
   extractData(csvString) {
     const results = [];
-
+   csvString=csvString.replace(/\r/g, "");
     const rows = csvString.split("\n"); // Split string into rows
     const headers = rows.shift().split(","); // Remove first row and use it as headers
     
@@ -44,13 +42,11 @@ export class CellularAutomaton {
     
     return result;
   }
-
-
   /**
-   * Достать столбцы с датой и значениями и подготовить к использованию
-   * 
-   * @param {string}csvString: "\\путь\\к\\файлу"
-   */
+       * Достать столбцы с датой и значениями и подготовить к использованию
+       * 
+       * @param {string}csvString: "\\путь\\к\\файлу"
+       */
   async LoadData(csvString) {
 
     this.rawData = this.extractData(csvString);
@@ -63,8 +59,6 @@ export class CellularAutomaton {
     this.sortByValue();
     this.getSequence();
   }
-
-
   /**
    * Сортирует по значению, и помещает в отдельную переменную, затем расставляет уровни
    */
@@ -75,8 +69,6 @@ export class CellularAutomaton {
     });
     this.placeLevel();
   }
-
-
    /**
    * Сортирует список с уровнями по дате
    */
@@ -87,8 +79,6 @@ export class CellularAutomaton {
     });
     
   }
-
-
   /**
    * Расставляет уровень для каждого элемента в отсортированном списке  в соответствии с курсорами
    */
@@ -104,8 +94,6 @@ export class CellularAutomaton {
       };
     });
   }
-
-  
   /**
    * Передвинуть курсор указанного уровня на указанное число элементов
    * 
