@@ -1,5 +1,6 @@
 import fs from 'fs'
 import csv from 'csv-parser'
+
 export class CellularAutomaton {
   /**Неотформатированные данные, ключи - наименование стобца, значения - список значений столбца */
   rawData = null;
@@ -30,30 +31,31 @@ export class CellularAutomaton {
    * 
    * @param {string} path Путь к файлу
   */
-  extractData(path) {
+  extractData(csvString) {
     const results = [];
 
-    return new Promise((resolve, reject) => {
-      fs.createReadStream(path)
-        .pipe(csv())
-        .on('data', (data) => {
-          results.push(data);
-        })
-        .on('end', () => {
-          resolve(results);
-
-        });
+    const rows = csvString.split("\n"); // Split string into rows
+    const headers = rows.shift().split(","); // Remove first row and use it as headers
+    
+    const result = rows.map(row => {
+      const values = row.split(",");
+      const obj = {};
+      headers.forEach((header, index) => {
+        obj[header] = values[index];
+      });
+      return obj;
     });
-
+    
+    return result;
   }
   /**
        * Достать столбцы с датой и значениями и подготовить к использованию
        * 
-       * @param {string}path: "\\путь\\к\\файлу"
+       * @param {string}csvString: "\\путь\\к\\файлу"
        */
-  async LoadData(path) {
+  async LoadData(csvString) {
 
-    this.rawData = await this.extractData(path);
+    this.rawData = this.extractData(csvString);
     this.data = this.rawData.map((data) => {
       return {
         'date': new Date(data['<DATE>']),
@@ -120,3 +122,14 @@ export class CellularAutomaton {
 
   }
 }
+function main(){
+  var test=`<TICKER>,<PER>,<DATE>,<TIME>,<CLOSE>
+  CBOT.$DJUSNC,M,01/11/13,000000,242.2851800
+  CBOT.$DJUSNC,M,01/12/13,000000,244.4012700
+  CBOT.$DJUSNC,M,01/01/14,000000,230.9347500
+  CBOT.$DJUSNC,M,01/02/14,000000,240.4801200`
+  const qwe = new CellularAutomaton();
+ qwe.LoadData(test);
+  console.log(qwe.data);
+}
+main();
