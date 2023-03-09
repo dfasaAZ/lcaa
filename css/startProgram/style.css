@@ -2,47 +2,75 @@
   font-family: mainFont;
   src: url(../../fonts/Belgrano-Regular.ttf);
 }
+
 @font-face {
   font-family: BeVietnam-SB;
   src: url(../../fonts/BeVietnam-SemiBold.ttf);
 }
+
 * {
   padding: 0;
   margin: 0;
 }
 
 body {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   width: 100%;
   height: 100%;
   background: radial-gradient(50% 50% at 50% 50%, #19213E 0%, #050917 100%);
 }
+
 body .welcome_section {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 85%;
   height: 100%;
 }
+
 @media (max-width: 576px) {
   body .welcome_section {
     width: 85%;
   }
 }
+
 body .welcome_section header {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 130px;
 }
+
 body .welcome_section header .logo {
   font-family: mainFont;
   font-size: calc(100px * 0.25);
   color: #E4E4E4;
+  width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   line-height: calc(100px * 0.25);
@@ -50,19 +78,34 @@ body .welcome_section header .logo {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   cursor: pointer;
 }
+
 body .welcome_section header .header_list {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   list-style-type: none;
   width: 450px;
 }
+
 @media (max-width: 576px) {
   body .welcome_section header .header_list {
     display: none;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -73,10 +116,12 @@ body .welcome_section header .header_list {
     background: blue;
   }
 }
+
 body .welcome_section header .header_list > a {
   text-decoration: none;
   text-align: center;
 }
+
 body .welcome_section header .header_list > a > li {
   position: relative;
   font-family: mainFont;
@@ -87,26 +132,37 @@ body .welcome_section header .header_list > a > li {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   cursor: pointer;
 }
+
 body .welcome_section header .header_list > a > li::before {
   position: absolute;
   bottom: -2px;
-  content: "";
+  content: '';
   width: 0;
   height: 2px;
   background: #E4E4E4;
 }
+
 body .welcome_section header .header_list > a > li:hover::before {
   width: 100%;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
 body .welcome_section header > a {
   text-decoration: none;
 }
+
 body .welcome_section header > a .header_button {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 230px;
   height: 50px;
   border: 2px solid #E4E4E4;
@@ -115,19 +171,23 @@ body .welcome_section header > a .header_button {
   cursor: pointer;
   overflow: hidden;
 }
+
 body .welcome_section header > a .header_button::before {
   position: absolute;
-  content: "";
+  content: '';
   left: 0;
   width: 0;
   height: 100%;
   background: #E4E4E4;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
 body .welcome_section header > a .header_button:hover::before {
   width: 100%;
   background: none;
 }
+
 body .welcome_section header > a .header_button > div {
   font-family: mainFont;
   font-size: calc(100px * 0.25);
@@ -136,48 +196,85 @@ body .welcome_section header > a .header_button > div {
   letter-spacing: 0.05em;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   z-index: 1;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
 body .welcome_section main {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 700px;
   overflow: hidden;
 }
+
 body .welcome_section main .slides {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 100%;
   right: 0;
+  -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
+
 body .welcome_section main .slides > div {
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 100%;
+  -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
+
 body .welcome_section main .slides > div:nth-child(1) {
   left: 0;
 }
+
 body .welcome_section main .slides > div:nth-child(2) {
-  left: 100%;
+  left: calc(100% * 1);
 }
+
 body .welcome_section main .slides > div:nth-child(3) {
-  flex-direction: column;
-  left: 200%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  left: calc(100% * 2);
 }
+
 body .welcome_section main .slides > div .stepNumber {
   position: absolute;
   color: #E4E4E4;
@@ -186,10 +283,16 @@ body .welcome_section main .slides > div .stepNumber {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   left: 20%;
 }
+
 body .welcome_section main .slides .firstStepWindow label {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 300px;
   height: 60px;
   border-radius: 50px;
@@ -201,44 +304,74 @@ body .welcome_section main .slides .firstStepWindow label {
   background: radial-gradient(34.06% 108.38% at 3.82% 50%, #E4E4E4 0%, rgba(228, 228, 228, 0) 100%);
   cursor: pointer;
 }
+
 body .welcome_section main .slides .firstStepWindow label img {
   width: 50px;
   margin-right: -30px;
 }
+
 body .welcome_section main .slides .firstStepWindow label input[type=file] {
   display: none;
 }
+
 body .welcome_section main .slides .firstStepWindow .hint {
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   height: 45%;
   width: 15%;
   bottom: 0;
 }
+
 body .welcome_section main .slides .firstStepWindow .hint .arrow {
   width: 40%;
   border: 2px dashed #E4E4E4;
-  transform: rotate(-90deg);
-  animation: arrowSteps infinite 10s steps(8);
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  -webkit-animation: arrowSteps infinite 10s steps(8);
+          animation: arrowSteps infinite 10s steps(8);
 }
+
+@-webkit-keyframes arrowSteps {
+  from {
+    width: 0;
+  }
+}
+
 @keyframes arrowSteps {
   from {
     width: 0;
   }
 }
+
 body .welcome_section main .slides .firstStepWindow .hint .text {
   color: #E4E4E4;
   font-family: mainFont;
   font-size: 25px;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
+
 body .welcome_section main .secondStepWindow .viewDataWindow {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 30%;
   height: 40%;
   color: #E4E4E4;
@@ -247,6 +380,7 @@ body .welcome_section main .secondStepWindow .viewDataWindow {
   overflow: auto;
   border: 8px solid #E4E4E4;
 }
+
 body .welcome_section main .thirdStepWindow .nameObjectWindow {
   width: 30%;
   height: 10%;
@@ -255,13 +389,20 @@ body .welcome_section main .thirdStepWindow .nameObjectWindow {
   padding-left: 20px;
   font-family: mainFont;
   color: #E4E4E4;
-  font-size: 20px;
+  font-size: calc($fontSize * 0.2);
 }
+
 body .welcome_section main .thirdStepWindow .startButton {
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 200px;
   height: 50px;
   bottom: 30%;
@@ -274,20 +415,24 @@ body .welcome_section main .thirdStepWindow .startButton {
   overflow: hidden;
   cursor: pointer;
 }
+
 body .welcome_section main .thirdStepWindow .startButton::before {
   position: absolute;
-  content: "";
+  content: '';
   left: 0;
   width: 0;
   height: 100%;
   background: #E4E4E4;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
 body .welcome_section main .thirdStepWindow .startButton:hover::before {
   width: 100%;
   background: none;
 }
-body .welcome_section main > div[class^=sliderButton] {
+
+body .welcome_section main > div[class^="sliderButton"] {
   position: absolute;
   width: 50px;
   height: 50px;
@@ -297,24 +442,36 @@ body .welcome_section main > div[class^=sliderButton] {
   z-index: 1;
   opacity: 0.5;
 }
-body .welcome_section main > div[class^=sliderButton]:hover {
+
+body .welcome_section main > div[class^="sliderButton"]:hover {
   opacity: 0.8;
 }
-body .welcome_section main > div[class^=sliderButton].active {
+
+body .welcome_section main > div[class^="sliderButton"].active {
   opacity: 0;
 }
-body .welcome_section main div[class$=left] {
+
+body .welcome_section main div[class$="left"] {
   left: 0;
-  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
 }
-body .welcome_section main div[class$=right] {
+
+body .welcome_section main div[class$="right"] {
   right: 0;
 }
+
 body .welcome_section footer {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 130px;
   font-family: mainFont;
@@ -324,6 +481,7 @@ body .welcome_section footer {
   letter-spacing: 0.05ch;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
+
 body .welcome_section footer .lang_switcher {
   position: absolute;
   font-size: 30px;
@@ -332,4 +490,5 @@ body .welcome_section footer .lang_switcher {
   text-shadow: 0px 0px 3px #E4E4E4;
   right: 0;
   cursor: pointer;
-}/*# sourceMappingURL=style.css.map */
+}
+/*# sourceMappingURL=style.css.map */

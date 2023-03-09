@@ -1,21 +1,24 @@
+import {CellularAutomaton} from './CellularAutomaton.mjs'
+
 document.addEventListener("DOMContentLoaded", ()=>{
     let file = document.querySelector("#uploadButton>input");
     let viewDataWindow = document.querySelector(".viewDataWindow");
-    let fileContent = [];
 
     file.addEventListener("change", function(){
         try{
             let fR = new FileReader();
 
             function getValues(str){
-                str.split(',').map(e=>{
-                    fileContent.push(Number(e));
-                    viewDataWindow.innerHTML += `${Number(e)},<br>`;
-                })
+                for (let key of str){
+                    // viewDataWindow.innerHTML += `${String(st)},<br>`;
+                    console.log(key);
+                }
             }
 
-            fR.onload = (e)=> {
-                getValues(e.target.result); 
+            fR.onload = (e) => {
+                let obj = new CellularAutomaton();
+                obj.LoadData(e.target.result);
+                getValues(obj.rawData); 
             }
             fR.readAsText(file.files[0], "UTF-8");
         }
