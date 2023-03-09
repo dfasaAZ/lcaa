@@ -119,8 +119,8 @@ body{
                     overflow:hidden;
     
                     &::before{
-                        position: absolute;
                         content:'';
+                        position: absolute;
                         left:0;
                         width:0;
                         height:100%;
@@ -176,7 +176,7 @@ body{
                 &.p2{
                     display:none;
                     width:7.5ch;
-                    animation: borderFlash 1s step-start infinite, printText 2s steps(8);
+                    animation: borderFlash 1s step-start infinite, printText 3s steps(8);
                 }
 
                 @keyframes borderFlash{

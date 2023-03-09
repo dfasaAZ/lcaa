@@ -168,8 +168,8 @@ body .welcome_section header > a .header_button {
 }
 
 body .welcome_section header > a .header_button::before {
-  position: absolute;
   content: '';
+  position: absolute;
   left: 0;
   width: 0;
   height: 100%;
@@ -235,8 +235,8 @@ body .welcome_section main .main_text.p1 {
 body .welcome_section main .main_text.p2 {
   display: none;
   width: 7.5ch;
-  -webkit-animation: borderFlash 1s step-start infinite, printText 2s steps(8);
-          animation: borderFlash 1s step-start infinite, printText 2s steps(8);
+  -webkit-animation: borderFlash 1s step-start infinite, printText 3s steps(8);
+          animation: borderFlash 1s step-start infinite, printText 3s steps(8);
 }
 
 @-webkit-keyframes borderFlash {
