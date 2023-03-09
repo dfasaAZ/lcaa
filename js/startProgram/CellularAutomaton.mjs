@@ -120,3 +120,11 @@ export class CellularAutomaton {
 
   }
 }
+
+async function main(){
+  const test = new  CellularAutomaton();
+  await test.LoadData('test.csv');
+  console.log(test.rawData);
+}
+
+main();

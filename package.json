@@ -1,0 +1,23 @@
+{
+  "name": "dovgalpersonal",
+  "version": "1.0.0",
+  "description": "Linear Cellular Automaton Algorithm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DovgalNikita/lcaa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DovgalNikita/lcaa/issues"
+  },
+  "homepage": "https://github.com/DovgalNikita/lcaa#readme",
+  "dependencies": {
+    "csv-parser": "^3.0.0"
+  }
+}

@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
             let fR = new FileReader();
 
             function getValues(str){
+                console.log(JSON.parse(JSON.stringify(str)));
                 str.split(',').map(e=>{
                     fileContent.push(Number(e));
                     viewDataWindow.innerHTML += `${Number(e)},<br>`;
