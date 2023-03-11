@@ -2,8 +2,10 @@ export class CellularAutomaton {
   /**Неотформатированные данные, ключи - наименование стобца, значения - список значений столбца */
   rawData = null;
   data = [];
+  /**Отсортированные данные с расставленными уровнями */
   sortedData = [];
-
+  /**Объект, хранящий таблицу переходов */
+  counts=[];
   /**Строка всех последовательных уровней*/
   sequence="";
   /**Курсоры, указывающие на границы коридоров
@@ -27,7 +29,7 @@ export class CellularAutomaton {
   */
   extractData(csvString) {
     const results = [];
-    csvString=csvString.replace(/\r/g, "");
+    csvString=csvString.replace(/\r\n/g, "\n");
     const rows = csvString.split("\n"); // Split string into rows
     const headers = rows.shift().split(","); // Remove first row and use it as headers
     
@@ -60,14 +62,14 @@ export class CellularAutomaton {
     this.getSequence();
   }
   /**
-   * Сортирует по значению, и помещает в отдельную переменную, затем расставляет уровни
+   * Сортирует по значению, и помещает в отдельную переменную
    */
   sortByValue() {
 
-    this.sortedData = this.data.sort((a, b) => {
+    
+    this.sortedData.sort((a, b) => {
       return a.value - b.value;
     });
-    this.placeLevel();
   }
    /**
    * Сортирует список с уровнями по дате
@@ -83,6 +85,10 @@ export class CellularAutomaton {
    * Расставляет уровень для каждого элемента в отсортированном списке  в соответствии с курсорами
    */
   placeLevel() {
+    this.sortedData!=null?
+    this.sortedData = this.data.sort((a, b) => {
+      return a.value - b.value;
+    }):this.sortByValue();
     this.cursors.sort((a, b) => a.position - b.position);
 
     this.sortedData = this.sortedData.map((data, index) => {
@@ -93,6 +99,7 @@ export class CellularAutomaton {
         level: levelValue
       };
     });
+    this.getSequence();
   }
   /**
    * Передвинуть курсор указанного уровня на указанное число элементов
@@ -114,5 +121,63 @@ export class CellularAutomaton {
     this.sequence=sequence;
 
 
+  }/**
+   * Считает количесво комбинаций в строке последовательностей
+   * @param {*} combination Передаваемая комбинация, поиск которой пранируется осущесвить
+   * @returns количество совпадений
+   */
+  countCombinationOccurrences(combination) {
+   let sequence=this.sequence;
+    const combinationLength = combination.length;
+    let count = 0;
+  
+    for (let i = 0; i < sequence.length - combinationLength + 1; i++) {
+      let match = true;
+      for (let j = 0; j < combinationLength; j++) {
+        if (sequence[i + j] !== combination[j]) {
+          match = false;
+          break;
+        }
+      }
+      if (match) {
+        count++;
+      }
+    }
+  
+    return count;
+  }
+/**
+ * Производит поиск количества переходов, записывает результат в список counts
+ * @param {number} iteration Номер итерации прохода (Изначально задавать 0)
+ */
+  countLevelCombinations(iteration) {
+    const levels = this.cursors.map(cursor => cursor.name);;
+let sequence=this.sequence;
+    var firstLevel;
+    var longestList;
+    if (this.counts[iteration]==null)this.counts.push({});
+    if (this.counts[iteration-1]!=null){
+    levels.length<this.counts[iteration-1].length?longestList=this.counts[iteration-1].length:longestList=levels.length;}else longestList=levels.length;
+    for (let i = 0; i < longestList; i++) {
+      iteration==0?firstLevel = levels[i]:firstLevel=Object.keys(this.counts[iteration-1])[i].replaceAll('-to-','');
+      for (let j = 0; j < levels.length; j++) {
+        const secondLevel = levels[j];
+        const combination1 = `${firstLevel}${secondLevel}`;      
+        const count1 = this.countCombinationOccurrences(combination1);
+        this.counts[iteration][`${firstLevel}-to-${secondLevel}`] = count1;
+        
+      }
+      
+      for (let k = 0; k <= Object.values(this.counts[iteration]).length; k++) {
+        let element = Object.values(this.counts[iteration])[k];
+        if (element > 1) {
+          this.countLevelCombinations(iteration + 1);
+          break;
+        }
+      }
+      
+    }
+  
+   
   }
 }
