@@ -75,8 +75,6 @@ export class CellularAutomaton {
    * Сортирует по значению, и помещает в отдельную переменную
    */
   sortByValue() {
-
-    
     this.sortedData.sort((a, b) => {
       return a.value - b.value;
     });
@@ -85,11 +83,9 @@ export class CellularAutomaton {
    * Сортирует список с уровнями по дате
    */
    sortByDate() {
-
     return this.sortedData.sort((a, b) => {
       return a.date - b.date;
     });
-    
   }
   /**
    * Расставляет уровень для каждого элемента в отсортированном списке  в соответствии с курсорами
@@ -161,8 +157,8 @@ export class CellularAutomaton {
  * @param {number} iteration Номер итерации прохода (Изначально задавать 0)
  */
   countLevelCombinations(iteration) {
-    const levels = this.cursors.map(cursor => cursor.name);;
-let sequence=this.sequence;
+    const levels = this.cursors.map(cursor => cursor.name);
+    let sequence=this.sequence;
     var firstLevel;
     var longestList;
     if (this.counts[iteration]==null)this.counts.push({});
