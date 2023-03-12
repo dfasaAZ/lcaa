@@ -3,12 +3,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/startProgram/style.css">
+    <script src="../js/startProgram/chartModule.js"></script>
     <title>startPgrogram</title>
 </head>
 <body>
     <section class="welcome_section">
         <header>
-            <div class="logo">dovgalPersonal</div>
+            <div class="logo">dovgal & chern</div>
             <ul class="header_list">
                 <a href="../index.html"><li>Main</li></a>
                 <a href=""><li>About Project</li></a>
@@ -19,6 +20,10 @@
         <main>
             <div class="sliderButton-left active"></div>
             <div class="sliderButton-right"></div>
+            <div class="msgbox">
+                <div class="exit"></div>
+                <div class="caption">Upload a file or complete the name object input</div>
+            </div>
 
             <div class="slides">
                 <div class="firstStepWindow">
@@ -44,11 +49,25 @@
                     <div class="startButton">start</div>
                 </div>
             </div>
+            <div class="programCalculate">
+                <div class="titleWindow main">object name</div>
+                <div class="chartWindow">
+                    <div class="titleWindow">I. Chart</div>
+                    <div class="chart">
+                        <canvas id="chartModel"></canvas>
+                    </div>
+                </div>
+                <div class="transitionsWindow">
+                    <div class="titleWindow">II. Transitions</div>
+                    <div class="transitions"></div>
+                </div>
+            </div>
         </main>
         <footer>
             <div class="lang_switcher">EU</div>
         </footer>
     </section>
+    <script src="../js/startProgram/chart.js"></script>
     <script src="../js/startProgram/frontend.js" type="module"></script>
     <script src="../js/startProgram/backend.js" type="module"></script>
 </body>

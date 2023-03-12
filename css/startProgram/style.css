@@ -43,7 +43,8 @@ body .welcome_section {
       -ms-flex-align: center;
           align-items: center;
   width: 85%;
-  height: 100%;
+  min-height: 900px;
+  height: auto;
 }
 
 @media (max-width: 576px) {
@@ -216,7 +217,7 @@ body .welcome_section main {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  height: 700px;
+  height: auto;
   overflow: hidden;
 }
 
@@ -236,7 +237,7 @@ body .welcome_section main .slides {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  height: 100%;
+  height: 700px;
   right: 0;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
@@ -433,6 +434,9 @@ body .welcome_section main .thirdStepWindow .startButton:hover::before {
 }
 
 body .welcome_section main > div[class^="sliderButton"] {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: absolute;
   width: 50px;
   height: 50px;
@@ -459,6 +463,182 @@ body .welcome_section main div[class$="left"] {
 
 body .welcome_section main div[class$="right"] {
   right: 0;
+}
+
+body .welcome_section main .msgbox {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 450px;
+  height: 150px;
+  background: #111833;
+  border: 2px solid #0d132c;
+  -webkit-transition: .2s ease-in;
+  transition: .2s ease-in;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  z-index: 1;
+}
+
+body .welcome_section main .msgbox.active {
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}
+
+body .welcome_section main .msgbox .exit {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 30px;
+  height: 30px;
+  right: 15px;
+  top: 15px;
+  -webkit-transition: .1s ease-in;
+  transition: .1s ease-in;
+  cursor: pointer;
+}
+
+body .welcome_section main .msgbox .exit:hover {
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  -webkit-transform-origin: center;
+          transform-origin: center;
+}
+
+body .welcome_section main .msgbox .exit::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  background-color: #E4E4E4;
+  height: 2px;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
+body .welcome_section main .msgbox .exit::before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  background-color: #E4E4E4;
+  height: 2px;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+body .welcome_section main .msgbox .caption {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-family: mainFont;
+  text-align: center;
+  font-size: 20px;
+  color: #E4E4E4;
+  width: 80%;
+  height: auto;
+  padding: 20px;
+  line-height: 30px;
+  word-wrap: break-word;
+}
+
+body .welcome_section main .programCalculate {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+body .welcome_section main .programCalculate .titleWindow {
+  font-family: mainFont;
+  line-height: 30px;
+  font-size: 30px;
+  color: #E4E4E4;
+  margin: 25px 0;
+}
+
+body .welcome_section main .programCalculate > .titleWindow {
+  font-size: 40px;
+  margin: 25px 0 0 0;
+  text-decoration: underline;
+}
+
+body .welcome_section main .programCalculate .chartWindow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 400px;
+  background-color: #020512;
+  border-radius: 30px;
+  margin: 50px 0;
+}
+
+body .welcome_section main .programCalculate .chartWindow .chart {
+  width: 95%;
+  height: 70%;
+  background-color: #111833;
+}
+
+body .welcome_section main .programCalculate .chartWindow .chart #chartModel {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 300px;
+  background-color: #020512;
+  border-radius: 30px;
+  margin-bottom: 50px;
 }
 
 body .welcome_section footer {
