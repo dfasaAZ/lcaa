@@ -25,13 +25,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let labelsArrForChart = [];  //для графика легенды
     let backgroundColorsArrForChart = [];  //для background-color столбцов
     let borderColorsArrForChart = [];  //для border-color столбцов
+    let minNumbersArrForChart; 
+    let maxNumbersArrForChart; 
 /**событие по нажатии кнопки upload--------------------------------------------*/
     file.addEventListener("change", function(){
         try{
             /** Здесь происходят все основные вычисления массивов */
-            function getValues(data, dataSorted){
+            function getValues(dataSorted){
                 let i=0;
-                
+
                 dataSorted.forEach (e=>{
                     i++;
                     viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
@@ -51,12 +53,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     }
                 })
 
+                maxNumbersArrForChart = Math.max.apply(null, numbersArrForChart);
+                minNumbersArrForChart = Math.min.apply(null, numbersArrForChart);
             }
 
             fR.onload = (e) => {
                 obj.LoadData(e.target.result); 
                 obj.placeLevel();
-                getValues(obj.data, obj.sortedData);
+                getValues(obj.sortedData);
             }
             fR.readAsText(file.files[0], "UTF-8");
         }
@@ -110,11 +114,10 @@ var config = {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                },
-            }],
+            y:{
+                min:100,
+                max:300
+            }
         },
     }
 };
