@@ -25,26 +25,18 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let labelsArrForChart = [];  //для графика легенды
     let backgroundColorsArrForChart = [];  //для background-color столбцов
     let borderColorsArrForChart = [];  //для border-color столбцов
-    let minNumbersArr;
-    let maxNumbersArr;
 /**событие по нажатии кнопки upload--------------------------------------------*/
     file.addEventListener("change", function(){
         try{
             /** Здесь происходят все основные вычисления массивов */
             function getValues(data, dataSorted){
                 let i=0;
-                data.forEach(e => {
+                
+                dataSorted.forEach (e=>{
                     i++;
                     viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
                     numbersArrForChart.push(Math.round(e.value)); 
                     labelsArrForChart.push(String(e.date).substr(4,11));
-                });
-
-                maxNumbersArr = Math.max.apply(null, numbersArrForChart);
-                minNumbersArr = Math.min.apply(null, numbersArrForChart);
-
-                dataSorted.forEach (e=>{
-                    console.log(e);
                     if (e.level == "low"){
                         backgroundColorsArrForChart.push(redColorA);
                         borderColorsArrForChart.push(redColor);
