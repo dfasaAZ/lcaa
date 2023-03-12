@@ -53,11 +53,21 @@ export class CellularAutomaton {
 
     this.rawData = this.extractData(csvString);
     this.data = this.rawData.map((data) => {
+      var dateString = data['<DATE>'];
+      if (dateString) {
+        if (dateString.includes('.')) {
+          const [day, month, year] = dateString.split('.');
+          dateString = new Date(`${year}-${month}-${day}`);
+        } else {
+          dateString = new Date(dateString);
+        }
+      }
       return {
-        'date': new Date(data['<DATE>']),
+        'date': dateString,
         'value': parseFloat(data['<CLOSE>'])
       };
     });
+    
     this.sortByValue();
     this.getSequence();
   }
