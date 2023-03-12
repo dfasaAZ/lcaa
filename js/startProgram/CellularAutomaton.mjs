@@ -95,6 +95,7 @@ export class CellularAutomaton {
         level: levelValue
       };
     });
+    this.sortByDate();
     this.getSequence();
   }
   /**

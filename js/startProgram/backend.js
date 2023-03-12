@@ -31,9 +31,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     file.addEventListener("change", function(){
         try{
             /** Здесь происходят все основные вычисления массивов */
-            function getValues(str){
+            function getValues(data, dataSorted){
                 let i=0;
-                str.forEach(e => {
+                data.forEach(e => {
                     i++;
                     viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
                     numbersArrForChart.push(Math.round(e.value)); 
@@ -43,12 +43,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 maxNumbersArr = Math.max.apply(null, numbersArrForChart);
                 minNumbersArr = Math.min.apply(null, numbersArrForChart);
 
-                numbersArrForChart.forEach (e=>{
-                    if (e < minNumbersArr + (maxNumbersArr-minNumbersArr)/3){
+                dataSorted.forEach (e=>{
+                    console.log(e);
+                    if (e.level == "low"){
                         backgroundColorsArrForChart.push(redColorA);
                         borderColorsArrForChart.push(redColor);
                     }
-                    else if ( e >= minNumbersArr + (maxNumbersArr-minNumbersArr) / 3 && e < minNumbersArr + (maxNumbersArr-minNumbersArr) * 2 / 3) {
+                    else if (e.level == "medium") {
                         backgroundColorsArrForChart.push(yellowColorA);
                         borderColorsArrForChart.push(yellowColor);
                     }
@@ -57,13 +58,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         borderColorsArrForChart.push(greenColor);
                     }
                 })
+
             }
 
             fR.onload = (e) => {
-                obj.LoadData(e.target.result);
-                getValues(obj.data); 
+                obj.LoadData(e.target.result); 
                 obj.placeLevel();
-                console.log(obj.sortedData);
+                getValues(obj.data, obj.sortedData);
             }
             fR.readAsText(file.files[0], "UTF-8");
         }

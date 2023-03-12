@@ -479,7 +479,7 @@ body .welcome_section main .msgbox {
   max-width: 450px;
   height: 150px;
   background: #111833;
-  border: 2px solid #0d132c;
+  border: 5px solid #0d132c;
   -webkit-transition: .2s ease-in;
   transition: .2s ease-in;
   -webkit-transform: scale(0);
