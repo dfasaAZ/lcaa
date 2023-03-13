@@ -168,6 +168,7 @@ export class CellularAutomaton {
     for (let i = 0; i < longestList; i++) {
       iteration==0?firstLevel = levels[i]:firstLevel=Object.keys(this.counts[iteration-1])[i].replaceAll('-to-','');
       for (let j = 0; j < levels.length; j++) {
+      if(iteration){if(this.counts[iteration-1][firstLevel]==0){break;};}
         const secondLevel = levels[j];
         const combination1 = `${firstLevel}${secondLevel}`;      
         const count1 = this.countCombinationOccurrences(combination1);
