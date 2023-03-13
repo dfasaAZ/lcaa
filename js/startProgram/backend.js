@@ -25,8 +25,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let labelsArrForChart = [];  //для графика легенды
     let backgroundColorsArrForChart = [];  //для background-color столбцов
     let borderColorsArrForChart = [];  //для border-color столбцов
-    let minNumbersArrForChart; 
-    let maxNumbersArrForChart; 
+    // let minNumbersArrForChart; 
+    // let maxNumbersArrForChart; 
+    let minDotsArrForChartLine = [];
+    let mediumDotsArrForChartLine = [];
+    let maxDotsArrForChartLine = [];
+    let minLine = [];
 /**событие по нажатии кнопки upload--------------------------------------------*/
     file.addEventListener("change", function(){
         try{
@@ -52,9 +56,39 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         borderColorsArrForChart.push(greenColor);
                     }
                 })
+                
 
-                maxNumbersArrForChart = Math.max.apply(null, numbersArrForChart);
-                minNumbersArrForChart = Math.min.apply(null, numbersArrForChart);
+                /** Нахождение на кусочках (по 10 точек) мин, сред, макс. точек */
+                const chunkSize = 10; 
+                for (let i = 0; i < dataSorted.length-1; i+=chunkSize){
+                    let pieceArr = numbersArrForChart.slice(i,i + chunkSize);
+                    minDotsArrForChartLine.push({value:Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
+                    maxDotsArrForChartLine.push({value:Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
+                }
+                
+                console.log(minDotsArrForChartLine);
+
+                
+                for (let p = minDotsArrForChartLine[0].value - minDotsArrForChartLine[0].position; p<=minDotsArrForChartLine[0].value; p++){
+                    minLine.push(p);
+                }
+
+                for (let i = 1; i < 6; i++){
+                    let val = 0;
+                    let t = minDotsArrForChartLine[i-1].value;
+                    for (let p = 0; p < minDotsArrForChartLine[i].position; p++){
+                        t+=(minDotsArrForChartLine[i].value - minDotsArrForChartLine[i-1].value)/minDotsArrForChartLine[i].position;
+                        minLine.push(t);
+                    }
+                }
+
+
+                
+                console.log(minLine);
+                
+
+                // maxNumbersArrForChart = Math.max.apply(null, numbersArrForChart);
+                // minNumbersArrForChart = Math.min.apply(null, numbersArrForChart);
             }
 
             fR.onload = (e) => {
@@ -101,8 +135,8 @@ var config = {
             },
             {
                 type: 'line',
-                label: 'Line',
-                data: [],
+                label: 'HighLevel',
+                data: minLine,
                 fill: false,
                 borderColor: 'rgb(54, 162, 235)',
                 borderWidth: 2,
@@ -115,9 +149,9 @@ var config = {
         maintainAspectRatio: false,
         scales: {
             y:{
-                min:100,
-                max:300
-            }
+                min:200,
+                max:350
+            },
         },
     }
 };
