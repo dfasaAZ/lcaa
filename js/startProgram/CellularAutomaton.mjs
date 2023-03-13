@@ -1,6 +1,8 @@
 export class CellularAutomaton {
   /**Неотформатированные данные, ключи - наименование стобца, значения - список значений столбца */
   rawData = null;
+   /**Глубина памяти */
+   memoryDepth=0;
   data = [];
   /**Отсортированные данные с расставленными уровнями */
   sortedData = [];
@@ -186,6 +188,63 @@ export class CellularAutomaton {
       
     }
   
+    this.memoryDepth=this.counts.length;
+  }
+   /**
+   * Возвращает чистые значения для расчета вероятности терма следующей точки
+   * 
+   * @param {*} excludeItems Количество элементов с конца, которые следует игнорировать(по умочанию 0)
+   * @param {*} data Список с данными
+   * @param {*} counts Список с переходами
+   * @param {*} memoryDepth Глубина памяти
+   * 
+   * @returns 
+   */
+   calculateMeetIndexes(excludeItems=0,data=this.sortedData, counts=this.counts, memoryDepth=this.memoryDepth) {
+    const meetIndexes = new Map();
+    const levels = ["low", "medium", "high"];
+    // Slice the data array to exclude the specified number of elements from the end
+    data = data.slice(0, -excludeItems || undefined);
+    // Loop over each level of depth
+    for (let depth = 0; depth < memoryDepth; depth++) {
+      const lastElements = data.slice(-1 - depth).reverse();
+      let lastLevel = '';
+      let stageSum = { low: 0, medium: 0, high: 0 };
+
+      // Loop over each element in the lastElements array
+      for (let i = 0; i < 3; i++) {
+        const currentLevel = levels[i];
+
+        lastLevel='';
+        // Check if the last level has changed
+        for (let j=0;j<lastElements.length;j++){
+          lastLevel+=lastElements[j].level;
+        }
+
+        // Calculate the count based on the current level and last level
+        const key = lastLevel + currentLevel;
+        const count = counts[depth][key];
+
+        // Add the count to the stage sum
+        if (count !== undefined) {
+          stageSum[currentLevel] += count;
+        }
+      }
+
+      // Calculate the meet index for each level and add it to the meetIndexes map
+      var sum = stageSum.low + stageSum.medium + stageSum.high;
+      if (sum==0)return meetIndexes;
+      const lowMeetIndex = stageSum.low / sum;
+      const mediumMeetIndex = stageSum.medium / sum;
+      const highMeetIndex = stageSum.high / sum;
+      // TODO: Создать накапливаемую переменную для индексов, прибавлять индексы к предыдущим значениям 
+      meetIndexes.set('low', lowMeetIndex+(meetIndexes.has('low')?meetIndexes.get('low'):0));
+      meetIndexes.set('medium', mediumMeetIndex+(meetIndexes.has('medium')?meetIndexes.get('medium'):0));
+      meetIndexes.set('high', highMeetIndex+(meetIndexes.has('high')?meetIndexes.get('high'):0));
+    }
+
+    return meetIndexes;
+  }
    
   }
 }
