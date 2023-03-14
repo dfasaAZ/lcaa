@@ -10,6 +10,8 @@ export class CellularAutomaton {
   counts=[];
   /**Строка всех последовательных уровней*/
   sequence="";
+  validationTables=[];
+  ForecastError=0;
   /**Курсоры, указывающие на границы коридоров
    * 
    * Все элементы в отсортированном массиве с индексом меньше либо равном position должны иметь аттрибут с соответствующим именем 
@@ -120,12 +122,14 @@ export class CellularAutomaton {
     this.cursors[this.cursors.findIndex(c => c.name === level)].position += amount;
     this.placeLevel();
   }
-  getSequence(){
-    var dataList=[];
-    dataList=this.sortByDate();
+  getSequence(dataList=this.sortByDate()){
+    
+    
     const levelArray = dataList.map(data => data.level);
     const sequence = levelArray.join('');
-    this.sequence=sequence;
+    if(dataList.length>this.memoryDepth){
+    this.sequence=sequence;}
+    return sequence;
 
 
   }/**
@@ -133,7 +137,7 @@ export class CellularAutomaton {
    * @param {*} combination Передаваемая комбинация, поиск которой пранируется осуществить
    * @returns количество совпадений
    */
-  countCombinationOccurrences(seq,combination) {
+  countCombinationOccurrences(combination,seq=this.sequence) {
    let sequence=seq;
     const combinationLength = combination.length;
     let count = 0;
@@ -157,26 +161,26 @@ export class CellularAutomaton {
  * Производит поиск количества переходов, записывает результат в список counts
  * @param {number} iteration Номер итерации прохода (Изначально задавать 0)
  */
-  countLevelCombinations(iteration) {
+countLevelCombinations(iteration) {
   let mipo=0;//количество элементов в результирующем массиве текущей итерации
-    const levels = this.cursors.map(cursor => cursor.name);
-    let sequence=this.sequence;
-    var firstLevel;
-    var longestList;
-    if (this.counts[iteration]==null)this.counts.push({});
-    if (this.counts[iteration-1]!=null){
+  const levels = this.cursors.map(cursor => cursor.name);
+  let sequence=this.sequence;
+  var firstLevel;
+  var longestList;
+  if (this.counts[iteration]==null)this.counts.push({});
+  if (this.counts[iteration-1]!=null){
     mipo=Object.keys(this.counts[iteration-1]).length;
   levels.length<mipo?longestList=mipo:longestList=levels.length;}else longestList=levels.length;
-    for (let i = 0; i < longestList; i++) {
-      iteration==0?firstLevel = levels[i]:firstLevel=Object.keys(this.counts[iteration-1])[i].replaceAll('-to-','');
-      for (let j = 0; j < levels.length; j++) {
+  for (let i = 0; i < longestList; i++) {
+    iteration==0?firstLevel = levels[i]:firstLevel=Object.keys(this.counts[iteration-1])[i].replaceAll('-to-','');
+    for (let j = 0; j < levels.length; j++) {
       if(iteration){if(this.counts[iteration-1][firstLevel]==0){break;};}
-        const secondLevel = levels[j];
-        const combination1 = `${firstLevel}${secondLevel}`;      
-        const count1 = this.countCombinationOccurrences(combination1);
+      const secondLevel = levels[j];
+      const combination1 = `${firstLevel}${secondLevel}`;      
+      const count1 = this.countCombinationOccurrences(combination1);
       this.counts[iteration][`${firstLevel}${secondLevel}`] = count1;
-        
-      }
+      
+    }
       
       for (let k = 0; k <= Object.values(this.counts[iteration]).length; k++) {
         let element = Object.values(this.counts[iteration])[k];
@@ -211,7 +215,7 @@ export class CellularAutomaton {
       let lastLevel = '';
       let stageSum = { low: 0, medium: 0, high: 0 };
 
-      // Loop over each element in the lastElements array
+      // Loop over each element in the levels array
       for (let i = 0; i < 3; i++) {
         const currentLevel = levels[i];
 
@@ -245,6 +249,26 @@ export class CellularAutomaton {
 
     return meetIndexes;
   }
-   
+  Validation(){
+let val_template={"index":0,"sequence":'',"raw":new Map(),"sum":0,"oddities":new Map(),"term":'',"Correct":false};
+for (let i = 0; i < this.sortedData.length-this.memoryDepth; i++) {
+  const index = this.sortedData.length-i;
+  const sequence= this.getSequence(this.sortedData.slice(-this.memoryDepth-i,this.sortedData.length-i));
+  const raw=this.calculateMeetIndexes(i);
+  const sum = [...raw.values()].reduce((acc, val) => acc + val, 0);
+  const oddities = new Map(Array.from(raw.entries()).map(([k, v]) => [k, v / sum]));
+  const term=Array.from(oddities.entries())
+  .reduce((max, [k, v]) => v > oddities.get(max) ? k : max, Array.from(oddities.keys())[0]); 
+  const Correct=this.sortedData[index]!=null?(term==this.sortedData[index].level):true;
+  this.validationTables.push({...val_template, index, sequence, raw, sum, oddities, term, Correct});
+
   }
+  this.getForecasterror();
+}
+getForecasterror() {
+  const count = this.validationTables.filter(obj => obj.Correct).length;
+  const percentage=100 -(count / this.validationTables.length * 100);
+this.ForecastError=percentage;
+  return percentage
+}
 }
