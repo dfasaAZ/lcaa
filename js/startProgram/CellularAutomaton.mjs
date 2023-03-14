@@ -90,6 +90,18 @@ export class CellularAutomaton {
     });
   }
   /**
+   * Определить границы курсоров в зависимости от размера данных
+   */
+  defCursors(data=this.sortedData,cursors=this.cursors){
+const length=data.length;
+const step=(length/3)|0;
+cursors.sort((a, b) => b.position - a.position);
+for (let i = 0; i < cursors.length; i++) {
+  cursors[i].position=length-step*i;
+}
+this.cursors=cursors;
+  }
+  /**
    * Расставляет уровень для каждого элемента в отсортированном списке  в соответствии с курсорами
    */
   placeLevel() {
@@ -97,6 +109,7 @@ export class CellularAutomaton {
     this.sortedData = this.data.sort((a, b) => {
       return a.value - b.value;
     }):this.sortByValue();
+    this.defCursors();
     this.cursors.sort((a, b) => a.position - b.position);
 
     this.sortedData = this.sortedData.map((data, index) => {
@@ -173,8 +186,8 @@ countLevelCombinations(iteration) {
   levels.length<mipo?longestList=mipo:longestList=levels.length;}else longestList=levels.length;
   for (let i = 0; i < longestList; i++) {
     iteration==0?firstLevel = levels[i]:firstLevel=Object.keys(this.counts[iteration-1])[i].replaceAll('-to-','');
-    for (let j = 0; j < levels.length; j++) {
       if(iteration){if(this.counts[iteration-1][firstLevel]==0){break;};}
+    for (let j = 0; j < levels.length; j++) {
       const secondLevel = levels[j];
       const combination1 = `${firstLevel}${secondLevel}`;      
       const count1 = this.countCombinationOccurrences(combination1);
