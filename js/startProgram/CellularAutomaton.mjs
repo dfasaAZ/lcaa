@@ -174,7 +174,7 @@ this.cursors=cursors;
  * Производит поиск количества переходов, записывает результат в список counts
  * @param {number} iteration Номер итерации прохода (Изначально задавать 0)
  */
-countLevelCombinations(iteration) {
+countLevelCombinations(iteration=0) {
   let mipo=0;//количество элементов в результирующем массиве текущей итерации
   const levels = this.cursors.map(cursor => cursor.name);
   let sequence=this.sequence;
