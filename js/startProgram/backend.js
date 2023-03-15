@@ -1,7 +1,8 @@
+import { CellularAutomaton } from "./CellularAutomaton.mjs";
+
 document.addEventListener("DOMContentLoaded", ()=>{
     let file = document.querySelector("#uploadButton>input");
     let viewDataWindow = document.querySelector(".viewDataWindow");
-    let fileContent = [];
 
     file.addEventListener("change", function(){
         try{
@@ -10,13 +11,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
             function getValues(str){
                 console.log(JSON.parse(JSON.stringify(str)));
                 str.split(',').map(e=>{
-                    fileContent.push(Number(e));
                     viewDataWindow.innerHTML += `${Number(e)},<br>`;
                 })
             }
 
             fR.onload = (e)=> {
-                getValues(e.target.result); 
+                getValues(e.target.result);
+                let obj = new CellularAutomaton();
+                obj.LoadData(String(e.target.value));
+                console.log(obj.rawData);
             }
             fR.readAsText(file.files[0], "UTF-8");
         }
@@ -24,8 +27,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
         }
     })
-
-
-
-    
 })

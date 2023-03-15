@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "dovgalpersonal",
   "version": "1.0.0",
   "description": "Linear Cellular Automaton Algorithm",

@@ -1,6 +1,3 @@
-import fs from 'fs'
-import csv from 'csv-parser'
-
 export class CellularAutomaton {
   /**Неотформатированные данные, ключи - наименование стобца, значения - список значений столбца */
   rawData = null;
