@@ -223,9 +223,7 @@ body .welcome_section main {
 
 body .welcome_section main .slides {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -434,9 +432,7 @@ body .welcome_section main .thirdStepWindow .startButton:hover::before {
 }
 
 body .welcome_section main > div[class^="sliderButton"] {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   position: absolute;
   width: 50px;
   height: 50px;
@@ -559,7 +555,9 @@ body .welcome_section main .msgbox .caption {
 }
 
 body .welcome_section main .programCalculate {
-  display: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -582,10 +580,14 @@ body .welcome_section main .programCalculate .titleWindow {
   margin: 25px 0;
 }
 
-body .welcome_section main .programCalculate > .titleWindow {
+body .welcome_section main .programCalculate .titleWindow.main {
   font-size: 40px;
-  margin: 25px 0 0 0;
   text-decoration: underline;
+  margin: 25px 0 50px;
+}
+
+body .welcome_section main .programCalculate > div {
+  margin-bottom: 50px;
 }
 
 body .welcome_section main .programCalculate .chartWindow {
@@ -606,7 +608,6 @@ body .welcome_section main .programCalculate .chartWindow {
   height: 400px;
   background-color: #020512;
   border-radius: 30px;
-  margin: 50px 0;
 }
 
 body .welcome_section main .programCalculate .chartWindow .chart {
@@ -635,10 +636,166 @@ body .welcome_section main .programCalculate .transitionsWindow {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  height: 300px;
+  min-height: 500px;
+  height: auto;
   background-color: #020512;
   border-radius: 30px;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions {
+  width: 95%;
+  height: auto;
+  background-color: #111833;
   margin-bottom: 50px;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 200px;
+  margin: 50px 0;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section {
+  width: 90%;
+  height: 100%;
+  border: 1px solid #494949;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table div {
+  font-family: BeVietnam-SB;
+  font-size: 15px;
+  line-height: 15px;
+  color: #E4E4E4;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  height: 20%;
+  background-color: blue;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .head > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .head > div:first-child {
+  width: 40%;
+  background-color: #020512;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  height: 80%;
+  background-color: green;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .confColumn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 9.1%;
+  height: 100%;
+  background-color: red;
+  overflow: hidden;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .confColumn > div {
+  text-align: center;
+  width: auto;
+  height: auto;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contain {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: white;
+  width: 90.9%;
+  height: 100%;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contain > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 body .welcome_section footer {

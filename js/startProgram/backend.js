@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 /**переменные--------------------------------------------*/
     let fR = new FileReader();
     let nameObjectWindow = document.querySelector('.nameObjectWindow');
-    let obj = new CellularAutomaton();
+    let object = new CellularAutomaton();
     let file = document.querySelector("#uploadButton>input");
     let viewDataWindow = document.querySelector(".viewDataWindow");
     let startButton = document.querySelector(".startButton");
@@ -35,9 +35,19 @@ document.addEventListener("DOMContentLoaded", ()=>{
     file.addEventListener("change", function(){
         try{
             /** Здесь происходят все основные вычисления массивов */
-            function getValues(dataSorted){
+            function getValues(object){
                 let i=0;
+                let dataSorted = []; //Для 1 ЭТАПА
+                let modificationArr = []; //Для 2 ЭТАПА
 
+                for (let i in object.sortedData){ // Инициализация dataSorted
+                    dataSorted.push(i); 
+                }
+                for (let i in object.counts){ // Инициализация modificationArr
+                    modificationArr.push(i);
+                }
+
+                /** 1 ЭТАП::: Цвето Разграфка */
                 dataSorted.forEach (e=>{
                     i++;
                     viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
@@ -56,45 +66,47 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         borderColorsArrForChart.push(greenColor);
                     }
                 })
+
+                /** 2 ЭТАП::: Заполнение таблиц переходов */
+                modificationArr.map(e=>{
+                    
+                })
                 
+
+
+
 
                 /** Нахождение на кусочках (по 10 точек) мин, сред, макс. точек */
-                const chunkSize = 10; 
-                for (let i = 0; i < dataSorted.length-1; i+=chunkSize){
-                    let pieceArr = numbersArrForChart.slice(i,i + chunkSize);
-                    minDotsArrForChartLine.push({value:Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
-                    maxDotsArrForChartLine.push({value:Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
-                }
+                // const chunkSize = 10; 
+                // for (let i = 0; i < dataSorted.length-1; i+=chunkSize){
+                //     let pieceArr = numbersArrForChart.slice(i,i + chunkSize);
+                //     minDotsArrForChartLine.push({value:Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
+                //     maxDotsArrForChartLine.push({value:Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
+                // }
                 
-                console.log(minDotsArrForChartLine);
+                // for (let p = minDotsArrForChartLine[0].value - minDotsArrForChartLine[0].position; p<=minDotsArrForChartLine[0].value; p++){
+                //     minLine.push(p);
+                // }
 
-                
-                for (let p = minDotsArrForChartLine[0].value - minDotsArrForChartLine[0].position; p<=minDotsArrForChartLine[0].value; p++){
-                    minLine.push(p);
-                }
+                // for (let i = 1; i < 6; i++){
+                //     let val = 0;
+                //     let t = minDotsArrForChartLine[i-1].value;
+                //     for (let p = 0; p < minDotsArrForChartLine[i].position; p++){
+                //         t+=(minDotsArrForChartLine[i].value - minDotsArrForChartLine[i-1].value)/minDotsArrForChartLine[i].position;
+                //         minLine.push(t);
+                //     }
+                // }
 
-                for (let i = 1; i < 6; i++){
-                    let val = 0;
-                    let t = minDotsArrForChartLine[i-1].value;
-                    for (let p = 0; p < minDotsArrForChartLine[i].position; p++){
-                        t+=(minDotsArrForChartLine[i].value - minDotsArrForChartLine[i-1].value)/minDotsArrForChartLine[i].position;
-                        minLine.push(t);
-                    }
-                }
-
-
-                
-                console.log(minLine);
-                
 
                 // maxNumbersArrForChart = Math.max.apply(null, numbersArrForChart);
                 // minNumbersArrForChart = Math.min.apply(null, numbersArrForChart);
             }
 
             fR.onload = (e) => {
-                obj.LoadData(e.target.result); 
-                obj.placeLevel();
-                getValues(obj.sortedData);
+                object.LoadData(e.target.result); 
+                object.placeLevel();
+                object.countLevelCombinations();
+                getValues(object);
             }
             fR.readAsText(file.files[0], "UTF-8");
         }
