@@ -18,9 +18,9 @@ export class CellularAutomaton {
    * 
    * TODO: процедурно генерировать курсоры на случай если точек будет не 60 и\или коридоров будет больше*/
   cursors = [
-    { 'name': 'low', 'position': 20 },
-    { 'name': 'medium', 'position': 40 },
-    { 'name': 'high', 'position': 60 }
+    { 'name': 'Н', 'position': 20 },
+    { 'name': 'С', 'position': 40 },
+    { 'name': 'В', 'position': 60 }
 
   ];
   /**Достать данные в чистом виде из csv строки 
@@ -219,7 +219,7 @@ countLevelCombinations(iteration=0) {
    */
    calculateMeetIndexes(excludeItems=0,data=this.sortedData, counts=this.counts, memoryDepth=this.memoryDepth) {
     const meetIndexes = new Map();
-    const levels = ["low", "medium", "high"];
+    const levels = this.cursors.map(cursor => cursor.name);
     // Slice the data array to exclude the specified number of elements from the end
     data = data.slice(0, -excludeItems || undefined);
     // Loop over each level of depth
