@@ -2,76 +2,48 @@
   font-family: mainFont;
   src: url(../../fonts/Belgrano-Regular.ttf);
 }
-
 @font-face {
   font-family: BeVietnam-SB;
   src: url(../../fonts/BeVietnam-SemiBold.ttf);
 }
-
 * {
   padding: 0;
   margin: 0;
 }
 
 body {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
   height: 100%;
   background: radial-gradient(50% 50% at 50% 50%, #19213E 0%, #050917 100%);
 }
-
 body .welcome_section {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   width: 85%;
   min-height: 900px;
   height: auto;
 }
-
 @media (max-width: 576px) {
   body .welcome_section {
     width: 85%;
   }
 }
-
 body .welcome_section header {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   height: 130px;
 }
-
 body .welcome_section header .logo {
   font-family: mainFont;
   font-size: calc(100px * 0.25);
   color: #E4E4E4;
-  width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   line-height: calc(100px * 0.25);
@@ -79,34 +51,19 @@ body .welcome_section header .logo {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   cursor: pointer;
 }
-
 body .welcome_section header .header_list {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-between;
+  align-items: center;
   list-style-type: none;
   width: 450px;
 }
-
 @media (max-width: 576px) {
   body .welcome_section header .header_list {
     display: none;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-pack: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -117,12 +74,10 @@ body .welcome_section header .header_list {
     background: blue;
   }
 }
-
 body .welcome_section header .header_list > a {
   text-decoration: none;
   text-align: center;
 }
-
 body .welcome_section header .header_list > a > li {
   position: relative;
   font-family: mainFont;
@@ -133,37 +88,26 @@ body .welcome_section header .header_list > a > li {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   cursor: pointer;
 }
-
 body .welcome_section header .header_list > a > li::before {
   position: absolute;
   bottom: -2px;
-  content: '';
+  content: "";
   width: 0;
   height: 2px;
   background: #E4E4E4;
 }
-
 body .welcome_section header .header_list > a > li:hover::before {
   width: 100%;
-  -webkit-transition: .5s;
-  transition: .5s;
+  transition: 0.5s;
 }
-
 body .welcome_section header > a {
   text-decoration: none;
 }
-
 body .welcome_section header > a .header_button {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 230px;
   height: 50px;
   border: 2px solid #E4E4E4;
@@ -172,23 +116,19 @@ body .welcome_section header > a .header_button {
   cursor: pointer;
   overflow: hidden;
 }
-
 body .welcome_section header > a .header_button::before {
   position: absolute;
-  content: '';
+  content: "";
   left: 0;
   width: 0;
   height: 100%;
   background: #E4E4E4;
-  -webkit-transition: .5s;
-  transition: .5s;
+  transition: 0.5s;
 }
-
 body .welcome_section header > a .header_button:hover::before {
   width: 100%;
   background: none;
 }
-
 body .welcome_section header > a .header_button > div {
   font-family: mainFont;
   font-size: calc(100px * 0.25);
@@ -197,83 +137,48 @@ body .welcome_section header > a .header_button > div {
   letter-spacing: 0.05em;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   z-index: 1;
-  -webkit-transition: .5s;
-  transition: .5s;
+  transition: 0.5s;
 }
-
 body .welcome_section main {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: auto;
   overflow: hidden;
 }
-
 body .welcome_section main .slides {
   position: relative;
   display: none;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 700px;
   right: 0;
-  -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
-
 body .welcome_section main .slides > div {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
-
 body .welcome_section main .slides > div:nth-child(1) {
   left: 0;
 }
-
 body .welcome_section main .slides > div:nth-child(2) {
-  left: calc(100% * 1);
+  left: 100%;
 }
-
 body .welcome_section main .slides > div:nth-child(3) {
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  left: calc(100% * 2);
+  flex-direction: column;
+  left: 200%;
 }
-
 body .welcome_section main .slides > div .stepNumber {
   position: absolute;
   color: #E4E4E4;
@@ -282,16 +187,10 @@ body .welcome_section main .slides > div .stepNumber {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   left: 20%;
 }
-
 body .welcome_section main .slides .firstStepWindow label {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-around;
+  align-items: center;
   width: 300px;
   height: 60px;
   border-radius: 50px;
@@ -303,74 +202,44 @@ body .welcome_section main .slides .firstStepWindow label {
   background: radial-gradient(34.06% 108.38% at 3.82% 50%, #E4E4E4 0%, rgba(228, 228, 228, 0) 100%);
   cursor: pointer;
 }
-
 body .welcome_section main .slides .firstStepWindow label img {
   width: 50px;
   margin-right: -30px;
 }
-
 body .welcome_section main .slides .firstStepWindow label input[type=file] {
   display: none;
 }
-
 body .welcome_section main .slides .firstStepWindow .hint {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   height: 45%;
   width: 15%;
   bottom: 0;
 }
-
 body .welcome_section main .slides .firstStepWindow .hint .arrow {
   width: 40%;
   border: 2px dashed #E4E4E4;
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-  -webkit-animation: arrowSteps infinite 10s steps(8);
-          animation: arrowSteps infinite 10s steps(8);
+  transform: rotate(-90deg);
+  animation: arrowSteps infinite 10s steps(8);
 }
-
-@-webkit-keyframes arrowSteps {
-  from {
-    width: 0;
-  }
-}
-
 @keyframes arrowSteps {
   from {
     width: 0;
   }
 }
-
 body .welcome_section main .slides .firstStepWindow .hint .text {
   color: #E4E4E4;
   font-family: mainFont;
   font-size: 25px;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
-
 body .welcome_section main .secondStepWindow .viewDataWindow {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  justify-content: center;
+  align-items: flex-start;
   width: 30%;
   height: 40%;
   color: #E4E4E4;
@@ -379,7 +248,6 @@ body .welcome_section main .secondStepWindow .viewDataWindow {
   overflow: auto;
   border: 8px solid #E4E4E4;
 }
-
 body .welcome_section main .thirdStepWindow .nameObjectWindow {
   width: 30%;
   height: 10%;
@@ -388,20 +256,13 @@ body .welcome_section main .thirdStepWindow .nameObjectWindow {
   padding-left: 20px;
   font-family: mainFont;
   color: #E4E4E4;
-  font-size: calc($fontSize * 0.2);
+  font-size: 20px;
 }
-
 body .welcome_section main .thirdStepWindow .startButton {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 200px;
   height: 50px;
   bottom: 30%;
@@ -414,24 +275,20 @@ body .welcome_section main .thirdStepWindow .startButton {
   overflow: hidden;
   cursor: pointer;
 }
-
 body .welcome_section main .thirdStepWindow .startButton::before {
   position: absolute;
-  content: '';
+  content: "";
   left: 0;
   width: 0;
   height: 100%;
   background: #E4E4E4;
-  -webkit-transition: .5s;
-  transition: .5s;
+  transition: 0.5s;
 }
-
 body .welcome_section main .thirdStepWindow .startButton:hover::before {
   width: 100%;
   background: none;
 }
-
-body .welcome_section main > div[class^="sliderButton"] {
+body .welcome_section main > div[class^=sliderButton] {
   display: none;
   position: absolute;
   width: 50px;
@@ -442,107 +299,71 @@ body .welcome_section main > div[class^="sliderButton"] {
   z-index: 1;
   opacity: 0.5;
 }
-
-body .welcome_section main > div[class^="sliderButton"]:hover {
+body .welcome_section main > div[class^=sliderButton]:hover {
   opacity: 0.8;
 }
-
-body .welcome_section main > div[class^="sliderButton"].active {
+body .welcome_section main > div[class^=sliderButton].active {
   opacity: 0;
 }
-
-body .welcome_section main div[class$="left"] {
+body .welcome_section main div[class$=left] {
   left: 0;
-  -webkit-transform: scaleX(-1);
-          transform: scaleX(-1);
+  transform: scaleX(-1);
 }
-
-body .welcome_section main div[class$="right"] {
+body .welcome_section main div[class$=right] {
   right: 0;
 }
-
 body .welcome_section main .msgbox {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   max-width: 450px;
   height: 150px;
   background: #111833;
   border: 5px solid #0d132c;
-  -webkit-transition: .2s ease-in;
-  transition: .2s ease-in;
-  -webkit-transform: scale(0);
-          transform: scale(0);
+  transition: 0.2s ease-in;
+  transform: scale(0);
   z-index: 1;
 }
-
 body .welcome_section main .msgbox.active {
-  -webkit-transform: scale(1);
-          transform: scale(1);
+  transform: scale(1);
 }
-
 body .welcome_section main .msgbox .exit {
   position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   width: 30px;
   height: 30px;
   right: 15px;
   top: 15px;
-  -webkit-transition: .1s ease-in;
-  transition: .1s ease-in;
+  transition: 0.1s ease-in;
   cursor: pointer;
 }
-
 body .welcome_section main .msgbox .exit:hover {
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
-  -webkit-transform-origin: center;
-          transform-origin: center;
+  transform: rotate(45deg);
+  transform-origin: center;
 }
-
 body .welcome_section main .msgbox .exit::after {
   position: absolute;
-  content: '';
+  content: "";
   width: 100%;
   background-color: #E4E4E4;
   height: 2px;
-  -webkit-transform-origin: center;
-          transform-origin: center;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  transform-origin: center;
+  transform: rotate(45deg);
 }
-
 body .welcome_section main .msgbox .exit::before {
   position: absolute;
-  content: '';
+  content: "";
   width: 100%;
   background-color: #E4E4E4;
   height: 2px;
-  -webkit-transform-origin: center;
-          transform-origin: center;
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
+  transform-origin: center;
+  transform: rotate(-45deg);
 }
-
 body .welcome_section main .msgbox .caption {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   font-family: mainFont;
   text-align: center;
   font-size: 20px;
@@ -553,25 +374,14 @@ body .welcome_section main .msgbox .caption {
   line-height: 30px;
   word-wrap: break-word;
 }
-
 body .welcome_section main .programCalculate {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: auto;
 }
-
 body .welcome_section main .programCalculate .titleWindow {
   font-family: mainFont;
   line-height: 30px;
@@ -579,236 +389,155 @@ body .welcome_section main .programCalculate .titleWindow {
   color: #E4E4E4;
   margin: 25px 0;
 }
-
 body .welcome_section main .programCalculate .titleWindow.main {
   font-size: 40px;
   text-decoration: underline;
   margin: 25px 0 50px;
 }
-
 body .welcome_section main .programCalculate > div {
   margin-bottom: 50px;
 }
-
 body .welcome_section main .programCalculate .chartWindow {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
   height: 400px;
   background-color: #020512;
   border-radius: 30px;
 }
-
 body .welcome_section main .programCalculate .chartWindow .chart {
   width: 95%;
   height: 70%;
   background-color: #111833;
 }
-
 body .welcome_section main .programCalculate .chartWindow .chart #chartModel {
   width: 100% !important;
   height: 100% !important;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   width: 100%;
-  min-height: 500px;
+  min-height: 300px;
   height: auto;
   background-color: #020512;
   border-radius: 30px;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions {
   width: 95%;
   height: auto;
   background-color: #111833;
   margin-bottom: 50px;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: space-evenly;
+  align-items: center;
   width: 100%;
-  height: 200px;
+  min-height: 200px;
+  height: auto;
   margin: 50px 0;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section {
   width: 90%;
   height: 100%;
-  border: 1px solid #494949;
+  border: 1px solid rgb(73, 73, 73);
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  background-color: red;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table div {
   font-family: BeVietnam-SB;
   font-size: 15px;
   line-height: 15px;
   color: #E4E4E4;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .head {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   width: 100%;
-  height: 20%;
+  height: 50px;
   background-color: blue;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .head > div {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .head > div:first-child {
   width: 40%;
-  background-color: #020512;
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 80%;
-  background-color: green;
+  margin-bottom: 50px;
 }
-
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row:last-child {
+  margin: 0;
+}
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .confColumn {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 9.1%;
-  height: 100%;
-  background-color: red;
+  min-height: 200px;
+  height: auto;
   overflow: hidden;
+  border: 1px solid rgb(73, 73, 73);
 }
-
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .confColumn > div {
   text-align: center;
   width: auto;
   height: auto;
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
-
-body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contain {
-  display: -webkit-box;
-  display: -ms-flexbox;
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contains {
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  background-color: white;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   width: 90.9%;
-  height: 100%;
+  height: auto;
 }
-
-body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contain > div {
-  display: -webkit-box;
-  display: -ms-flexbox;
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contains .contain {
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
+  margin-bottom: 10px;
+  border: 1px solid rgb(73, 73, 73);
 }
-
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contains .contain:last-child {
+  margin: 0;
+}
+body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contains .contain > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgb(73, 73, 73);
+}
 body .welcome_section footer {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 130px;
   font-family: mainFont;
@@ -818,7 +547,6 @@ body .welcome_section footer {
   letter-spacing: 0.05ch;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
-
 body .welcome_section footer .lang_switcher {
   position: absolute;
   font-size: 30px;
@@ -827,5 +555,4 @@ body .welcome_section footer .lang_switcher {
   text-shadow: 0px 0px 3px #E4E4E4;
   right: 0;
   cursor: pointer;
-}
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */
