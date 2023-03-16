@@ -119,8 +119,8 @@ body{
                     overflow:hidden;
     
                     &::before{
-                        position: absolute;
                         content:'';
+                        position: absolute;
                         left:0;
                         width:0;
                         height:100%;
@@ -170,7 +170,7 @@ body{
 
                 &.p1{
                     width:20ch;
-                    animation: borderFlash 1s step-start infinite, printText 6s steps(20);
+                    animation: borderFlash 1s step-start infinite, printText 4s steps(20);
                 }
 
                 &.p2{

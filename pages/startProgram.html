@@ -3,12 +3,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/startProgram/style.css">
+    <script src="../js/startProgram/chartModule.js"></script>
     <title>startPgrogram</title>
 </head>
 <body>
     <section class="welcome_section">
         <header>
-            <div class="logo">dovgalPersonal</div>
+            <div class="logo">dovgal & chern</div>
             <ul class="header_list">
                 <a href="../index.html"><li>Main</li></a>
                 <a href=""><li>About Project</li></a>
@@ -19,19 +20,23 @@
         <main>
             <div class="sliderButton-left active"></div>
             <div class="sliderButton-right"></div>
+            <div class="msgbox">
+                <div class="exit"></div>
+                <div class="caption">Upload a file or complete the name object input</div>
+            </div>
 
             <div class="slides">
                 <div class="firstStepWindow">
                     <div class="stepNumber">STEP 1</div>
                     <label id="uploadButton">
                         <img src="../img/cloud.png" alt="">
-                        <input type="file" accept=".txt">
+                        <input type="file" accept=".csv">
                         Upload file
                         <audio src="../audio/beep.mp3" preload="auto"></audio>
                     </label>
                     <div class="hint">
                         <div class="arrow"></div>
-                        <p class="text">.txt file format</p>
+                        <p class="text">.csv file format</p>
                     </div>
                 </div>
                 <div class="secondStepWindow">
@@ -44,12 +49,81 @@
                     <div class="startButton">start</div>
                 </div>
             </div>
+            <div class="programCalculate">
+                <div class="titleWindow main">object name</div>
+                <div class="chartWindow">
+                    <div class="titleWindow">I. Chart</div>
+                    <div class="chart">
+                        <canvas id="chartModel"></canvas>
+                    </div>
+                </div>
+                <div class="transitionsWindow">
+                    <div class="titleWindow">II. Transitions</div>
+                    <div class="transitions">
+                        <div class="transitionsLine">
+                            <div class="section">
+                                <div class="title"></div>
+                                <div class="table">
+                                    <div class="head">
+                                        <div>Depth</div>
+                                        <div>Transition from</div>
+                                        <div>Transition to</div>
+                                        <div>Count of transition</div>
+                                        <div>Total transitions</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="confColumn"><div>1 config</div></div>
+                                        <div class="contains"></div>
+                                        <div class="contain">
+                                            <div class="transFrom">
+                                                <div class="low">Н</div>
+                                                <div class="medium">С</div>
+                                                <div class="high">В</div>
+                                            </div>
+                                            <div class="transTo">
+                                                <div class="low">1</div>
+                                                <div class="medium">2</div>
+                                                <div class="high">3</div>
+                                            </div>
+                                            <div class="countTrans">
+                                                <div class="low">1</div>
+                                                <div class="medium">2</div>
+                                                <div class="high">3</div>
+                                            </div>
+                                            <div class="totalTrans">43</div>
+                                        </div>
+                                        <div class="contain">
+                                            <div class="transFrom">
+                                                <div class="low">Н</div>
+                                                <div class="medium">С</div>
+                                                <div class="high">В</div>
+                                            </div>
+                                            <div class="transTo">
+                                                <div class="low">1</div>
+                                                <div class="medium">2</div>
+                                                <div class="high">3</div>
+                                            </div>
+                                            <div class="countTrans">
+                                                <div class="low">1</div>
+                                                <div class="medium">2</div>
+                                                <div class="high">3</div>
+                                            </div>
+                                            <div class="totalTrans">43</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transitionsLine"></div>
+                    </div>
+                </div>
+            </div>
         </main>
         <footer>
             <div class="lang_switcher">EU</div>
         </footer>
     </section>
-    <script src="../js/startProgram/index.js"></script>
-    <script src="../js/startProgram/backend.js"></script>
+    <script src="../js/startProgram/backend.js" type="module"></script>
+    <script src="../js/startProgram/frontend.js" type="module"></script>
 </body>
 </html>

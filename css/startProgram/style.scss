@@ -30,7 +30,8 @@ body{
         justify-content: space-between;
         align-items: center;
         width:85%;
-        height:100%;
+        min-height:900px;
+        height:auto;
 
         @media (max-width:576px){
             width:85%;
@@ -160,17 +161,17 @@ body{
             justify-content: center;
             align-items: center;
             width:100%;
-            height:700px;
+            height:auto;
             overflow: hidden;
 
             .slides{
                 position:relative;
-                display:flex;
+                display:none;/////////////////////
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
                 width:100%;
-                height:100%;
+                height:700px;
                 right:0;
                 transition:all 1s ease;
 
@@ -271,7 +272,7 @@ body{
                 .viewDataWindow{
                     display: flex;
                     justify-content: center;
-                    align-items: center;
+                    align-items: flex-start;
                     width:30%;
                     height:40%;
                     color:$white;
@@ -333,6 +334,7 @@ body{
 
 
             &>div[class^="sliderButton"]{
+                display:none;////////////////////////////
                 position:absolute;
                 width:50px;
                 height:50px;
@@ -358,6 +360,245 @@ body{
             div[class$="right"]{
                 right: 0;
                 
+            }
+
+
+            .msgbox{
+                position: absolute;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                max-width:450px;
+                height:150px;
+                background:#111833;
+                border:5px solid #0d132c;
+                transition: .2s ease-in;
+                transform: scale(0);
+                z-index:1;
+
+                &.active{
+                    transform: scale(1);
+                }
+                
+                .exit{
+                    position:absolute;
+                    display:flex;
+                    align-items: center;
+                    width:30px;
+                    height:30px;
+                    right:15px;
+                    top:15px;
+                    transition: .1s ease-in;
+                    cursor:pointer;
+
+                    &:hover{
+                        transform: rotate(45deg);
+                        transform-origin: center;
+                    }
+
+                    &::after{
+                        position: absolute;
+                        content: '';
+                        width:100%;
+                        background-color:$white;
+                        height:2px;
+                        transform-origin: center;
+                        transform: rotate(45deg);
+                    }
+                    &::before{
+                        position: absolute;
+                        content: '';
+                        width:100%;
+                        background-color:$white;
+                        height:2px;
+                        transform-origin: center;
+                        transform: rotate(-45deg);
+                    }
+                }
+
+                .caption{
+                    display: flex;
+                    align-items: center;
+                    font-family: mainFont;
+                    text-align: center;
+                    font-size: 20px;
+                    color:$white;
+                    width:80%;
+                    height:auto;
+                    padding:20px;
+                    line-height: 30px;
+                    word-wrap: break-word; 
+                }
+            }
+
+
+            .programCalculate{
+                display:flex;/////
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width:100%;
+                height:auto;
+
+                .titleWindow{
+                    font-family: mainFont;
+                    line-height: 30px;
+                    font-size:30px;
+                    color:$white;
+                    margin:25px 0;
+
+                    &.main{
+                        font-size: 40px;
+                        text-decoration: underline;
+                        margin:25px 0 50px;
+                    }
+                }
+
+                & > div{
+                    margin-bottom:50px;
+                }
+
+                .chartWindow{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    width:100%;
+                    height:400px;
+                    background-color:#020512;
+                    border-radius: 30px;
+
+                    .chart{
+                        width:95%;
+                        height:70%;
+                        background-color: #111833;
+
+                        #chartModel{
+                            width:100% !important; 
+                            height:100% !important;
+                        }
+                    }
+                }
+
+                .transitionsWindow{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    align-items: center;
+                    width:100%;
+                    min-height: 500px;
+                    height:auto;
+                    background-color:#020512;
+                    border-radius: 30px;
+
+                    .transitions{
+                        width:95%;
+                        height:auto;
+                        background-color: #111833;
+                        margin-bottom:50px;
+
+                        .transitionsLine{
+                            display:flex;
+                            justify-content: space-evenly;
+                            align-items: center;
+                            width:100%;
+                            height:200px;
+                            // background-color: red;
+                            margin:50px 0;
+
+                            .section{
+                                width:90%;
+                                height:100%;
+                                border:1px solid rgb(73, 73, 73);
+                                // background-color: red;
+
+                                .table{
+                                    display:flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    align-items: center;
+                                    width:100%;
+                                    height:100%;
+                                    background-color: red;
+
+                                    div{
+                                        font-family: BeVietnam-SB;
+                                        font-size: 15px;
+                                        line-height: 15px;
+                                        color:$white;
+                                    }
+                                    
+                                    .head{
+                                        display: flex;
+                                        flex-direction: row;
+                                        width:100%;
+                                        height:20%;
+                                        background-color: blue;
+
+                                        &>div{
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            width:100%;
+                                            height:100%;
+
+                                            &:first-child{
+                                                width:40%;
+                                                background-color: #020512;
+                                            }
+                                        }
+                                    }
+
+                                    .row{
+                                        display: flex;
+                                        width:100%;
+                                        height:80%;
+                                        background-color: green;
+
+                                        .confColumn{
+                                            display: flex;
+                                            justify-content: center;
+                                            align-items: center;
+                                            width:9.1%;
+                                            height: 100%;
+                                            background-color: red;
+                                            overflow: hidden;
+                                            
+                                            >div{
+                                                text-align: center;
+                                                width:auto;
+                                                height: auto;
+                                                transform: rotate(-90deg);
+                                            }
+                                        }
+
+                                        .contain{
+                                            display: flex;
+                                            flex-direction: row;
+                                            justify-content: center;
+                                            align-items: center;
+                                            background-color: white;
+                                            width:90.9%;
+                                            height: 100%;
+
+                                            &>div{
+                                                display: flex;
+                                                flex-direction: column;
+                                                justify-content: center;
+                                                align-items: center;
+                                                width:100%;
+                                                height:100%;
+                                            }
+
+                                            
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 

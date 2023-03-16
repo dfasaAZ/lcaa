@@ -1,36 +1,37 @@
 export class CellularAutomaton {
   /**Неотформатированные данные, ключи - наименование стобца, значения - список значений столбца */
   rawData = null;
+   /**Глубина памяти */
+   memoryDepth=0;
   data = [];
+  /**Отсортированные данные с расставленными уровнями */
   sortedData = [];
-  /**
-   * Строка всех последовательных уровней
-   */
+  /**Объект, хранящий таблицу переходов */
+  counts=[];
+  /**Строка всех последовательных уровней*/
   sequence="";
+  validationTables=[];
+  ForecastError=0;
   /**Курсоры, указывающие на границы коридоров
    * 
    * Все элементы в отсортированном массиве с индексом меньше либо равном position должны иметь аттрибут с соответствующим именем 
    * 
    * TODO: процедурно генерировать курсоры на случай если точек будет не 60 и\или коридоров будет больше*/
   cursors = [
-    { 'name': 'low', 'position': 20 },
-    { 'name': 'medium', 'position': 40 },
-    { 'name': 'high', 'position': 60 }
+    { 'name': 'Н', 'position': 20 },
+    { 'name': 'С', 'position': 40 },
+    { 'name': 'В', 'position': 60 }
 
   ];
-  /**Достать данные в чистом виде из csv файла 
-   * 
-   * 
+  /**Достать данные в чистом виде из csv строки 
    * 
    * Возвращает список map'ов со всеми столбцами
    * 
-   * !!!Использовать только с await!!!
-   * 
-   * @param {string} path Путь к файлу
+   * @param {string} csvString Строка в формате csv
   */
   extractData(csvString) {
     const results = [];
-
+    csvString=csvString.replace(/\r\n/g, "\n");
     const rows = csvString.split("\n"); // Split string into rows
     const headers = rows.shift().split(","); // Remove first row and use it as headers
     
@@ -48,44 +49,67 @@ export class CellularAutomaton {
   /**
        * Достать столбцы с датой и значениями и подготовить к использованию
        * 
-       * @param {string}csvString: "\\путь\\к\\файлу"
+       * @param {string}csvString: "строка в формате csv"
        */
   async LoadData(csvString) {
 
     this.rawData = this.extractData(csvString);
     this.data = this.rawData.map((data) => {
+      var dateString = data['<DATE>'];
+      if (dateString) {
+        if (dateString.includes('.')) {
+          const [day, month, year] = dateString.split('.');
+          dateString = new Date(`${year}-${month}-${day}`);
+        } else {
+          dateString = new Date(dateString);
+        }
+      }
       return {
-        'date': new Date(data['<DATE>']),
+        'date': dateString,
         'value': parseFloat(data['<CLOSE>'])
       };
     });
+    
     this.sortByValue();
     this.getSequence();
   }
   /**
-   * Сортирует по значению, и помещает в отдельную переменную, затем расставляет уровни
+   * Сортирует по значению, и помещает в отдельную переменную
    */
   sortByValue() {
-
-    this.sortedData = this.data.sort((a, b) => {
+    this.sortedData.sort((a, b) => {
       return a.value - b.value;
     });
-    this.placeLevel();
   }
    /**
    * Сортирует список с уровнями по дате
    */
    sortByDate() {
-
     return this.sortedData.sort((a, b) => {
       return a.date - b.date;
     });
-    
+  }
+  /**
+   * Определить границы курсоров в зависимости от размера данных
+   */
+  defCursors(data=this.sortedData,cursors=this.cursors){
+const length=data.length;
+const step=(length/3)|0;
+cursors.sort((a, b) => b.position - a.position);
+for (let i = 0; i < cursors.length; i++) {
+  cursors[i].position=length-step*i;
+}
+this.cursors=cursors;
   }
   /**
    * Расставляет уровень для каждого элемента в отсортированном списке  в соответствии с курсорами
    */
   placeLevel() {
+    this.sortedData!=null?
+    this.sortedData = this.data.sort((a, b) => {
+      return a.value - b.value;
+    }):this.sortByValue();
+    this.defCursors();
     this.cursors.sort((a, b) => a.position - b.position);
 
     this.sortedData = this.sortedData.map((data, index) => {
@@ -96,26 +120,217 @@ export class CellularAutomaton {
         level: levelValue
       };
     });
+    this.sortByDate();
+    this.getSequence();
   }
   /**
    * Передвинуть курсор указанного уровня на указанное число элементов
    * 
    * @param {String} level Строка имени изменяемого уровня 
    * 
-   * Пример - "high"
+   * Пример - "high","medium", "low"
    * @param {Number} amount Число на которое нужно сдвинуть позицию уровня(отрицательное для сдвига вниз)
    */
   moveLevel(level, amount) {
     this.cursors[this.cursors.findIndex(c => c.name === level)].position += amount;
     this.placeLevel();
   }
-  getSequence(){
-    var dataList=[];
-    dataList=this.sortByDate();
+  getSequence(dataList=this.sortByDate()){
+    
+    
     const levelArray = dataList.map(data => data.level);
     const sequence = levelArray.join('');
-    this.sequence=sequence;
+    if(dataList.length>this.memoryDepth){
+    this.sequence=sequence;}
+    return sequence;
 
+
+  }/**
+   * Считает количество комбинаций в строке последовательностей
+   * @param {*} combination Передаваемая комбинация, поиск которой пранируется осуществить
+   * @returns количество совпадений
+   */
+ async countCombinationOccurrences(combination,seq=this.sequence) {
+   let sequence=seq;
+    const combinationLength = combination.length;
+    let count = 0;
+  
+    for (let i = 0; i < sequence.length - combinationLength + 1; i++) {
+      let match = true;
+      for (let j = 0; j < combinationLength; j++) {
+        if (sequence[i + j] !== combination[j]) {
+          match = false;
+          break;
+        }
+      }
+      if (match) {
+        count++;
+      }
+    }
+  const result=[combination,count];
+    return result
+  }
+/**
+ * Производит поиск количества переходов, записывает результат в список counts
+ * @param {number} iteration Номер итерации прохода (Изначально задавать 0)
+ */
+async countLevelCombinations(iteration = 0) {
+  const levels = this.cursors.map(cursor => cursor.name);
+  const counts = this.counts;
+
+  const isFirstIteration = iteration === 0;
+  const isLastIteration = iteration === counts.length-1;
+
+  const mipo = counts[iteration-1]!=null ? Object.keys(counts[iteration-1]).length : 0;
+  const longestList = Math.max(levels.length, mipo);
+  if (this.counts[iteration]==null)this.counts.push({});
+  const promises = [];
+  for (let i = 0; i < longestList; i++) {
+    let firstLevel;
+    if (isFirstIteration) {
+      firstLevel = levels[i];
+    } else {
+      firstLevel = Object.keys(counts[iteration - 1])[i];
+      let occ=0;
+      //ниже идет проверка на условие: если два из трех элементов группы раны нулю
+      for (let l = 0; l < levels.length; l++) {
+        if (counts[iteration - 1][firstLevel.slice(0,-1).concat(levels[l])]==0) {
+          occ+=1;
+        }
+      }
+      if (counts[iteration - 1][firstLevel] === 0) {
+        continue;
+      }
+      //строка ниже, если не закомменчена, дает соответствующее алгоритму кол-во конфигураций, но ИНОГДА ошибка становится больше
+     else if(occ>=(levels.length-1)){continue};
+    }
+
+    const subPromises = [];
+for (let j = 0; j < levels.length; j++) {
+  const secondLevel = levels[j];
+  const combination1 = `${firstLevel}${secondLevel}`;
+
+  const promise = new Promise(resolve => {
+    // resolve({combination1: this.countCombinationOccurrences(combination1)});
+    resolve(this.countCombinationOccurrences(combination1));
+  });
+  subPromises.push(promise);
+}
+promises.push(subPromises);
+
+   
+  }
+
+  const results = await Promise.all(promises.flat());
+  
+  for (let i = 0; i < results.length; i++) {
+    const combination =Object.values(results[i])[0];
+    counts[iteration][combination] = Object.values(results[i])[1];
+  }
+  
+ // if (!isLastIteration) {
+    for (let k = 0; k < Object.values(counts[iteration]).length; k++) {
+      const element = Object.values(counts[iteration])[k];
+      if (element > 1) {
+        await this.countLevelCombinations(iteration + 1);
+        break;
+      }
+    }
+ // }
+
+  this.memoryDepth = counts.length;
+}
+
+   /**
+   * Возвращает чистые значения для расчета вероятности терма следующей точки
+   * 
+   * @param {*} excludeItems Количество элементов с конца, которые следует игнорировать(по умочанию 0)
+   * @param {*} data Список с данными
+   * @param {*} counts Список с переходами
+   * @param {*} memoryDepth Глубина памяти
+   * 
+   * @returns 
+   */
+   calculateMeetIndexes(excludeItems=0,data=this.sortedData, counts=this.counts, memoryDepth=this.memoryDepth) {
+    const meetIndexes = new Map();
+    const levels = this.cursors.map(cursor => cursor.name);
+    // Slice the data array to exclude the specified number of elements from the end
+    data = data.slice(0, -excludeItems || undefined);
+    // Loop over each level of depth
+    for (let depth = 0; depth < memoryDepth; depth++) {
+      const lastElements = data.slice(-1 - depth).reverse();
+      let lastLevel = '';
+      let stageSum = { Н: 0, С: 0, В: 0 };
+
+      // Loop over each element in the levels array
+      for (let i = 0; i < 3; i++) {
+        const currentLevel = levels[i];
+
+        lastLevel='';
+        // Check if the last level has changed
+        for (let j=0;j<lastElements.length;j++){
+          lastLevel+=lastElements[j].level;
+        }
+
+        // Calculate the count based on the current level and last level
+        const key = lastLevel + currentLevel;
+        const count = counts[depth][key];
+
+        // Add the count to the stage sum
+        if (count !== undefined) {
+          stageSum[currentLevel] += count;
+        }
+      }
+
+      // Calculate the meet index for each level and add it to the meetIndexes map
+      var sum = 0;
+      for (let iq = 0; iq < levels.length; iq++) {
+       
+        sum+=stageSum[levels[iq]];
+      }
+      if (sum==0)return meetIndexes;
+      let MeetIndex=[];
+      for (let iq = 0; iq < levels.length; iq++) {
+      MeetIndex.push( stageSum[levels[iq]]/sum);
+      }
+      
+      
+
+      // const lowMeetIndex = stageSum.low / sum;
+      // const mediumMeetIndex = stageSum.medium / sum;
+      // const highMeetIndex = stageSum.high / sum;
+      // TODO: Создать накапливаемую переменную для индексов, прибавлять индексы к предыдущим значениям 
+      for (let i = 0; i < levels.length; i++) {
+        meetIndexes.set(levels[i], MeetIndex[i]+(meetIndexes.has(levels[i])?meetIndexes.get(levels[i]):0));
+        
+      }
+      // meetIndexes.set('low', lowMeetIndex+(meetIndexes.has('low')?meetIndexes.get('low'):0));
+      // meetIndexes.set('medium', mediumMeetIndex+(meetIndexes.has('medium')?meetIndexes.get('medium'):0));
+      // meetIndexes.set('high', highMeetIndex+(meetIndexes.has('high')?meetIndexes.get('high'):0));
+    }
+
+    return meetIndexes;
+  }
+  Validation(){
+let val_template={"index":0,"sequence":'',"raw":new Map(),"sum":0,"oddities":new Map(),"term":'',"Correct":false};
+for (let i = 0; i < this.memoryDepth; i++) {
+  const index = this.sortedData.length-i;
+  const sequence= this.getSequence(this.sortedData.slice(-this.memoryDepth-i,this.sortedData.length-i));
+  const raw=this.calculateMeetIndexes(i);
+  const sum = [...raw.values()].reduce((acc, val) => acc + val, 0);
+  const oddities = new Map(Array.from(raw.entries()).map(([k, v]) => [k, v / sum]));
+  const term=Array.from(oddities.entries())
+  .reduce((max, [k, v]) => v > oddities.get(max) ? k : max, Array.from(oddities.keys())[0]); 
+  const Correct=this.sortedData[index]!=null?(term==this.sortedData[index].level):true;
+  this.validationTables.push({...val_template, index, sequence, raw, sum, oddities, term, Correct});
 
   }
+  this.getForecasterror();
+}
+getForecasterror() {
+  const count = this.validationTables.filter(obj => obj.Correct).length;
+  const percentage=100 -(count / this.validationTables.length * 100);
+this.ForecastError=percentage;
+  return percentage
+}
 }
