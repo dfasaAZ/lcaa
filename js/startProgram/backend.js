@@ -40,14 +40,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 let dataSorted = []; //Для 1 ЭТАПА
                 let modificationArr = []; //Для 2 ЭТАПА
 
-                for (let i in object.sortedData){ // Инициализация dataSorted
+                for (let i of object.sortedData){ // Инициализация dataSorted
                     dataSorted.push(i); 
                 }
-                for (let i in object.counts){ // Инициализация modificationArr
+                for (let i of object.counts){ // Инициализация modificationArr
+                    console.log(i);
                     modificationArr.push(i);
                 }
-
-                console.log(modificationArr);
 
                 /** 1 ЭТАП::: Цвето Разграфка */
                 dataSorted.forEach (e=>{
@@ -55,11 +54,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
                     numbersArrForChart.push(Math.round(e.value)); 
                     labelsArrForChart.push(String(e.date).substr(4,11));
-                    if (e.level == "low"){
+                    if (e.level == "Н"){
                         backgroundColorsArrForChart.push(redColorA);
                         borderColorsArrForChart.push(redColor);
                     }
-                    else if (e.level == "medium") {
+                    else if (e.level == "С") {
                         backgroundColorsArrForChart.push(yellowColorA);
                         borderColorsArrForChart.push(yellowColor);
                     }
