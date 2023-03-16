@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     modificationArr.push(i);
                 }
 
+                console.log(modificationArr);
+
                 /** 1 ЭТАП::: Цвето Разграфка */
                 dataSorted.forEach (e=>{
                     i++;
