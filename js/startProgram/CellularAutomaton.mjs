@@ -150,7 +150,7 @@ this.cursors=cursors;
    * @param {*} combination Передаваемая комбинация, поиск которой пранируется осуществить
    * @returns количество совпадений
    */
-  countCombinationOccurrences(combination,seq=this.sequence) {
+ async countCombinationOccurrences(combination,seq=this.sequence) {
    let sequence=seq;
     const combinationLength = combination.length;
     let count = 0;
@@ -167,46 +167,80 @@ this.cursors=cursors;
         count++;
       }
     }
-  
-    return count;
+  const result=[combination,count];
+    return result
   }
 /**
  * Производит поиск количества переходов, записывает результат в список counts
  * @param {number} iteration Номер итерации прохода (Изначально задавать 0)
  */
-countLevelCombinations(iteration=0) {
-  let mipo=0;//количество элементов в результирующем массиве текущей итерации
+async countLevelCombinations(iteration = 0) {
   const levels = this.cursors.map(cursor => cursor.name);
-  let sequence=this.sequence;
-  var firstLevel;
-  var longestList;
+  const counts = this.counts;
+
+  const isFirstIteration = iteration === 0;
+  const isLastIteration = iteration === counts.length-1;
+
+  const mipo = counts[iteration-1]!=null ? Object.keys(counts[iteration-1]).length : 0;
+  const longestList = Math.max(levels.length, mipo);
   if (this.counts[iteration]==null)this.counts.push({});
-  if (this.counts[iteration-1]!=null){
-    mipo=Object.keys(this.counts[iteration-1]).length;
-  levels.length<mipo?longestList=mipo:longestList=levels.length;}else longestList=levels.length;
+  const promises = [];
   for (let i = 0; i < longestList; i++) {
-    iteration==0?firstLevel = levels[i]:firstLevel=Object.keys(this.counts[iteration-1])[i].replaceAll('-to-','');
-      if(iteration){if(this.counts[iteration-1][firstLevel]==0){break;};}
-    for (let j = 0; j < levels.length; j++) {
-      const secondLevel = levels[j];
-      const combination1 = `${firstLevel}${secondLevel}`;      
-      const count1 = this.countCombinationOccurrences(combination1);
-      this.counts[iteration][`${firstLevel}${secondLevel}`] = count1;
-      
-    }
-      
-      for (let k = 0; k <= Object.values(this.counts[iteration]).length; k++) {
-        let element = Object.values(this.counts[iteration])[k];
-        if (element > 1) {
-          this.countLevelCombinations(iteration + 1);
-          break;
+    let firstLevel;
+    if (isFirstIteration) {
+      firstLevel = levels[i];
+    } else {
+      firstLevel = Object.keys(counts[iteration - 1])[i];
+      let occ=0;
+      //ниже идет проверка на условие: если два из трех элементов группы раны нулю
+      for (let l = 0; l < levels.length; l++) {
+        if (counts[iteration - 1][firstLevel.slice(0,-1).concat(levels[l])]==0) {
+          occ+=1;
         }
       }
-      
+      if (counts[iteration - 1][firstLevel] === 0) {
+        continue;
+      }
+      //строка ниже, если не закомменчена, дает соответствующее алгоритму кол-во конфигураций, но ИНОГДА ошибка становится больше
+     else if(occ>=(levels.length-1)){continue};
     }
-  
-    this.memoryDepth=this.counts.length;
+
+    const subPromises = [];
+for (let j = 0; j < levels.length; j++) {
+  const secondLevel = levels[j];
+  const combination1 = `${firstLevel}${secondLevel}`;
+
+  const promise = new Promise(resolve => {
+    // resolve({combination1: this.countCombinationOccurrences(combination1)});
+    resolve(this.countCombinationOccurrences(combination1));
+  });
+  subPromises.push(promise);
+}
+promises.push(subPromises);
+
+   
   }
+
+  const results = await Promise.all(promises.flat());
+  
+  for (let i = 0; i < results.length; i++) {
+    const combination =Object.values(results[i])[0];
+    counts[iteration][combination] = Object.values(results[i])[1];
+  }
+  
+ // if (!isLastIteration) {
+    for (let k = 0; k < Object.values(counts[iteration]).length; k++) {
+      const element = Object.values(counts[iteration])[k];
+      if (element > 1) {
+        await this.countLevelCombinations(iteration + 1);
+        break;
+      }
+    }
+ // }
+
+  this.memoryDepth = counts.length;
+}
+
    /**
    * Возвращает чистые значения для расчета вероятности терма следующей точки
    * 
@@ -226,7 +260,7 @@ countLevelCombinations(iteration=0) {
     for (let depth = 0; depth < memoryDepth; depth++) {
       const lastElements = data.slice(-1 - depth).reverse();
       let lastLevel = '';
-      let stageSum = { low: 0, medium: 0, high: 0 };
+      let stageSum = { Н: 0, С: 0, В: 0 };
 
       // Loop over each element in the levels array
       for (let i = 0; i < 3; i++) {
@@ -249,22 +283,37 @@ countLevelCombinations(iteration=0) {
       }
 
       // Calculate the meet index for each level and add it to the meetIndexes map
-      var sum = stageSum.low + stageSum.medium + stageSum.high;
+      var sum = 0;
+      for (let iq = 0; iq < levels.length; iq++) {
+       
+        sum+=stageSum[levels[iq]];
+      }
       if (sum==0)return meetIndexes;
-      const lowMeetIndex = stageSum.low / sum;
-      const mediumMeetIndex = stageSum.medium / sum;
-      const highMeetIndex = stageSum.high / sum;
+      let MeetIndex=[];
+      for (let iq = 0; iq < levels.length; iq++) {
+      MeetIndex.push( stageSum[levels[iq]]/sum);
+      }
+      
+      
+
+      // const lowMeetIndex = stageSum.low / sum;
+      // const mediumMeetIndex = stageSum.medium / sum;
+      // const highMeetIndex = stageSum.high / sum;
       // TODO: Создать накапливаемую переменную для индексов, прибавлять индексы к предыдущим значениям 
-      meetIndexes.set('low', lowMeetIndex+(meetIndexes.has('low')?meetIndexes.get('low'):0));
-      meetIndexes.set('medium', mediumMeetIndex+(meetIndexes.has('medium')?meetIndexes.get('medium'):0));
-      meetIndexes.set('high', highMeetIndex+(meetIndexes.has('high')?meetIndexes.get('high'):0));
+      for (let i = 0; i < levels.length; i++) {
+        meetIndexes.set(levels[i], MeetIndex[i]+(meetIndexes.has(levels[i])?meetIndexes.get(levels[i]):0));
+        
+      }
+      // meetIndexes.set('low', lowMeetIndex+(meetIndexes.has('low')?meetIndexes.get('low'):0));
+      // meetIndexes.set('medium', mediumMeetIndex+(meetIndexes.has('medium')?meetIndexes.get('medium'):0));
+      // meetIndexes.set('high', highMeetIndex+(meetIndexes.has('high')?meetIndexes.get('high'):0));
     }
 
     return meetIndexes;
   }
   Validation(){
 let val_template={"index":0,"sequence":'',"raw":new Map(),"sum":0,"oddities":new Map(),"term":'',"Correct":false};
-for (let i = 0; i < this.sortedData.length-this.memoryDepth; i++) {
+for (let i = 0; i < this.memoryDepth; i++) {
   const index = this.sortedData.length-i;
   const sequence= this.getSequence(this.sortedData.slice(-this.memoryDepth-i,this.sortedData.length-i));
   const raw=this.calculateMeetIndexes(i);
