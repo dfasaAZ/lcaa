@@ -2,43 +2,70 @@
   font-family: mainFont;
   src: url(../fonts/Belgrano-Regular.ttf);
 }
+
 * {
   padding: 0;
   margin: 0;
 }
 
 body {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   width: 100%;
   height: 100%;
   background: radial-gradient(50% 50% at 50% 50%, #19213E 0%, #050917 100%);
 }
+
 body .welcome_section {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 85%;
   height: 100%;
 }
+
 @media (max-width: 576px) {
   body .welcome_section {
     width: 85%;
   }
 }
+
 body .welcome_section header {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 130px;
 }
+
 body .welcome_section header .logo {
   font-family: mainFont;
   font-size: calc(100px * 0.25);
   color: #E4E4E4;
+  width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   line-height: calc(100px * 0.25);
@@ -46,19 +73,34 @@ body .welcome_section header .logo {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   cursor: pointer;
 }
+
 body .welcome_section header .header_list {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   list-style-type: none;
   width: 450px;
 }
+
 @media (max-width: 576px) {
   body .welcome_section header .header_list {
     display: none;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -69,10 +111,12 @@ body .welcome_section header .header_list {
     background: blue;
   }
 }
+
 body .welcome_section header .header_list > a {
   text-decoration: none;
   text-align: center;
 }
+
 body .welcome_section header .header_list > a > li {
   position: relative;
   font-family: mainFont;
@@ -83,26 +127,37 @@ body .welcome_section header .header_list > a > li {
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   cursor: pointer;
 }
+
 body .welcome_section header .header_list > a > li::before {
   position: absolute;
   bottom: -2px;
-  content: "";
+  content: '';
   width: 0;
   height: 2px;
   background: #E4E4E4;
 }
+
 body .welcome_section header .header_list > a > li:hover::before {
   width: 100%;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
 body .welcome_section header > a {
   text-decoration: none;
 }
+
 body .welcome_section header > a .header_button {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 230px;
   height: 50px;
   border: 2px solid #E4E4E4;
@@ -111,19 +166,23 @@ body .welcome_section header > a .header_button {
   cursor: pointer;
   overflow: hidden;
 }
+
 body .welcome_section header > a .header_button::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   width: 0;
   height: 100%;
   background: #E4E4E4;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
 body .welcome_section header > a .header_button:hover::before {
   width: 100%;
   background: none;
 }
+
 body .welcome_section header > a .header_button > div {
   font-family: mainFont;
   font-size: calc(100px * 0.25);
@@ -132,16 +191,28 @@ body .welcome_section header > a .header_button > div {
   letter-spacing: 0.05em;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
   z-index: 1;
-  transition: 0.5s;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
+
 body .welcome_section main {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 700px;
 }
+
 body .welcome_section main .main_text {
   font-family: mainFont;
   font-size: 80px;
@@ -154,15 +225,32 @@ body .welcome_section main .main_text {
   text-align: center;
   border-right: 10px solid #E4E4E4;
 }
+
 body .welcome_section main .main_text.p1 {
   width: 20ch;
-  animation: borderFlash 1s step-start infinite, printText 4s steps(20);
+  -webkit-animation: borderFlash 1s step-start infinite, printText 4s steps(20);
+          animation: borderFlash 1s step-start infinite, printText 4s steps(20);
 }
+
 body .welcome_section main .main_text.p2 {
   display: none;
   width: 7.5ch;
-  animation: borderFlash 1s step-start infinite, printText 3s steps(8);
+  -webkit-animation: borderFlash 1s step-start infinite, printText 3s steps(8);
+          animation: borderFlash 1s step-start infinite, printText 3s steps(8);
 }
+
+@-webkit-keyframes borderFlash {
+  0% {
+    border-color: #E4E4E4;
+  }
+  50% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: #E4E4E4;
+  }
+}
+
 @keyframes borderFlash {
   0% {
     border-color: #E4E4E4;
@@ -174,16 +262,30 @@ body .welcome_section main .main_text.p2 {
     border-color: #E4E4E4;
   }
 }
+
+@-webkit-keyframes printText {
+  from {
+    width: 0;
+  }
+}
+
 @keyframes printText {
   from {
     width: 0;
   }
 }
+
 body .welcome_section footer {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
   height: 130px;
   font-family: mainFont;
@@ -193,13 +295,15 @@ body .welcome_section footer {
   letter-spacing: 0.05ch;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
+
 body .welcome_section footer .footer_caption {
   position: absolute;
-  top: 45px;
+  top: calc((130px / 2) - $fontSize*0.20);
   font-size: 20px;
   line-height: 20px;
   text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.75);
 }
+
 body .welcome_section footer .lang_switcher {
   position: absolute;
   font-size: 30px;
@@ -208,4 +312,5 @@ body .welcome_section footer .lang_switcher {
   text-shadow: 0px 0px 3px #E4E4E4;
   right: 0;
   cursor: pointer;
-}/*# sourceMappingURL=style.css.map */
+}
+/*# sourceMappingURL=style.css.map */

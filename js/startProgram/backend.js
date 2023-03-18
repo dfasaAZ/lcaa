@@ -14,7 +14,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let programCalculateWindow = document.querySelector(".programCalculate");
     let sliderButtons = document.querySelector(`div[class^="sliderButton"]`);
     let programCalculateTitle = document.querySelector(`.titleWindow.main`);
-    let ctx = document.getElementById('chartModel');
+    let ctx = document.getElementById('chartModel'); //Диаграмма 
+    let transitions = document.querySelector('.transitions'); //Внутреннее окно Transitions
     let greenColorA = "rgb(0, 100, 0, 0.5)";
     let greenColor = "rgb(0, 100, 0)";
     let yellowColorA = "rgb(255, 215, 0, 0.5)";
@@ -36,20 +37,21 @@ document.addEventListener("DOMContentLoaded", ()=>{
         try{
             /** Здесь происходят все основные вычисления массивов */
             function getValues(object){
+                /**
+                *@param {Number} i Перменная для разграфки первого этапа
+                */
                 let i=0;
                 let dataSorted = []; //Для 1 ЭТАПА
-                let modificationArr = []; //Для 2 ЭТАПА
+                let modificationArr = new Map(); //Для 2 ЭТАПА
+
 
                 for (let i of object.sortedData){ // Инициализация dataSorted
                     dataSorted.push(i); 
                 }
+  
 
-                console.log(object.counts);
-                for (let i of object.counts){ // Инициализация modificationArr
-                    modificationArr.push(i);
-                }
 
-                /** 1 ЭТАП::: Цвето Разграфка */
+                /** 1 ЭТАП::: Цвето-Разграфка */
                 dataSorted.forEach (e=>{
                     i++;
                     viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
@@ -70,10 +72,74 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 })
 
                 /** 2 ЭТАП::: Заполнение таблиц переходов */
-                modificationArr.map(e=>{
-                    
-                })
-                
+                let configNumber = 1;
+                for (let i of object.counts){
+                    console.log(i);
+                    let length;
+                    let temporaryArr=[];
+                    let lastChar="";
+                    let currentCombination="";
+
+                    transitions.insertAdjacentHTML('beforeend', `
+                    <div class="transitionsLine">
+                        <div class="section">
+                            <div class="table">
+                                <div class="head">
+                                    <div>Depth</div>
+                                    <div>Transition from</div>
+                                    <div>Transition to</div>
+                                    <div>Count of transition</div>
+                                    <div>Total transitions</div>
+                                </div>
+                                <div class="row">
+                                    <div class="confColumn"><div>${configNumber} config</div></div>
+                                    <div class="contains">
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
+                    `)
+
+                        Object.entries(i).forEach(e=>{
+                            if (e[0].length-1 == configNumber){
+                                let string = Array.from(e[0]);
+                                if (string.slice(0,string.length-1).join("")==lastChar){
+                                    temporaryArr.push(e[0].substr(-1));
+                                }else{
+                                    // console.log(temporaryArr);
+                                }
+                                
+                                document.querySelectorAll('.row .contains')[document.querySelectorAll('.row .contains').length-1].insertAdjacentHTML('beforeend',
+                                `<div class="contain">
+                                    <div class="transFrom">
+                                        <div class="valFrom">${string.reverse().slice(1,string.length).reverse().join("")}</div>
+                                    </div>
+                                    <div class="transTo">
+                                        <div class="low">${(e[0]).substr(-1)}</div>
+                                        <div class="medium">${(e[0]).substr(-1)}</div>
+                                        <div class="high">${(e[0]).substr(-1)}</div>
+                                    </div>
+                                    <div class="countTrans">
+                                        <div class="low">1</div>
+                                        <div class="medium">2</div>
+                                        <div class="high">3</div>
+                                    </div>
+                                    <div class="totalTrans">43</div>
+                                </div>
+                                `);
+                                
+                                lastChar=string.slice(0,string.length-1).join("");
+                                // lastChar1=string.reverse().slice(1,string.length).reverse().join("");
+                            }else{
+                                
+                            }
+                        })
+                     
+
+
+                    configNumber++;
+                }
 
 
 
@@ -104,10 +170,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 // minNumbersArrForChart = Math.min.apply(null, numbersArrForChart);
             }
 
-            fR.onload = (e) => {
+            fR.onload = async (e) => {
                 object.LoadData(e.target.result); 
                 object.placeLevel();
-                object.countLevelCombinations();
+                await object.countLevelCombinations();
                 getValues(object);
             }
             fR.readAsText(file.files[0], "UTF-8");
