@@ -74,11 +74,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 /** 2 ЭТАП::: Заполнение таблиц переходов */
                 let configNumber = 1;
                 for (let i of object.counts){
-                    console.log(i);
-                    let length;
-                    let temporaryArr=[];
-                    let lastChar="";
-                    let currentCombination="";
+                    let totalTrans=0;
 
                     transitions.insertAdjacentHTML('beforeend', `
                     <div class="transitionsLine">
@@ -94,6 +90,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                 <div class="row">
                                     <div class="confColumn"><div>${configNumber} config</div></div>
                                     <div class="contains">
+                                        <div class="contain">
+                                            <div class="transFrom"></div>
+                                            <div class="transTo"></div>
+                                            <div class="countTrans"></div>
+                                            <div class="totalTrans"></div>
+                                        </div>
                                     </div>
                                 </div>   
                             </div>
@@ -101,39 +103,39 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     </div>
                     `)
 
+                        let k=0;
+                        let k1=true;
                         Object.entries(i).forEach(e=>{
-                            if (e[0].length-1 == configNumber){
-                                let string = Array.from(e[0]);
-                                if (string.slice(0,string.length-1).join("")==lastChar){
-                                    temporaryArr.push(e[0].substr(-1));
-                                }else{
-                                    // console.log(temporaryArr);
-                                }
-                                
-                                document.querySelectorAll('.row .contains')[document.querySelectorAll('.row .contains').length-1].insertAdjacentHTML('beforeend',
-                                `<div class="contain">
-                                    <div class="transFrom">
-                                        <div class="valFrom">${string.reverse().slice(1,string.length).reverse().join("")}</div>
-                                    </div>
-                                    <div class="transTo">
-                                        <div class="low">${(e[0]).substr(-1)}</div>
-                                        <div class="medium">${(e[0]).substr(-1)}</div>
-                                        <div class="high">${(e[0]).substr(-1)}</div>
-                                    </div>
-                                    <div class="countTrans">
-                                        <div class="low">1</div>
-                                        <div class="medium">2</div>
-                                        <div class="high">3</div>
-                                    </div>
-                                    <div class="totalTrans">43</div>
-                                </div>
-                                `);
-                                
-                                lastChar=string.slice(0,string.length-1).join("");
-                                // lastChar1=string.reverse().slice(1,string.length).reverse().join("");
-                            }else{
-                                
+                            let string = Array.from(e[0]);
+                            if (k1) {
+                                document.querySelectorAll('.contains .contain .transFrom')[document.querySelectorAll('.contains .contain .transFrom').length-1].insertAdjacentHTML('beforeend', `<div>${string.slice(0,string.length-1).join("")}</div>`);
+                                k1=false;
                             }
+
+                            if (k<3){
+                                document.querySelectorAll('.contains .contain .transTo')[document.querySelectorAll('.contains .contain .transTo').length-1].insertAdjacentHTML('beforeend', `<div>${string.slice(-1).join("")}</div>`);
+                                document.querySelectorAll('.contains .contain .countTrans')[document.querySelectorAll('.contains .contain .countTrans').length-1].insertAdjacentHTML('beforeend', `<div>${e[1]}</div>`);
+                                totalTrans+=e[1];
+                                k++;
+                            }else{
+                                document.querySelectorAll('.contains .contain .totalTrans')[document.querySelectorAll('.contains .contain .totalTrans').length-1].insertAdjacentHTML('beforeend', `<div>${totalTrans}</div>`);
+                                totalTrans=0;
+
+                                document.querySelectorAll('.row .contains')[document.querySelectorAll('.row .contains').length-1].insertAdjacentHTML('beforeend',
+                                    `<div class="contain">
+                                        <div class="transFrom"></div>
+                                        <div class="transTo"></div>
+                                        <div class="countTrans"></div>
+                                        <div class="totalTrans"></div>
+                                    </div>
+                                `);
+                                k=0;
+                                k1=true;
+                            }
+                            
+                            
+                            // lastChar=string.slice(0,string.length-1).join("");
+                            // lastChar1=string.reverse().slice(1,string.length).reverse().join("");
                         })
                      
 
