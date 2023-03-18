@@ -43,8 +43,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 for (let i of object.sortedData){ // Инициализация dataSorted
                     dataSorted.push(i); 
                 }
+
+                console.log(object.counts);
                 for (let i of object.counts){ // Инициализация modificationArr
-                    console.log(i);
                     modificationArr.push(i);
                 }
 
