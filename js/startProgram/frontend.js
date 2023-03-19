@@ -27,5 +27,19 @@ document.addEventListener("DOMContentLoaded", ()=>{
         sliderIndex==0 ? sliderLeftButton.classList.add("active") : sliderLeftButton.classList.remove("active");
     })
 
+    let hidderBut = document.querySelector('.transitionsWindow .hidderBut');
+    let transitions = document.querySelector('.transitionsWindow .transitions');
+    let hidderButK=true;
+    hidderBut.addEventListener('click', ()=>{
+        if (hidderButK) {
+            hidderBut.style.transform = "rotate(0)";
+            hidderButK=false;
+            transitions.style.display="none";
+        }else{
+            hidderBut.style.transform = "rotate(90deg)";
+            hidderButK=true;
+            transitions.style.display="";
+        }
+    })
 
 })

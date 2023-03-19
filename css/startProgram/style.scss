@@ -166,7 +166,7 @@ body{
 
             .slides{
                 position:relative;
-                display:flex;/////////////////////
+                display:none;/////////////////////
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
@@ -433,7 +433,7 @@ body{
 
 
             .programCalculate{
-                display:none;/////
+                display:flex;/////
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -481,17 +481,34 @@ body{
                 }
 
                 .transitionsWindow{
+                    position: relative;
                     display: flex;
                     flex-direction: column;
-                    justify-content: flex-start;
+                    justify-content: center;
                     align-items: center;
                     width:100%;
-                    min-height: 300px;
+                    min-height: 100px;
                     height:auto;
                     background-color:#020512;
                     border-radius: 30px;
 
+                    .hidderBut{
+                        position: absolute;
+                        top:35px;
+                        left:30px;
+                        width:30px;
+                        height:30px;
+                        background:url('../../img/arrow.png') no-repeat;
+                        background-size: contain;
+                        z-index:1;
+                        transform: rotate(90deg);
+                        transform-origin: center;
+                        cursor:pointer;
+                        transition:.5s;
+                    }
+
                     .transitions{
+                        // display:none;
                         width:95%;
                         height:auto;
                         background-color: #111833;
@@ -509,7 +526,8 @@ body{
                             .section{
                                 width:90%;
                                 height:100%;
-                                border:1px solid blue;
+                                border:1px solid #040b29;
+                                box-shadow:0 0 10px 5px white;
 
                                 .table{
                                     display:flex;
@@ -531,7 +549,7 @@ body{
                                         flex-direction: row;
                                         width:100%;
                                         height:50px;
-                                        background-color: blue;
+                                        background-color: #020512;
 
                                         &>div{
                                             display: flex;
@@ -564,7 +582,7 @@ body{
                                             min-height: 200px;
                                             height: auto;
                                             overflow: hidden;
-                                            border:1px solid blue;
+                                            border:1px solid #020512;
 
                                             >div{
                                                 text-align: center;
@@ -590,7 +608,7 @@ body{
                                                 align-items: center;
                                                 width:100%;
                                                 height:100%;
-                                                border:1px solid blue;
+                                                border:1px solid #020512;
 
     
                                                 &>div{
@@ -600,7 +618,7 @@ body{
                                                     align-items: center;
                                                     width:calc(100% / 4);
                                                     height:100%;
-                                                    border:1px solid blue; 
+                                                    border:1px solid #020512; 
                                                 }
     
                                                 

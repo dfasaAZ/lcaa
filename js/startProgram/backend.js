@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     </div>
                     `)
 
+                    console.log(i);
                         let k=0;
                         let k1=true;
                         Object.entries(i).forEach(e=>{

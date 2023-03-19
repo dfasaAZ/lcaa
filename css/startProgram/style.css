@@ -223,9 +223,7 @@ body .welcome_section main {
 
 body .welcome_section main .slides {
   position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
@@ -559,7 +557,9 @@ body .welcome_section main .msgbox .caption {
 }
 
 body .welcome_section main .programCalculate {
-  display: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -624,6 +624,7 @@ body .welcome_section main .programCalculate .chartWindow .chart #chartModel {
 }
 
 body .welcome_section main .programCalculate .transitionsWindow {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -631,17 +632,35 @@ body .welcome_section main .programCalculate .transitionsWindow {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
-  min-height: 300px;
+  min-height: 100px;
   height: auto;
   background-color: #020512;
   border-radius: 30px;
+}
+
+body .welcome_section main .programCalculate .transitionsWindow .hidderBut {
+  position: absolute;
+  top: 35px;
+  left: 30px;
+  width: 30px;
+  height: 30px;
+  background: url("../../img/arrow.png") no-repeat;
+  background-size: contain;
+  z-index: 1;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  cursor: pointer;
+  -webkit-transition: .5s;
+  transition: .5s;
 }
 
 body .welcome_section main .programCalculate .transitionsWindow .transitions {
@@ -670,7 +689,9 @@ body .welcome_section main .programCalculate .transitionsWindow .transitions .tr
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section {
   width: 90%;
   height: 100%;
-  border: 1px solid blue;
+  border: 1px solid #040b29;
+  -webkit-box-shadow: 0 0 10px 5px white;
+          box-shadow: 0 0 10px 5px white;
 }
 
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table {
@@ -708,7 +729,7 @@ body .welcome_section main .programCalculate .transitionsWindow .transitions .tr
           flex-direction: row;
   width: 100%;
   height: 50px;
-  background-color: blue;
+  background-color: #020512;
 }
 
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .head > div {
@@ -756,7 +777,7 @@ body .welcome_section main .programCalculate .transitionsWindow .transitions .tr
   min-height: 200px;
   height: auto;
   overflow: hidden;
-  border: 1px solid blue;
+  border: 1px solid #020512;
 }
 
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .confColumn > div {
@@ -801,7 +822,7 @@ body .welcome_section main .programCalculate .transitionsWindow .transitions .tr
           align-items: center;
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
+  border: 1px solid #020512;
 }
 
 body .welcome_section main .programCalculate .transitionsWindow .transitions .transitionsLine .section .table .row .contains .contain > div {
@@ -820,7 +841,7 @@ body .welcome_section main .programCalculate .transitionsWindow .transitions .tr
           align-items: center;
   width: calc(100% / 4);
   height: 100%;
-  border: 1px solid blue;
+  border: 1px solid #020512;
 }
 
 body .welcome_section footer {
