@@ -166,7 +166,7 @@ body{
 
             .slides{
                 position:relative;
-                display:none;/////////////////////
+                display:flex;/////////////////////
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
@@ -433,7 +433,7 @@ body{
 
 
             .programCalculate{
-                display:flex;/////
+                display:none;/////
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -508,7 +508,6 @@ body{
                     }
 
                     .transitions{
-                        // display:none;
                         width:95%;
                         height:auto;
                         background-color: #111833;
