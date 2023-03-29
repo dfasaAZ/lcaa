@@ -44,6 +44,10 @@ body{
             width:100%;
             height:130px;
 
+            &>div:first-child,&>div:last-child{
+                width:250px;
+            }
+
             .logo{
                 font-family: mainFont;
                 font-size:calc(#{$fontSize} * 0.25);
@@ -525,8 +529,8 @@ body{
                             .section{
                                 width:90%;
                                 height:100%;
-                                border:1px solid #040b29;
-                                box-shadow:0 0 10px 5px white;
+                                border:10px solid #020512;
+                                // box-shadow:0 0 10px 5px white;
 
                                 .table{
                                     display:flex;

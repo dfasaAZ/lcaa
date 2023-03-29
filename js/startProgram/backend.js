@@ -103,7 +103,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     </div>
                     `)
 
-                    console.log(i);
                         let k=0;
                         let k1=true;
                         Object.entries(i).forEach(e=>{
@@ -114,7 +113,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             }
 
                             if (k<3){
-                                document.querySelectorAll('.contains .contain .transTo')[document.querySelectorAll('.contains .contain .transTo').length-1].insertAdjacentHTML('beforeend', `<div>${string.slice(-1).join("")}</div>`);
+                                document.querySelectorAll('.contains .contain .transTo')[document.querySelectorAll('.contains .contain .transTo').length-1].insertAdjacentHTML('beforeend', `<div>${string.slice(-1)}</div>`);
                                 document.querySelectorAll('.contains .contain .countTrans')[document.querySelectorAll('.contains .contain .countTrans').length-1].insertAdjacentHTML('beforeend', `<div>${e[1]}</div>`);
                                 totalTrans+=e[1];
                                 k++;
@@ -133,10 +132,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                 k=0;
                                 k1=true;
                             }
-                            
-                            
-                            // lastChar=string.slice(0,string.length-1).join("");
-                            // lastChar1=string.reverse().slice(1,string.length).reverse().join("");
                         })
                      
 
@@ -177,6 +172,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 object.LoadData(e.target.result); 
                 object.placeLevel();
                 await object.countLevelCombinations();
+                object.Validation();
+                console.log(object.validationTables);
                 getValues(object);
             }
             fR.readAsText(file.files[0], "UTF-8");

@@ -313,7 +313,7 @@ promises.push(subPromises);
   }
   Validation(){
 let val_template={"index":0,"sequence":'',"raw":new Map(),"sum":0,"oddities":new Map(),"term":'',"Correct":false};
-for (let i = 0; i < this.memoryDepth; i++) {
+for (let i = 0; i < this.sortedData.length-this.memoryDepth; i++) {
   const index = this.sortedData.length-i;
   const sequence= this.getSequence(this.sortedData.slice(-this.memoryDepth-i,this.sortedData.length-i));
   const raw=this.calculateMeetIndexes(i);
