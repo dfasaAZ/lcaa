@@ -1,6 +1,13 @@
 $fontSize:100px;
 $white:#E4E4E4;
 
+@mixin fontSettings{
+    font-family: BeVietnam-SB;
+    font-size: 15px;
+    line-height: 15px;
+    color:$white;
+}
+
 @font-face {
     font-family: mainFont;
     src: url(../../fonts/Belgrano-Regular.ttf);
@@ -170,7 +177,7 @@ body{
 
             .slides{
                 position:relative;
-                display:flex;/////////////////////
+                display:none;/////////////////////
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
@@ -288,8 +295,7 @@ body{
             }
 
             .thirdStepWindow{
-                
-
+            
                 .nameObjectWindow{
                     width:30%;
                     height:10%;
@@ -437,7 +443,7 @@ body{
 
 
             .programCalculate{
-                display:none;/////
+                display:flex;/////
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -541,10 +547,7 @@ body{
                                     height:100%;
 
                                     div{
-                                        font-family: BeVietnam-SB;
-                                        font-size: 15px;
-                                        line-height: 15px;
-                                        color:$white;
+                                        @include fontSettings();
                                     }
                                     
                                     .head{
@@ -631,6 +634,115 @@ body{
                                     
                                 }
                             }
+                        }
+                    }
+                }
+
+                .validation{
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    width:100%;
+                    min-height: 100px;
+                    height:auto;
+                    background-color:#020512;
+                    border-radius: 30px;
+
+                    .hidderBut{
+                        position: absolute;
+                        top:35px;
+                        left:30px;
+                        width:30px;
+                        height:30px;
+                        background:url('../../img/arrow.png') no-repeat;
+                        background-size: contain;
+                        z-index:1;
+                        transform: rotate(90deg);
+                        transform-origin: center;
+                        cursor:pointer;
+                        transition:.5s;
+                    }
+
+                    .terms{
+                        display:flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: center;
+                        width:95%;
+                        height:auto;
+                        background-color: #111833;
+                        margin-bottom:50px;
+
+                        .termsLine{
+                            display:flex;
+                            flex-direction: column;
+                            width:90%;
+                            min-height:250px;
+                            justify-content: center;
+                            align-items: center;
+
+                            &>div:first-child{
+                                margin-top:50px;
+                            }
+                            &>div{
+                                margin-bottom:50px;
+                            }
+
+                            .instance{
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
+                                width:100%;
+                                height:100%;
+                                border:10px solid #020512;
+
+                                .header{
+                                    display:flex;
+                                    flex-direction: row;
+                                    width:100%;
+                                    height:50px;
+                                    background-color: #020512;
+
+                                    &>div{
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        align-items: center;
+                                        width:calc(100% / 7);
+                                        height:100%;
+                                        @include fontSettings();
+                                    }
+                                }
+
+                                .contain{
+                                    width:100%;
+                                    height:100px;
+                                    display: flex;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: center;
+                                    align-items: center;
+
+                                    &>div{
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        align-items: center;
+                                        width:calc(100% / 7);
+                                        height:100%;
+                                        @include fontSettings();
+                                        border:1px solid #020512;
+                                    }
+                                }
+                                
+                            }
+                            
+                            
+
+                            
                         }
                     }
                 }
