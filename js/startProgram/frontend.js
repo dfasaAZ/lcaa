@@ -2,9 +2,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
     document.querySelector("#uploadButton audio").volume = 0.1;
     
     let uploadButton = document.querySelector("#uploadButton");
+    let uploadButtonInput = document.querySelector("#uploadButton input");
 
     uploadButton.addEventListener("mouseover", ()=>{
         document.querySelector("#uploadButton audio").play();
+    })
+    uploadButtonInput.addEventListener('change', ()=>{
+        sliderRightButton.click();
     })
 
     let sliderLeftButton = document.querySelector(".sliderButton-left");

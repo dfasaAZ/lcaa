@@ -177,7 +177,7 @@ body{
 
             .slides{
                 position:relative;
-                display:none;/////////////////////
+                display:flex;/////////////////////
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
@@ -443,7 +443,7 @@ body{
 
 
             .programCalculate{
-                display:flex;/////
+                display:none;/////
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -735,6 +735,13 @@ body{
                                         height:100%;
                                         @include fontSettings();
                                         border:1px solid #020512;
+                                    }
+
+                                    &>div:last-child.false{
+                                        background-color:rgba(168, 0, 0, 0.5);
+                                    }
+                                    &>div:last-child.true{
+                                        background-color:rgba(0, 168, 28, 0.5);
                                     }
                                 }
                                 

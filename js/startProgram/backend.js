@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let mediumDotsArrForChartLine = [];
     let maxDotsArrForChartLine = [];
     let minLine = [];
+
+    let termsLine = document.querySelector('.validation .termsLine');
 /**событие по нажатии кнопки upload--------------------------------------------*/
     file.addEventListener("change", function(){
         try{
@@ -141,6 +143,61 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 
 
+                /** 3 ЭТАП::: Заполнение таблиц валидации */
+                for (let i of object.validationTables){
+                    let lowArr = [];
+                    let middleArr = [];
+                    let highArr = [];
+                    [lowArr,middleArr,highArr] = Object.entries(i)[2][1].entries(); //деструктуризация мэпа уровней
+                    let lowArrP = [];
+                    let middleArrP = [];
+                    let highArrP = [];
+                    [lowArrP,middleArrP,highArrP] = Object.entries(i)[4][1].entries(); //деструктуризация мэпа вероятностей
+                    console.log(Object.entries(i));
+
+                    termsLine.insertAdjacentHTML('beforeend', `
+                    <div class="instance">
+                        <div class="header">
+                            <div class="num">№ point</div>
+                            <div class="num">Configuration</div>
+                            <div class="num">Transitions</div>
+                            <div class="num">γ</div>
+                            <div class="num">Σ</div>
+                            <div class="num">P</div>
+                            <div class="num">Term</div>
+                        </div>
+                        <div class="contain">
+                            <div class="numberLine">${Object.entries(i)[0][1]}</div>
+                            <div class="config">${Object.entries(i)[1][1]}</div>
+                            <div class="transitions">
+                                <div class="div">${lowArr[0]}</div>
+                                <div class="div">${middleArr[0]}</div>
+                                <div class="div">${highArr[0]}</div>
+                            </div>
+                            <div class="gamma">
+                                <div class="div">${Math.round(lowArr[1]*100)/100}</div>
+                                <div class="div">${Math.round(middleArr[1]*100)/100}</div>
+                                <div class="div">${Math.round(highArr[1]*100)/100}</div>
+                            </div>
+                            <div class="eps">${Object.entries(i)[3][1]}</div>
+                            <div class="propability">
+                                <div class="div">${Math.round(lowArrP[1]*100)/100}</div>
+                                <div class="div">${Math.round(middleArrP[1]*100)/100}</div>
+                                <div class="div">${Math.round(highArrP[1]*100)/100}</div>
+                            </div>
+                            <div class="term">${Object.entries(i)[5][1]}</div>
+                        </div>
+                    </div>
+                    `)
+
+                    if(Object.entries(i)[6][1]===true){
+                        document.querySelectorAll('.instance .term')[document.querySelectorAll('.instance .term').length-1].classList.add('true');
+                    }else{
+                        document.querySelectorAll('.instance .term')[document.querySelectorAll('.instance .term').length-1].classList.add('false');
+                    }
+                }
+
+
 
                 /** Нахождение на кусочках (по 10 точек) мин, сред, макс. точек */
                 // const chunkSize = 10; 
@@ -173,7 +230,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 object.placeLevel();
                 await object.countLevelCombinations();
                 object.Validation();
-                console.log(object.validationTables);
                 getValues(object);
             }
             fR.readAsText(file.files[0], "UTF-8");
