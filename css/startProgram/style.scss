@@ -279,7 +279,13 @@ body{
             }
 
             .secondStepWindow{
-                    
+                display:flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                width:100%;
+                height:50%;
+
                 .viewDataWindow{
                     display: flex;
                     justify-content: center;
@@ -291,6 +297,23 @@ body{
                     font-size:auto;
                     overflow:auto;
                     border:8px solid $white;
+
+                    &.second{
+                        display:none;
+                    } 
+
+                    &.active{
+                        display: flex;
+                        justify-content: center;
+                        align-items: flex-start;
+                        width:30%;
+                        height:20%;
+                        color:$white;
+                        font-family: mainFont;
+                        font-size:auto;
+                        overflow:auto;
+                        border:8px solid $white;
+                    }
                 }
             }
 
@@ -305,6 +328,10 @@ body{
                     font-family:mainFont;
                     color:$white;
                     font-size: calc($fontSize * 0.2);
+
+                    &.second{
+                        display:none;
+                    }
                 }
 
                 .startButton{
@@ -444,315 +471,336 @@ body{
 
             .programCalculate{
                 display:none;/////
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
                 width:100%;
                 height:auto;
 
-                .titleWindow{
-                    font-family: mainFont;
-                    line-height: 30px;
-                    font-size:30px;
-                    color:$white;
-                    margin:25px 0;
 
-                    &.main{
-                        font-size: 40px;
-                        text-decoration: underline;
-                        margin:25px 0 50px;
-                    }
-                }
-
-                & > div{
-                    margin-bottom:50px;
-                }
-
-                .chartWindow{
+                >div{
+                    width:49%;
+                    height:auto;
                     display: flex;
                     flex-direction: column;
-                    justify-content: flex-start;
                     align-items: center;
-                    width:100%;
-                    height:400px;
-                    background-color:#020512;
-                    border-radius: 30px;
 
-                    .chart{
-                        width:95%;
-                        height:70%;
-                        background-color: #111833;
-
-                        #chartModel{
-                            width:100% !important; 
-                            height:100% !important;
+                    .titleWindow{
+                        font-family: mainFont;
+                        line-height: 30px;
+                        font-size:30px;
+                        color:$white;
+                        margin:25px 0;
+    
+                        &.main{
+                            font-size: 40px;
+                            text-decoration: underline;
+                            margin:25px 0 50px;
                         }
                     }
-                }
-
-                .transitionsWindow{
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    width:100%;
-                    min-height: 100px;
-                    height:auto;
-                    background-color:#020512;
-                    border-radius: 30px;
-
-                    .hidderBut{
-                        position: absolute;
-                        top:35px;
-                        left:30px;
-                        width:30px;
-                        height:30px;
-                        background:url('../../img/arrow.png') no-repeat;
-                        background-size: contain;
-                        z-index:1;
-                        transform: rotate(90deg);
-                        transform-origin: center;
-                        cursor:pointer;
-                        transition:.5s;
-                    }
-
-                    .transitions{
-                        width:95%;
-                        height:auto;
-                        background-color: #111833;
+    
+                    & > div{
                         margin-bottom:50px;
+                    }
+    
+                    .chartWindow{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        align-items: center;
+                        width:100%;
+                        height:400px;
+                        background-color:#020512;
+                        border-radius: 30px;
+    
+                        .chart{
+                            width:95%;
+                            height:70%;
+                            background-color: #111833;
+    
+                            #chartModel{
+                                width:100% !important; 
+                                height:100% !important;
+                            }
+                        }
+                    }
+    
+                    .transitionsWindow{
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width:100%;
+                        min-height: 100px;
+                        height:auto;
+                        background-color:#020512;
+                        border-radius: 30px;
+    
+                        .hidderBut{
+                            position: absolute;
+                            top:35px;
+                            left:30px;
+                            width:30px;
+                            height:30px;
+                            background:url('../../img/arrow.png') no-repeat;
+                            background-size: contain;
+                            z-index:1;
+                            transform: rotate(90deg);
+                            transform-origin: center;
+                            cursor:pointer;
+                            transition:.5s;
 
-                        .transitionsLine{
-                            display:flex;
-                            justify-content: space-evenly;
-                            align-items: center;
-                            width:100%;
-                            min-height:200px;
+                            &.active{
+                                transform: rotate(0deg);
+                            }
+                        }
+    
+                        .transitions{
+                            width:95%;
                             height:auto;
-                            margin:50px 0;
+                            background-color: #111833;
+                            margin-bottom:50px;
+    
+                            .transitionsLine{
+                                display:flex;
+                                justify-content: space-evenly;
+                                align-items: center;
+                                width:100%;
+                                min-height:200px;
+                                height:auto;
+                                margin:50px 0;
+    
+                                .section{
+                                    width:90%;
+                                    height:100%;
+                                    border:10px solid #020512;
+                                    // box-shadow:0 0 10px 5px white;
+    
+                                    .table{
+                                        display:flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        align-items: center;
+                                        width:100%;
+                                        height:100%;
+    
+                                        div{
+                                            @include fontSettings();
+                                        }
+                                        
+                                        .head{
+                                            display: flex;
+                                            flex-direction: row;
+                                            width:100%;
+                                            height:50px;
+                                            background-color: #020512;
+    
+                                            &>div{
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                                width:100%;
+                                                height:100%;
+                                                text-align: center;
+    
+                                                &:first-child{
+                                                    width:40%;
+                                                }
+                                            }
+                                        }
+    
+                                        .row{
+                                            display: flex;
+                                            width:100%;
+                                            height:80%;
+                                            margin-bottom: 50px;
+                                            
+                                            &:last-child{
+                                                margin:0;
+                                            }
+    
+                                            .confColumn{
+                                                display: flex;
+                                                justify-content: center;
+                                                align-items: center;
+                                                width:9.1%;
+                                                min-height: 200px;
+                                                height: auto;
+                                                overflow: hidden;
+                                                border:1px solid #020512;
+    
+                                                >div{
+                                                    text-align: center;
+                                                    width:auto;
+                                                    height: auto;
+                                                    transform: rotate(-90deg);
+                                                }
+                                            }
+    
+                                            .contains{
+                                                display:flex;
+                                                flex-direction: column;
+                                                justify-content: flex-start;
+                                                align-items: center;
+                                                width:90.9%;
+                                                height: auto;
+                                                
+    
+                                                .contain{
+                                                    display: flex;
+                                                    flex-direction: row;
+                                                    justify-content: center;
+                                                    align-items: center;
+                                                    width:100%;
+                                                    height:100%;
+                                                    border:1px solid #020512;
+    
+        
+                                                    &>div{
+                                                        display: flex;
+                                                        flex-direction: column;
+                                                        justify-content: center;
+                                                        align-items: center;
+                                                        width:calc(100% / 4);
+                                                        height:100%;
+                                                        border:1px solid #020512; 
+                                                    }
+        
+                                                    
+                                                }
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+    
+                    .validation{
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width:100%;
+                        min-height: 100px;
+                        height:auto;
+                        background-color:#020512;
+                        border-radius: 30px;
+    
+                        .hidderBut{
+                            position: absolute;
+                            top:35px;
+                            left:30px;
+                            width:30px;
+                            height:30px;
+                            background:url('../../img/arrow.png') no-repeat;
+                            background-size: contain;
+                            z-index:1;
+                            transform: rotate(90deg);
+                            transform-origin: center;
+                            cursor:pointer;
+                            transition:.5s;
 
-                            .section{
+                            &.active{
+                                transform: rotate(0deg);
+                            }
+                        }
+    
+                        .terms{
+                            display:flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: center;
+                            width:95%;
+                            height:auto;
+                            background-color: #111833;
+                            margin-bottom:50px;
+    
+                            .termsLine{
+                                display:flex;
+                                flex-direction: column;
                                 width:90%;
-                                height:100%;
-                                border:10px solid #020512;
-                                // box-shadow:0 0 10px 5px white;
-
-                                .table{
-                                    display:flex;
+                                min-height:250px;
+                                justify-content: center;
+                                align-items: center;
+    
+                                &>div:first-child{
+                                    margin-top:50px;
+                                }
+                                &>div{
+                                    margin-bottom:50px;
+                                }
+    
+                                .instance{
+                                    display: flex;
                                     flex-direction: column;
                                     justify-content: center;
                                     align-items: center;
                                     width:100%;
                                     height:100%;
-
-                                    div{
-                                        @include fontSettings();
-                                    }
-                                    
-                                    .head{
-                                        display: flex;
+                                    border:10px solid #020512;
+    
+                                    .header{
+                                        display:flex;
                                         flex-direction: row;
                                         width:100%;
                                         height:50px;
                                         background-color: #020512;
-
+    
                                         &>div{
                                             display: flex;
+                                            flex-direction: column;
                                             justify-content: center;
                                             align-items: center;
-                                            width:100%;
+                                            width:calc(100% / 7);
                                             height:100%;
-
-                                            &:first-child{
-                                                width:40%;
-                                            }
+                                            @include fontSettings();
                                         }
                                     }
-
-                                    .row{
-                                        display: flex;
+    
+                                    .contain{
                                         width:100%;
-                                        height:80%;
-                                        margin-bottom: 50px;
-                                        
-                                        &:last-child{
-                                            margin:0;
-                                        }
-
-                                        .confColumn{
+                                        height:100px;
+                                        display: flex;
+                                        display: flex;
+                                        flex-direction: row;
+                                        justify-content: center;
+                                        align-items: center;
+    
+                                        &>div{
                                             display: flex;
+                                            flex-direction: column;
                                             justify-content: center;
                                             align-items: center;
-                                            width:9.1%;
-                                            min-height: 200px;
-                                            height: auto;
-                                            overflow: hidden;
+                                            width:calc(100% / 7);
+                                            height:100%;
+                                            @include fontSettings();
                                             border:1px solid #020512;
-
-                                            >div{
-                                                text-align: center;
-                                                width:auto;
-                                                height: auto;
-                                                transform: rotate(-90deg);
-                                            }
                                         }
-
-                                        .contains{
-                                            display:flex;
-                                            flex-direction: column;
-                                            justify-content: flex-start;
-                                            align-items: center;
-                                            width:90.9%;
-                                            height: auto;
-                                            
-
-                                            .contain{
-                                                display: flex;
-                                                flex-direction: row;
-                                                justify-content: center;
-                                                align-items: center;
-                                                width:100%;
-                                                height:100%;
-                                                border:1px solid #020512;
-
     
-                                                &>div{
-                                                    display: flex;
-                                                    flex-direction: column;
-                                                    justify-content: center;
-                                                    align-items: center;
-                                                    width:calc(100% / 4);
-                                                    height:100%;
-                                                    border:1px solid #020512; 
-                                                }
-    
-                                                
-                                            }
+                                        &>div:last-child.false{
+                                            background-color:rgba(168, 0, 0, 0.5);
+                                        }
+                                        &>div:last-child.true{
+                                            background-color:rgba(0, 168, 28, 0.5);
                                         }
                                     }
                                     
                                 }
-                            }
-                        }
-                    }
-                }
-
-                .validation{
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    width:100%;
-                    min-height: 100px;
-                    height:auto;
-                    background-color:#020512;
-                    border-radius: 30px;
-
-                    .hidderBut{
-                        position: absolute;
-                        top:35px;
-                        left:30px;
-                        width:30px;
-                        height:30px;
-                        background:url('../../img/arrow.png') no-repeat;
-                        background-size: contain;
-                        z-index:1;
-                        transform: rotate(90deg);
-                        transform-origin: center;
-                        cursor:pointer;
-                        transition:.5s;
-                    }
-
-                    .terms{
-                        display:flex;
-                        flex-direction: column;
-                        justify-content: flex-start;
-                        align-items: center;
-                        width:95%;
-                        height:auto;
-                        background-color: #111833;
-                        margin-bottom:50px;
-
-                        .termsLine{
-                            display:flex;
-                            flex-direction: column;
-                            width:90%;
-                            min-height:250px;
-                            justify-content: center;
-                            align-items: center;
-
-                            &>div:first-child{
-                                margin-top:50px;
-                            }
-                            &>div{
-                                margin-bottom:50px;
-                            }
-
-                            .instance{
-                                display: flex;
-                                flex-direction: column;
-                                justify-content: center;
-                                align-items: center;
-                                width:100%;
-                                height:100%;
-                                border:10px solid #020512;
-
-                                .header{
-                                    display:flex;
-                                    flex-direction: row;
-                                    width:100%;
-                                    height:50px;
-                                    background-color: #020512;
-
-                                    &>div{
-                                        display: flex;
-                                        flex-direction: column;
-                                        justify-content: center;
-                                        align-items: center;
-                                        width:calc(100% / 7);
-                                        height:100%;
-                                        @include fontSettings();
-                                    }
-                                }
-
-                                .contain{
-                                    width:100%;
-                                    height:100px;
-                                    display: flex;
-                                    display: flex;
-                                    flex-direction: row;
-                                    justify-content: center;
-                                    align-items: center;
-
-                                    &>div{
-                                        display: flex;
-                                        flex-direction: column;
-                                        justify-content: center;
-                                        align-items: center;
-                                        width:calc(100% / 7);
-                                        height:100%;
-                                        @include fontSettings();
-                                        border:1px solid #020512;
-                                    }
-
-                                    &>div:last-child.false{
-                                        background-color:rgba(168, 0, 0, 0.5);
-                                    }
-                                    &>div:last-child.true{
-                                        background-color:rgba(0, 168, 28, 0.5);
-                                    }
-                                }
+                                
+                                
+    
                                 
                             }
-                            
-                            
-
-                            
                         }
                     }
                 }
+
+
+                
             }
         }
 

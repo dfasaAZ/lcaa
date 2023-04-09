@@ -31,34 +31,29 @@ document.addEventListener("DOMContentLoaded", ()=>{
         sliderIndex==0 ? sliderLeftButton.classList.add("active") : sliderLeftButton.classList.remove("active");
     })
 
-    let hidderBut = document.querySelector('.transitionsWindow .hidderBut'); //II.Transitions hide content
-    let transitions = document.querySelector('.transitionsWindow .transitions');
-    let hidderButK=true;
-    hidderBut.addEventListener('click', ()=>{
-        if (hidderButK) {
-            hidderBut.style.transform = "rotate(0)";
-            hidderButK=false;
-            transitions.style.display="none";
-        }else{
-            hidderBut.style.transform = "rotate(90deg)";
-            hidderButK=true;
-            transitions.style.display="";
+/**Для кнопки скрытия разделов II.Transitions */
+    event.target.addEventListener("click", (e)=>{
+        if (e.target.classList.contains("hidderBut") && e.target.parentNode.classList.contains("transitionsWindow")) {
+            if (e.target.classList.contains("active")) {
+                e.target.classList.remove("active");
+                e.target.parentNode.lastElementChild.style.display="";
+            }else{
+                e.target.classList.add("active");
+                e.target.parentNode.lastElementChild.style.display="none";
+            }
         }
     })
 
-
-    let hidderBut2 = document.querySelector('.validation .hidderBut'); //III.Validation hide content
-    let terms = document.querySelector('.validation .terms');
-    let hidderButK2=true;
-    hidderBut2.addEventListener('click', ()=>{
-        if (hidderButK2) {
-            hidderBut2.style.transform = "rotate(0)";
-            hidderButK2=false;
-            terms.style.display="none";
-        }else{
-            hidderBut2.style.transform = "rotate(90deg)";
-            hidderButK2=true;
-            terms.style.display="";
+/**Для кнопки скрытия разделов III.Validation */
+    event.target.addEventListener("click", (e)=>{
+        if (e.target.classList.contains("hidderBut") && e.target.parentNode.classList.contains("validation")) {
+            if (e.target.classList.contains("active")) {
+                e.target.classList.remove("active");
+                e.target.parentNode.lastElementChild.style.display="";
+            }else{
+                e.target.classList.add("active");
+                e.target.parentNode.lastElementChild.style.display="none";
+            }
         }
     })
 

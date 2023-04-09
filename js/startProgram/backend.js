@@ -2,11 +2,21 @@ import {CellularAutomaton} from './CellularAutomaton.mjs'
 
 document.addEventListener("DOMContentLoaded", ()=>{
 /**переменные--------------------------------------------*/
-    let fR = new FileReader();
-    let nameObjectWindow = document.querySelector('.nameObjectWindow');
-    let object = new CellularAutomaton();
+    let fR1 = new FileReader();
+    let fR2 = new FileReader();
+    let object1 = new CellularAutomaton();
+    let object2 = new CellularAutomaton();
+    let globalObjectCount=1;
+
     let file = document.querySelector("#uploadButton>input");
-    let viewDataWindow = document.querySelector(".viewDataWindow");
+
+    let nameObjectWindow1 = document.querySelector('.nameObjectWindow.first');
+    let nameObjectWindow2 = document.querySelector('.nameObjectWindow.second');
+
+    let viewDataWindowAll = document.querySelectorAll(".viewDataWindow");
+    let viewDataWindow1 = document.querySelector(".viewDataWindow.first");
+    let viewDataWindow2 = document.querySelector(".viewDataWindow.second");
+
     let startButton = document.querySelector(".startButton");
     let slidesWindow = document.querySelector('.slides');
     let msgbox = document.querySelector('.msgbox');
@@ -38,16 +48,13 @@ document.addEventListener("DOMContentLoaded", ()=>{
     file.addEventListener("change", function(){
         try{
             /** Здесь происходят все основные вычисления массивов */
-            function getValues(object){
+            function getValues(object1){
                 /**
                 *@param {Number} i Перменная для разграфки первого этапа
                 */
                 let i=0;
                 let dataSorted = []; //Для 1 ЭТАПА
-                let modificationArr = new Map(); //Для 2 ЭТАПА
-
-
-                for (let i of object.sortedData){ // Инициализация dataSorted
+                for (let i of object1.sortedData){ // Инициализация dataSorted
                     dataSorted.push(i); 
                 }
   
@@ -56,7 +63,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 /** 1 ЭТАП::: Цвето-Разграфка */
                 dataSorted.forEach (e=>{
                     i++;
-                    viewDataWindow.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
+                    viewDataWindow1.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
                     numbersArrForChart.push(Math.round(e.value)); 
                     labelsArrForChart.push(String(e.date).substr(4,11));
                     if (e.level == "Н"){
@@ -73,10 +80,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     }
                 })
 
+                /** 2 ЭТАП::: Добавление колонки объекта */
+
+
                 /** 2 ЭТАП::: Заполнение таблиц переходов */
                 let configNumber = 1;
-                for (let i of object.counts){
-                    console.log(i);
+                for (let i of object1.counts){
                     transitions.insertAdjacentHTML('beforeend', `
                     <div class="transitionsLine">
                         <div class="section">
@@ -129,7 +138,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 
                 /** 3 ЭТАП::: Заполнение таблиц валидации */
-                for (let i of object.validationTables){
+                for (let i of object1.validationTables){
                     let lowArr = [];
                     let middleArr = [];
                     let highArr = [];
@@ -180,43 +189,44 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         document.querySelectorAll('.instance .term')[document.querySelectorAll('.instance .term').length-1].classList.add('false');
                     }
                 }
-
-
-
-                /** Нахождение на кусочках (по 10 точек) мин, сред, макс. точек */
-                // const chunkSize = 10; 
-                // for (let i = 0; i < dataSorted.length-1; i+=chunkSize){
-                //     let pieceArr = numbersArrForChart.slice(i,i + chunkSize);
-                //     minDotsArrForChartLine.push({value:Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.min.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
-                //     maxDotsArrForChartLine.push({value:Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)), position:pieceArr.indexOf(Math.max.apply(null, numbersArrForChart.slice(i,i + chunkSize)))+i});
-                // }
-                
-                // for (let p = minDotsArrForChartLine[0].value - minDotsArrForChartLine[0].position; p<=minDotsArrForChartLine[0].value; p++){
-                //     minLine.push(p);
-                // }
-
-                // for (let i = 1; i < 6; i++){
-                //     let val = 0;
-                //     let t = minDotsArrForChartLine[i-1].value;
-                //     for (let p = 0; p < minDotsArrForChartLine[i].position; p++){
-                //         t+=(minDotsArrForChartLine[i].value - minDotsArrForChartLine[i-1].value)/minDotsArrForChartLine[i].position;
-                //         minLine.push(t);
-                //     }
-                // }
-
-
-                // maxNumbersArrForChart = Math.max.apply(null, numbersArrForChart);
-                // minNumbersArrForChart = Math.min.apply(null, numbersArrForChart);
             }
 
-            fR.onload = async (e) => {
-                object.LoadData(e.target.result); 
-                object.placeLevel();
-                await object.countLevelCombinations();
-                object.Validation();
-                getValues(object);
+            fR1.onload = async (e) => { // Обработка первого объекта
+                console.log(e);
+                    object1.LoadData(e.target.result); 
+                    object1.placeLevel();
+                    await object1.countLevelCombinations();
+                    object1.Validation();
+                    getValues(object1);
             }
-            fR.readAsText(file.files[0], "UTF-8");
+
+            fR2.onload = async (e) => { // Обработка второго объекта
+                console.log(e);
+                object2.LoadData(e.target.result); 
+                object2.placeLevel();
+                await object2.countLevelCombinations();
+                object2.Validation();
+                getValues(object2);
+            }
+
+            if (file.files.length==1){
+                fR1.readAsText(file.files[0], "UTF-8"); // Чтение первого объекта
+            }else{
+                globalObjectCount = 2;
+
+                // Добавление окна STEP 2
+                viewDataWindow2.style.display="flex";
+                for (let i=0; i<viewDataWindowAll.length;i++){
+                    viewDataWindowAll[i].classList.add("active");
+                }
+
+                // Добавление окна STEP 3
+                nameObjectWindow2.style.display="block";
+
+                fR1.readAsText(file.files[0], "UTF-8"); // Чтение первого объекта
+                fR2.readAsText(file.files[1], "UTF-8"); // Чтение второго объекта
+            }
+
         }
         catch{
 
@@ -225,12 +235,12 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 /**событие по нажатии кнопки start--------------------------------------------*/
 startButton.addEventListener('click', () => {
-    if ( typeof (file.files[0]) === "undefined" || nameObjectWindow.value==""){
+    if ( typeof (file.files[0]) === "undefined" || nameObjectWindow1.value==""){
         msgbox.classList.add('active');
     }else{
         slidesWindow.style.display="none";
         sliderButtons.style.display="none";
-        programCalculateTitle.innerHTML = String(nameObjectWindow.value);
+        programCalculateTitle.innerHTML = String(nameObjectWindow1.value);
         programCalculateWindow.style.display="flex";
     }
 })

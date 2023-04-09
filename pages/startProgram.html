@@ -30,7 +30,7 @@
                     <div class="stepNumber">STEP 1</div>
                     <label id="uploadButton">
                         <img src="../img/cloud.png" alt="">
-                        <input type="file" accept=".csv">
+                        <input type="file" accept=".csv" multiple >
                         Upload file
                         <audio src="../audio/beep.mp3" preload="auto"></audio>
                     </label>
@@ -41,134 +41,263 @@
                 </div>
                 <div class="secondStepWindow">
                     <div class="stepNumber">STEP 2</div>
-                    <div class="viewDataWindow"></div>
+                    <div class="viewDataWindow first"></div>
+                    <div class="viewDataWindow second"></div>
                 </div>
                 <div class="thirdStepWindow">
                     <div class="stepNumber">STEP 3</div>
-                    <input class="nameObjectWindow" placeholder="Enter the name of searching object">
+                    <input class="nameObjectWindow first" placeholder="Enter the name of searching object">
+                    <input class="nameObjectWindow second" placeholder="Enter the name of searching second object">
                     <div class="startButton">start</div>
                 </div>
             </div>
             <div class="programCalculate">
-                <div class="titleWindow main">object name</div>
-                <div class="chartWindow">
-                    <div class="titleWindow">I. Chart</div>
-                    <div class="chart">
-                        <canvas id="chartModel"></canvas>
+                <div>
+                    <div class="titleWindow main">object name</div>
+                    <div class="chartWindow">
+                        <div class="titleWindow">I. Chart</div>
+                        <div class="chart">
+                            <canvas id="chartModel"></canvas>
+                        </div>
                     </div>
-                </div>
-                <div class="transitionsWindow">
-                    <div class="hidderBut"></div>
-                    <div class="titleWindow">II. Transitions</div>
-                    <div class="transitions">
-                        <!-- <div class="transitionsLine">
-                            <div class="section">
-                                <div class="table">
-                                    <div class="head">
-                                        <div>Depth</div>
-                                        <div>Transition from</div>
-                                        <div>Transition to</div>
-                                        <div>Count of transition</div>
-                                        <div>Total transitions</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="confColumn"><div>1 config</div></div>
-                                        <div class="contains">
-                                            <div class="contain">
-                                                <div class="transFrom">
-                                                    <div class="low">Н</div>
-                                                </div>
-                                                <div class="transTo">
-                                                    <div class="low">1</div>
-                                                    <div class="medium">2</div>
-                                                    <div class="high">3</div>
-                                                </div>
-                                                <div class="countTrans">
-                                                    <div class="low">1</div>
-                                                    <div class="medium">2</div>
-                                                    <div class="high">3</div>
-                                                </div>
-                                                <div class="totalTrans">43</div>
-                                            </div>
-                                            <div class="contain">
-                                                <div class="transFrom">
-                                                    <div class="low">Н</div>
-                                                </div>
-                                                <div class="transTo">
-                                                    <div class="low">1</div>
-                                                    <div class="medium">2</div>
-                                                    <div class="high">3</div>
-                                                </div>
-                                                <div class="countTrans">
-                                                    <div class="low">1</div>
-                                                    <div class="medium">2</div>
-                                                    <div class="high">3</div>
-                                                </div>
-                                                <div class="totalTrans">43</div>
-                                            </div>
-                                            <div class="contain">
-                                                <div class="transFrom">
-                                                    <div class="low">Н</div>
-                                                </div>
-                                                <div class="transTo">
-                                                    <div class="low">1</div>
-                                                    <div class="medium">2</div>
-                                                    <div class="high">3</div>
-                                                </div>
-                                                <div class="countTrans">
-                                                    <div class="low">1</div>
-                                                    <div class="medium">2</div>
-                                                    <div class="high">3</div>
-                                                </div>
-                                                <div class="totalTrans">43</div>
-                                            </div>     
+                    <div class="transitionsWindow">
+                        <div class="hidderBut"></div>
+                        <div class="titleWindow">II. Transitions</div>
+                        <div class="transitions">
+                            <!-- <div class="transitionsLine">
+                                <div class="section">
+                                    <div class="table">
+                                        <div class="head">
+                                            <div>Depth</div>
+                                            <div>Transition from</div>
+                                            <div>Transition to</div>
+                                            <div>Count of transition</div>
+                                            <div>Total transitions</div>
                                         </div>
-                                    </div>   
+                                        <div class="row">
+                                            <div class="confColumn"><div>1 config</div></div>
+                                            <div class="contains">
+                                                <div class="contain">
+                                                    <div class="transFrom">
+                                                        <div class="low">Н</div>
+                                                    </div>
+                                                    <div class="transTo">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="countTrans">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="totalTrans">43</div>
+                                                </div>
+                                                <div class="contain">
+                                                    <div class="transFrom">
+                                                        <div class="low">Н</div>
+                                                    </div>
+                                                    <div class="transTo">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="countTrans">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="totalTrans">43</div>
+                                                </div>
+                                                <div class="contain">
+                                                    <div class="transFrom">
+                                                        <div class="low">Н</div>
+                                                    </div>
+                                                    <div class="transTo">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="countTrans">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="totalTrans">43</div>
+                                                </div>     
+                                            </div>
+                                        </div>   
+                                    </div>
                                 </div>
+                            </div>                         -->
+                            
+                        </div>
+                    </div>
+
+                    <div class="validation">
+                        <div class="hidderBut"></div>
+                        <div class="titleWindow">III. Validation</div>
+                        <div class="terms">
+                            <div class="termsLine">
+                                <!-- <div class="instance">
+                                    <div class="header">
+                                        <div class="num">№</div>
+                                        <div class="num">Configuration</div>
+                                        <div class="num">Transitions</div>
+                                        <div class="num">γ</div>
+                                        <div class="num">Σ</div>
+                                        <div class="num">P</div>
+                                        <div class="num">Term</div>
+                                    </div>
+                                    <div class="contain">
+                                        <div class="numberLine">1</div>
+                                        <div class="config">fgdg</div>
+                                        <div class="transitions">
+                                            <div class="div">1</div>
+                                            <div class="div">2</div>
+                                            <div class="div">3</div>
+                                        </div>
+                                        <div class="gamma">
+                                            <div class="div">1</div>
+                                            <div class="div">2</div>
+                                            <div class="div">3</div>
+                                        </div>
+                                        <div class="eps">g</div>
+                                        <div class="propability">
+                                            <div class="div">1</div>
+                                            <div class="div">2</div>
+                                            <div class="div">3</div>
+                                        </div>
+                                        <div class="term">C</div>
+                                    </div>
+                                </div> -->
+                                
                             </div>
-                        </div>                         -->
-                        
+                        </div>
                     </div>
                 </div>
 
-                <div class="validation">
-                    <div class="hidderBut"></div>
-                    <div class="titleWindow">III. Validation</div>
-                    <div class="terms">
-                        <div class="termsLine">
-                            <!-- <div class="instance">
-                                <div class="header">
-                                    <div class="num">№</div>
-                                    <div class="num">Configuration</div>
-                                    <div class="num">Transitions</div>
-                                    <div class="num">γ</div>
-                                    <div class="num">Σ</div>
-                                    <div class="num">P</div>
-                                    <div class="num">Term</div>
+                <div class="first_object">
+                    <div class="titleWindow main">object name</div>
+                    <div class="chartWindow">
+                        <div class="titleWindow">I. Chart</div>
+                        <div class="chart">
+                            <canvas id="chartModel"></canvas>
+                        </div>
+                    </div>
+                    <div class="transitionsWindow">
+                        <div class="hidderBut"></div>
+                        <div class="titleWindow">II. Transitions</div>
+                        <div class="transitions">
+                            <!-- <div class="transitionsLine">
+                                <div class="section">
+                                    <div class="table">
+                                        <div class="head">
+                                            <div>Depth</div>
+                                            <div>Transition from</div>
+                                            <div>Transition to</div>
+                                            <div>Count of transition</div>
+                                            <div>Total transitions</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="confColumn"><div>1 config</div></div>
+                                            <div class="contains">
+                                                <div class="contain">
+                                                    <div class="transFrom">
+                                                        <div class="low">Н</div>
+                                                    </div>
+                                                    <div class="transTo">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="countTrans">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="totalTrans">43</div>
+                                                </div>
+                                                <div class="contain">
+                                                    <div class="transFrom">
+                                                        <div class="low">Н</div>
+                                                    </div>
+                                                    <div class="transTo">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="countTrans">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="totalTrans">43</div>
+                                                </div>
+                                                <div class="contain">
+                                                    <div class="transFrom">
+                                                        <div class="low">Н</div>
+                                                    </div>
+                                                    <div class="transTo">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="countTrans">
+                                                        <div class="low">1</div>
+                                                        <div class="medium">2</div>
+                                                        <div class="high">3</div>
+                                                    </div>
+                                                    <div class="totalTrans">43</div>
+                                                </div>     
+                                            </div>
+                                        </div>   
+                                    </div>
                                 </div>
-                                <div class="contain">
-                                    <div class="numberLine">1</div>
-                                    <div class="config">fgdg</div>
-                                    <div class="transitions">
-                                        <div class="div">1</div>
-                                        <div class="div">2</div>
-                                        <div class="div">3</div>
-                                    </div>
-                                    <div class="gamma">
-                                        <div class="div">1</div>
-                                        <div class="div">2</div>
-                                        <div class="div">3</div>
-                                    </div>
-                                    <div class="eps">g</div>
-                                    <div class="propability">
-                                        <div class="div">1</div>
-                                        <div class="div">2</div>
-                                        <div class="div">3</div>
-                                    </div>
-                                    <div class="term">C</div>
-                                </div>
-                            </div> -->
+                            </div>                         -->
                             
+                        </div>
+                    </div>
+
+                    <div class="validation">
+                        <div class="hidderBut"></div>
+                        <div class="titleWindow">III. Validation</div>
+                        <div class="terms">
+                            <div class="termsLine">
+                                <!-- <div class="instance">
+                                    <div class="header">
+                                        <div class="num">№</div>
+                                        <div class="num">Configuration</div>
+                                        <div class="num">Transitions</div>
+                                        <div class="num">γ</div>
+                                        <div class="num">Σ</div>
+                                        <div class="num">P</div>
+                                        <div class="num">Term</div>
+                                    </div>
+                                    <div class="contain">
+                                        <div class="numberLine">1</div>
+                                        <div class="config">fgdg</div>
+                                        <div class="transitions">
+                                            <div class="div">1</div>
+                                            <div class="div">2</div>
+                                            <div class="div">3</div>
+                                        </div>
+                                        <div class="gamma">
+                                            <div class="div">1</div>
+                                            <div class="div">2</div>
+                                            <div class="div">3</div>
+                                        </div>
+                                        <div class="eps">g</div>
+                                        <div class="propability">
+                                            <div class="div">1</div>
+                                            <div class="div">2</div>
+                                            <div class="div">3</div>
+                                        </div>
+                                        <div class="term">C</div>
+                                    </div>
+                                </div> -->
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
