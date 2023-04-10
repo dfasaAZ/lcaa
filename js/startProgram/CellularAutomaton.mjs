@@ -10,17 +10,23 @@ export class CellularAutomaton {
   counts=[];
   /**Строка всех последовательных уровней*/
   sequence="";
+  /**Таблицы этапа валидации */
   validationTables=[];
+  /**Ошибка прогноза */
   ForecastError=0;
+  /**Опорные точки */
+  FootPoints={'Н':[],'С':[],'В':[]};
+  /**Список прогнозных значений */
+  predictionList=[];
   /**Курсоры, указывающие на границы коридоров
    * 
    * Все элементы в отсортированном массиве с индексом меньше либо равном position должны иметь аттрибут с соответствующим именем 
    * 
    * TODO: процедурно генерировать курсоры на случай если точек будет не 60 и\или коридоров будет больше*/
   cursors = [
-    { 'name': 'Н', 'position': 20 },
-    { 'name': 'С', 'position': 40 },
-    { 'name': 'В', 'position': 60 }
+    { 'name': 'Н', 'position': 0 },
+    { 'name': 'С', 'position': 1 },
+    { 'name': 'В', 'position': 2 }
 
   ];
   /**Достать данные в чистом виде из csv строки 
@@ -92,24 +98,25 @@ export class CellularAutomaton {
   /**
    * Определить границы курсоров в зависимости от размера данных
    */
-  defCursors(data=this.sortedData,cursors=this.cursors){
-const length=data.length;
-const step=(length/3)|0;
+  defCursors(data = this.sortedData, cursors = this.cursors) {
+    const length = data.length;
+    const step = (length / 3) | 0;
 cursors.sort((a, b) => b.position - a.position);
 for (let i = 0; i < cursors.length; i++) {
-  cursors[i].position=length-step*i;
+      cursors[i].position =length- step * (i);
 }
-this.cursors=cursors;
+    this.cursors = cursors;
+    return cursors
   }
   /**
    * Расставляет уровень для каждого элемента в отсортированном списке  в соответствии с курсорами
    */
   placeLevel() {
-    this.sortedData!=null?
+    if(this.sortedData!=null){
     this.sortedData = this.data.sort((a, b) => {
       return a.value - b.value;
-    }):this.sortByValue();
-    this.defCursors();
+    })}else{this.sortByValue();}
+    if (this.cursors[0].position===0) this.defCursors();
     this.cursors.sort((a, b) => a.position - b.position);
 
     this.sortedData = this.sortedData.map((data, index) => {
@@ -206,9 +213,9 @@ async countLevelCombinations(iteration = 0) {
     }
 
     const subPromises = [];
-for (let j = 0; j < levels.length; j++) {
-  const secondLevel = levels[j];
-  const combination1 = `${firstLevel}${secondLevel}`;
+    for (let j = 0; j < levels.length; j++) {
+      const secondLevel = levels[j];
+      const combination1 = `${firstLevel}${secondLevel}`;      
 
   const promise = new Promise(resolve => {
     // resolve({combination1: this.countCombinationOccurrences(combination1)});
@@ -222,25 +229,25 @@ promises.push(subPromises);
   }
 
   const results = await Promise.all(promises.flat());
-  
+      
   for (let i = 0; i < results.length; i++) {
     const combination =Object.values(results[i])[0];
     counts[iteration][combination] = Object.values(results[i])[1];
-  }
-  
+    }
+      
  // if (!isLastIteration) {
     for (let k = 0; k < Object.values(counts[iteration]).length; k++) {
       const element = Object.values(counts[iteration])[k];
-      if (element > 1) {
+        if (element > 1) {
         await this.countLevelCombinations(iteration + 1);
-        break;
+          break;
+        }
       }
-    }
  // }
-
+      
   this.memoryDepth = counts.length;
-}
-
+    }
+  
    /**
    * Возвращает чистые значения для расчета вероятности терма следующей точки
    * 
@@ -312,6 +319,7 @@ promises.push(subPromises);
     return meetIndexes;
   }
   Validation(){
+    this.validationTables=[];
 let val_template={"index":0,"sequence":'',"raw":new Map(),"sum":0,"oddities":new Map(),"term":'',"Correct":false};
 for (let i = 0; i < this.sortedData.length-this.memoryDepth; i++) {
   const index = this.sortedData.length-i;
@@ -325,12 +333,119 @@ for (let i = 0; i < this.sortedData.length-this.memoryDepth; i++) {
   this.validationTables.push({...val_template, index, sequence, raw, sum, oddities, term, Correct});
 
   }
-  this.getForecasterror();
+  return this.getForecasterror();
 }
 getForecasterror() {
   const count = this.validationTables.filter(obj => obj.Correct).length;
   const percentage=100 -(count / this.validationTables.length * 100);
 this.ForecastError=percentage;
   return percentage
+}
+calculatePrediction(data=this.sortedData,odds,levels=this.cursors.map(cursor => cursor.name)){
+  let prediction;
+  let lows = 0;
+  let mediums = 0;
+  let highs = 0;
+  let lowc = 0;
+  let mediumc = 0;
+  let highc = 0;
+
+  data.forEach(element => {
+    if (element.level === 'В') {
+      highs += element.value;
+      highc += 1;
+    }
+    if (element.level === 'С') {
+      mediums += element.value;
+      mediumc += 1;
+    }
+    if (element.level === 'Н') {
+      lows += element.value;
+      lowc += 1;
+    }
+  });
+
+  const oddsLow = odds.get("Н");
+  const oddsMedium = odds.get("С");
+  const oddsHigh = odds.get("В");
+  const avgMediums = (mediums / mediumc) * oddsMedium;  
+  const avgLows =(lows / !!lowc) * oddsLow ||0;
+  const avgHighs =(highs / highc)  ;
+  const maxOdds = Math.max(oddsLow, oddsMedium, oddsHigh);
+let totalAvg=0;
+
+if (maxOdds === oddsLow &&avgLows!=0) {
+   totalAvg=avgLows;
+} else if (oddsMedium>oddsHigh&&avgMediums!=0||avgHighs==0) {
+  totalAvg=avgMediums;
+} else if (avgHighs!=0) {
+  totalAvg=avgHighs; 
+}
+  
+
+  
+  prediction = totalAvg;
+  return prediction;
+}
+
+
+defuzzyfication(){
+  let result=[];
+  let sequence;
+  let i=0;
+  for (i=0;i<this.validationTables.length-1;i++){
+  sequence=this.sortedData.slice(-this.memoryDepth-i,this.sortedData.length-i);
+  const odds =new Map( this.validationTables[i].oddities);
+ 
+
+
+result.push(this.calculatePrediction(sequence,odds));
+//console.log(result);
+  }
+  this.predictionList=result;
+  return result
+}
+isBelowLine(lineDot1,lineDot2,dot){
+  const x1=lineDot1.index;
+  const y1=lineDot1.y;
+  const x2=lineDot2.index;
+  const y2=lineDot2.y;
+  //const {x,y}=dot;
+  const x=dot.index;
+  const y = dot.value;
+  const idealY=(((x-x1)/(x2-x1))*(y2-y1))+y1;
+  return y<idealY
+}
+FootPointsLevels(data=this.sortedData,foot=this.FootPoints){
+  for (let i = 0; i < data.length; i++) {
+    let dot = data[i];
+    dot={index:i,...dot};
+    let isUnder = false;
+    for (let level in foot) {
+      const points = foot[level];
+      for (let j = 0; j < points.length - 1; j++) {
+        const lineDot1 = points[j];
+        const lineDot2 = points[j + 1];
+        if(dot.index>=lineDot1.index&&dot.index<=lineDot2.index){
+        
+        if (this.isBelowLine(lineDot1, lineDot2, dot)) {
+          console.log(`${dot.date} is below ${level} line`);
+          data[i].level=level;
+          isUnder = true;
+          break;
+        }}else continue;
+      }
+      if (isUnder) break;
+    }
+    if (!isUnder) console.log(`${dot.date} is not under any lines`);
+  }
+return [data,foot]}
+async Recalculate(data=this.sortedData){
+  this.sortedData=data;
+  this.getSequence();
+await this.countLevelCombinations();
+this.Validation();
+this.defuzzyfication();
+return this.sortedData
 }
 }
