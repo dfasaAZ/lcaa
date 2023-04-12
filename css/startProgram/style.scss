@@ -526,6 +526,23 @@ body{
                                 height:100% !important;
                             }
                         }
+
+                        select{
+                            width:100px;
+                            height:40px;
+                            background-color: transparent;
+                            border:2px solid $white;
+                            @include fontSettings;
+                            font-size: 15px;
+                            margin:25px 0;
+                            text-align: center;
+                            border-radius: 10px;
+                            transition: .5s;
+
+                            &:focus{
+                                background-color:#020512;
+                            }
+                        }
                     }
     
                     .transitionsWindow{

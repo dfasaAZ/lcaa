@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let selectedLevel = document.querySelector('#levels');
     let ctx2 = document.querySelectorAll('#chartModel')[1]; //Диаграмма 2
 
+    let defuzChart1 = document.querySelectorAll('#defuzModel')[0]; //Дефазификация диаграмма 1
+    let defuzChart2 = document.querySelectorAll('#defuzModel')[1]; //Дефазификация диаграмма 1
+
     let transitions = document.querySelectorAll('.transitions'); //Внутреннее окно Transitions
     let greenColorA = "rgb(0, 100, 0, 0.5)";
     let greenColor = "rgb(0, 100, 0)";
@@ -124,6 +127,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             bColors.push(bcolor);
                         });
 
+
+                        console.log(labels);
+                        console.log(values);
                         //Построение графиков
                         if (curObjK) {
                             var chart1 = new Chart (ctx1,{
@@ -243,38 +249,33 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                   maintainAspectRatio: false,
                                   scales: {
                                     y: {
-                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,
-                                     
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
                                       display:true,
                                     },
-                                    
-                                    x:{beginAtZero: true,min:0,max:values.length,},
-                                    
+                                    x:{beginAtZero: true,min:0,max:values.length,},  
                                   }
                           
                                 }
                           
-                              });
+                            });
                         }
-                        console.log(curObj.FootPoints);
-                        // ctx1.onclick = async (e) => {
-                        //     const res = chart1.getElementsAtEventForMode(
-                        //       e,
-                        //       'nearest',
-                        //       { intersect: true },
-                        //       true
-                        //     );
-                        //     if (res.length == 0) return;
-                        //     curObj.dataSorted[res[0].index].level = selectedLevel.value;
-                        //     curObj.FootPoints[selectedLevel.value].push({x:chart1.curObj.dataSorted.labels[res[0].index],y:curObj.dataSorted[res[0].index].value,index:res[0].index});
-                        //     console.log(curObj.FootPoints);
-                        //     [curObj.dataSorted,curObj.FootPoints]=curObj.FootPointsLevels(curObj.dataSorted,curObj.FootPoints);
-                        //     chart1.destroy();
-                        //     curObj.dataSorted = await curObj.Recalculate(curObj.dataSorted);
+                        ctx1.onclick = async (e) => {
+                            const res = chart1.getElementsAtEventForMode(
+                              e,
+                              'nearest',
+                              { intersect: true },
+                              true
+                            );
+                            if (res.length == 0) return;
+                            curObj.dataSorted[res[0].index].level = selectedLevel.value;
+                            curObj.FootPoints[selectedLevel.value].push({x:chart1.curObj.dataSorted.labels[res[0].index],y:curObj.dataSorted[res[0].index].value,index:res[0].index});
+                            [curObj.dataSorted,curObj.FootPoints]=curObj.FootPointsLevels(curObj.dataSorted,curObj.FootPoints);
+                            chart1.destroy();
+                            curObj.dataSorted = await curObj.Recalculate(curObj.dataSorted);
                             
-                        //     getValues(curObj.dataSorted,curObj.FootPoints);
+                            getValues(curObj.dataSorted,curObj.FootPoints);
                             
-                        //   }
+                          }
 
 
                     /** 2 ЭТАП::: Заполнение таблиц переходов */
@@ -451,14 +452,109 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
                     /** 4 ЭТАП::: Дефазификация */
                         let movAvg = [];
+                        let initialValues = [];
+                        dataSorted.map((e)=>{
+                            initialValues.push(e.value);
+                        })
                         for (let i=0; i<dataSorted.length-curObj.memoryDepth; i++){
                             let sumArr=0;
                             for (let j=0; j<curObj.memoryDepth; j++){
                                 sumArr+=Object.entries(dataSorted)[i+j][1].value;
                             }
-                            movAvg.push(Math.round(sumArr/curObj.memoryDepth));
+                            movAvg.push(sumArr/curObj.memoryDepth);
                         }
-                        console.log(movAvg);
+
+                        if (curObjK){
+                            var defuzCh1 = new Chart (defuzChart1,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [
+                                    {label:"Sliding average",
+                                    type:'line',
+                                    data:movAvg,
+                                    borderColor: green[0],
+                                    xAxisID:'x',
+                                    },
+                                    // {label:"Дефазификация",
+                                    // type:'line',
+                                    // data:curObj.predictionList,
+                                    // borderColor: yellow[0],
+                                    // xAxisID:'x',
+                                    // },
+                                    {label:"Forecast",
+                                    type:'line',
+                                    data:initialValues,
+                                    borderColor: yellow[0],
+                                    xAxisID:'x',
+                                    }
+                                ]
+                                },
+                                options: {
+                                  responsive: true,
+                                  maintainAspectRatio: false,
+                                  scales: {
+                                    y: {
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
+                                      display:true,
+                                    },
+                                    x:{beginAtZero: true,min:0,max:values.length,},  
+                                  }
+                          
+                                }
+                          
+                            });
+                        }else{
+                            var defuzCh2 = new Chart (defuzChart2,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [
+                                    {label:"Sliding average",
+                                    type:'line',
+                                    data:movAvg,
+                                    borderColor: green[0],
+                                    xAxisID:'x',
+                                    },
+                                    // {label:"Дефазификация",
+                                    // type:'line',
+                                    // data:curObj.predictionList,
+                                    // borderColor: yellow[0],
+                                    // xAxisID:'x',
+                                    // },
+                                    {label:"Forecast",
+                                    type:'line',
+                                    data:initialValues,
+                                    borderColor: yellow[0],
+                                    xAxisID:'x',
+                                    }
+                                ]
+                                },
+                                options: {
+                                  responsive: true,
+                                  maintainAspectRatio: false,
+                                  scales: {
+                                    y: {
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
+                                      display:true,
+                                    },
+                                    x:{beginAtZero: true,min:0,max:values.length,},  
+                                  }
+                          
+                                }
+                          
+                            });
+                        }
+                        
+
 
                     curObjK=0;
             }
