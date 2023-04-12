@@ -24,8 +24,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let programCalculateWindow = document.querySelector(".programCalculate");
     let sliderButtons = document.querySelector(`div[class^="sliderButton"]`);
     let programCalculateTitle = document.querySelectorAll(`.titleWindow.main`);
+
     let ctx1 = document.querySelectorAll('#chartModel')[0]; //Диаграмма 1
+    let selectedLevel = document.querySelector('#levels');
     let ctx2 = document.querySelectorAll('#chartModel')[1]; //Диаграмма 2
+
     let transitions = document.querySelectorAll('.transitions'); //Внутреннее окно Transitions
     let greenColorA = "rgb(0, 100, 0, 0.5)";
     let greenColor = "rgb(0, 100, 0)";
@@ -74,7 +77,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         dataSorted.push(i); 
                     }
 
-                    /** 1 ЭТАП::: Цвето-Разграфка */
+                    /** Заполнение STEP2 */
                     dataSorted.forEach(e=>{
                         i++;
 
@@ -83,23 +86,193 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         }else{
                             viewDataWindow2.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
                         }
-
-
-                        numbersArrForChart.push(Math.round(e.value)); 
-                        labelsArrForChart.push(String(e.date).substr(4,11));
-                        if (e.level == "Н"){
-                            backgroundColorsArrForChart.push(redColorA);
-                            borderColorsArrForChart.push(redColor);
-                        }
-                        else if (e.level == "С") {
-                            backgroundColorsArrForChart.push(yellowColorA);
-                            borderColorsArrForChart.push(yellowColor);
-                        }
-                        else {
-                            backgroundColorsArrForChart.push(greenColorA);
-                            borderColorsArrForChart.push(greenColor);
-                        }
                     })
+
+                    /** 1 ЭТАП::: Цвето-Разграфка */
+                    //Задаём цвета
+                        const red = ["rgb(150,0,0)", "rgb(150,0,0,0.5)"];
+                        const yellow = ["rgb(255,215,0)", "rgb(255,215,0,0.5)"];
+                        const green = ["rgb(0,100,0)", "rgb(0,100,0,0.5)"];
+                        const colors = [red, yellow, green];
+                        /**Добвляем цвета к элементам*/
+                        var graphData = curObj.sortedData.map((element) => {
+                        let color;
+                        let bcolor;
+                        if (element.level == 'Н') { color = colors[0][0]; bcolor = colors[0][1]; } else
+                            if (element.level == 'С') { color = colors[1][0]; bcolor = colors[1][1]; } else
+                            if (element.level == 'В') { color = colors[2][0]; bcolor = colors[2][1]; }
+                            return {
+                                ...element,
+                                "color": color,
+                                "bcolor": bcolor
+                            }
+                        })
+                        
+                        let labels = [];
+                        let values = [];
+                        let bColors = [];
+                        let Colors = [];
+                        //Заполняем данные для графика
+                        Object.values(graphData).forEach(element => {
+                            const date = element["date"].getDate() + "/" + element["date"].getMonth() + "/" + element["date"].getFullYear()
+                            labels.push(date);
+                            const value = element["value"];
+                            values.push(value);
+                            const color = element["color"];
+                            Colors.push(color);
+                            const bcolor = element["bcolor"];
+                            bColors.push(bcolor);
+                        });
+
+                        //Построение графиков
+                        if (curObjK) {
+                            var chart1 = new Chart (ctx1,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [{
+                                    type:"bar",
+                                    label:"Значение ",
+                                    showLegend:false,
+                          
+                                    data: values,
+                          
+                                    backgroundColor: bColors,
+                          
+                                    borderColor: Colors,
+                          
+                                    borderWidth: 1,
+                                    
+                                  },
+                                {label:"Высокий",
+                                  type:'line',
+                                  data:curObj.FootPoints['В'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: green[0],
+                                  xAxisID:'x',
+                                  
+                                },{
+                                  label:"Средний",
+                                  type:'line',
+                                  data:curObj.FootPoints['С'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: yellow[0],
+                                  xAxisID:'x',
+                                  
+                                },
+                                {
+                                  label:"Низкий",
+                                  type:'line',
+                                  data:curObj.FootPoints['Н'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: red[0],
+                                  xAxisID:'x',
+                                  
+                                },]
+                          
+                                },
+                          
+                                options: {
+                                  responsive: true,
+                                  scales: {
+                                    y: {
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,
+                                     
+                                      display:true,
+                                    },
+                                    
+                                    x:{beginAtZero: true,min:0,max:values.length,},
+                                    
+                                  }
+                          
+                                }
+                          
+                              });
+                        } else{
+                            var chart2 = new Chart (ctx2,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [{
+                                    type:"bar",
+                                    label:"Значение ",
+                                    showLegend:false,
+                          
+                                    data: values,
+                          
+                                    backgroundColor: bColors,
+                          
+                                    borderColor: Colors,
+                          
+                                    borderWidth: 1,
+                                    
+                                  },
+                                {label:"Высокий",
+                                  type:'line',
+                                  data:curObj.FootPoints['В'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: green[0],
+                                  xAxisID:'x',
+                                  
+                                },{
+                                  label:"Средний",
+                                  type:'line',
+                                  data:curObj.FootPoints['С'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: yellow[0],
+                                  xAxisID:'x',
+                                  
+                                },
+                                {
+                                  label:"Низкий",
+                                  type:'line',
+                                  data:curObj.FootPoints['Н'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: red[0],
+                                  xAxisID:'x',
+                                  
+                                },]
+                          
+                                },
+                          
+                                options: {
+                                  responsive: true,
+                                  scales: {
+                                    y: {
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,
+                                     
+                                      display:true,
+                                    },
+                                    
+                                    x:{beginAtZero: true,min:0,max:values.length,},
+                                    
+                                  }
+                          
+                                }
+                          
+                              });
+                        }
+
+                        // ctx1.onclick = async (e) => {
+                        //     const res = chart1.getElementsAtEventForMode(
+                        //       e,
+                        //       'nearest',
+                        //       { intersect: true },
+                        //       true
+                        //     );
+                        //     if (res.length == 0) return;
+                        //     curObj.dataSorted[res[0].index].level = selectedLevel.value;
+                        //     curObj.FootPoints[selectedLevel.value].push({x:chart1.curObj.dataSorted.labels[res[0].index],y:curObj.dataSorted[res[0].index].value,index:res[0].index});
+                        //     console.log(curObj.FootPoints);
+                        //     [curObj.dataSorted,curObj.FootPoints]=curObj.FootPointsLevels(curObj.dataSorted,curObj.FootPoints);
+                        //     chart1.destroy();
+                        //     curObj.dataSorted = await curObj.Recalculate(curObj.dataSorted);
+                            
+                        //     getValues(curObj.dataSorted,curObj.FootPoints);
+                            
+                        //   }
 
 
                     /** 2 ЭТАП::: Заполнение таблиц переходов */
@@ -273,21 +446,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             }
                         }
                     }
-                    
-
-                    if (curObjK) {
-                        new Chart (ctx1,config);
-                        labelsArrForChart = [];
-                        numbersArrForChart = [];
-                        backgroundColorsArrForChart = [];
-                        borderColorsArrForChart = [];
-                    } else{
-                        new Chart (ctx2,config);
-                        labelsArrForChart = [];
-                        numbersArrForChart = [];
-                        backgroundColorsArrForChart = [];
-                        borderColorsArrForChart = [];
-                    }
 
 
                     curObjK=0;
@@ -367,42 +525,6 @@ msgboxExit.addEventListener('click', ()=>{
     msgbox.classList.remove('active');
 })
 
-//конфигурации графика--------------------------------------------
-var config = {
-    type: 'bar',
-    data: {
-        labels: labelsArrForChart,
-        datasets: [
-            {
-                label: [''],
-                data: numbersArrForChart,
-                backgroundColor: backgroundColorsArrForChart,
-                borderColor: borderColorsArrForChart,
-                borderWidth: 2,
-                order:2
-            },
-            {
-                type: 'line',
-                label: 'HighLevel',
-                data: minLine,
-                fill: false,
-                borderColor: 'rgb(54, 162, 235)',
-                borderWidth: 2,
-                order:1
-            },
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y:{
-                min:200,
-                max:350
-            },
-        },
-    }
-};
 
 })
 
