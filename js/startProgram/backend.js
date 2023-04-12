@@ -256,7 +256,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                               });
                         }
-
+                        console.log(curObj.FootPoints);
                         // ctx1.onclick = async (e) => {
                         //     const res = chart1.getElementsAtEventForMode(
                         //       e,
@@ -450,10 +450,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     }
 
                     /** 4 ЭТАП::: Дефазификация */
-                        // console.log(curObj.predictionList);
-                        // console.log(curObj.memoryDepth);
                         let movAvg = [];
-                        for (let i=curObj.memoryDepth+1; i<dataSorted.length-curObj.memoryDepth; i++){
+                        for (let i=0; i<dataSorted.length-curObj.memoryDepth; i++){
                             let sumArr=0;
                             for (let j=0; j<curObj.memoryDepth; j++){
                                 sumArr+=Object.entries(dataSorted)[i+j][1].value;
