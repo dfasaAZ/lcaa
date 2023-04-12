@@ -414,9 +414,30 @@ isBelowLine(lineDot1,lineDot2,dot){
   const x=dot.index;
   const y = dot.value;
   const idealY=(((x-x1)/(x2-x1))*(y2-y1))+y1;
-  return y<idealY
+  return y<=idealY
 }
 FootPointsLevels(data=this.sortedData,foot=this.FootPoints){
+  
+// Get all level names (N, C, B)
+let levels = Object.keys(foot);
+
+// Loop through each level 
+for (let level of levels) {
+
+ if(foot[level][0]!=undefined){ // Add first point with index -1 
+  foot[level].unshift({
+    x: foot[level][0].x,
+    y: foot[level][0].y,
+    index: -1 
+  })
+  
+  // Add last point with index +1000
+  foot[level].push({
+    x: foot[level][foot[level].length - 1].x,
+    y: foot[level][foot[level].length - 1].y,
+    index: foot[level][foot[level].length - 1].index + 1000
+  })}}
+
   for (let i = 0; i < data.length; i++) {
     let dot = data[i];
     dot={index:i,...dot};
@@ -439,6 +460,13 @@ FootPointsLevels(data=this.sortedData,foot=this.FootPoints){
     }
     if (!isUnder) console.log(`${dot.date} is not under any lines`);
   }
+  // Remove first and last points 
+for (let level of levels) {
+if(foot[level].length>2){
+    foot[level].shift();
+    foot[level].pop(); 
+}
+}
 return [data,foot]}
 async Recalculate(data=this.sortedData){
   this.sortedData=data;
