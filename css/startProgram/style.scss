@@ -477,6 +477,9 @@ body{
                 width:100%;
                 height:auto;
 
+                >div:nth-child(2){
+                    display:none;
+                }
 
                 >div{
                     width:49%;
@@ -523,6 +526,23 @@ body{
                                 height:100% !important;
                             }
                         }
+
+                        select{
+                            width:100px;
+                            height:40px;
+                            background-color: transparent;
+                            border:2px solid $white;
+                            @include fontSettings;
+                            font-size: 15px;
+                            margin:25px 0;
+                            text-align: center;
+                            border-radius: 10px;
+                            transition: .5s;
+
+                            &:focus{
+                                background-color:#020512;
+                            }
+                        }
                     }
     
                     .transitionsWindow{
@@ -557,6 +577,7 @@ body{
                         }
     
                         .transitions{
+                            display: none;
                             width:95%;
                             height:auto;
                             background-color: #111833;
@@ -710,7 +731,7 @@ body{
                         }
     
                         .terms{
-                            display:flex;
+                            display:none;
                             flex-direction: column;
                             justify-content: flex-start;
                             align-items: center;
@@ -797,6 +818,58 @@ body{
                             }
                         }
                     }
+
+
+
+                    .defuzzification{
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        width:100%;
+                        min-height: 100px;
+                        height:auto;
+                        background-color:#020512;
+                        border-radius: 30px;
+    
+                        .hidderBut{
+                            position: absolute;
+                            top:35px;
+                            left:30px;
+                            width:30px;
+                            height:30px;
+                            background:url('../../img/arrow.png') no-repeat;
+                            background-size: contain;
+                            z-index:1;
+                            transform: rotate(90deg);
+                            transform-origin: center;
+                            cursor:pointer;
+                            transition:.5s;
+
+                            &.active{
+                                transform: rotate(0deg);
+                            }
+                        }
+    
+                        .chart{
+                            display: none;
+                            width:95%;
+                            height:280px;
+                            background-color: #111833;
+                            margin-bottom:50px;
+                            
+                            #defuzModel{
+                                width:100% !important;
+                                height:100% !important;
+                            }
+                            
+                        }
+                    }
+
+
+
+
                 }
 
 

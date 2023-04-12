@@ -24,8 +24,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let programCalculateWindow = document.querySelector(".programCalculate");
     let sliderButtons = document.querySelector(`div[class^="sliderButton"]`);
     let programCalculateTitle = document.querySelectorAll(`.titleWindow.main`);
+
     let ctx1 = document.querySelectorAll('#chartModel')[0]; //Диаграмма 1
+    let selectedLevel = document.querySelector('#levels');
     let ctx2 = document.querySelectorAll('#chartModel')[1]; //Диаграмма 2
+
+    let defuzChart1 = document.querySelectorAll('#defuzModel')[0]; //Дефазификация диаграмма 1
+    let defuzChart2 = document.querySelectorAll('#defuzModel')[1]; //Дефазификация диаграмма 1
+
     let transitions = document.querySelectorAll('.transitions'); //Внутреннее окно Transitions
     let greenColorA = "rgb(0, 100, 0, 0.5)";
     let greenColor = "rgb(0, 100, 0)";
@@ -37,11 +43,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let labelsArrForChart = [];  //для графика легенды
     let backgroundColorsArrForChart = [];  //для background-color столбцов
     let borderColorsArrForChart = [];  //для border-color столбцов
-    // let minNumbersArrForChart; 
-    // let maxNumbersArrForChart; 
-    // let minDotsArrForChartLine = [];
-    // let mediumDotsArrForChartLine = [];
-    // let maxDotsArrForChartLine = [];
     let minLine = [];
 
     let termsLine = document.querySelectorAll('.validation .termsLine');
@@ -53,16 +54,33 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
             function getValues(curObj){
 
-                        /** *@param {Number} i Перменная для разграфки первого этапа*/
+                    /** Очистка::: все таблицы */
+                    if (document.querySelectorAll(".transitions .transitionsLine").length){ //Таблица Переходов
+                        for (let i =0; i<document.querySelectorAll(".transitions .transitionsLine").length; i++){
+                            document.querySelectorAll(".transitions .transitionsLine")[i].remove();
+                        }
+                    }
+
+                    if (document.querySelectorAll(".termsLine .instance").length){ //Таблица Валидации
+                        for (let i =0; i<document.querySelectorAll(".termsLine .instance").length; i++){
+                            document.querySelectorAll(".termsLine .instance")[i].remove();
+                        }
+                    }
+
+                    if (document.querySelectorAll(".termsLine .instance").length){ //Таблица Валидации
+                        for (let i =0; i<document.querySelectorAll(".termsLine .instance").length; i++){
+                            document.querySelectorAll(".termsLine .instance")[i].remove();
+                        }
+                    }
+
+                    /** *@param {Number} i Перменная для разграфки первого этапа*/
                     let i=0;
                     let dataSorted = []; //Для 1 ЭТАПА
                     for (let i of curObj.sortedData){ // Инициализация dataSorted
                         dataSorted.push(i); 
                     }
-    
 
-
-                    /** 1 ЭТАП::: Цвето-Разграфка */
+                    /** Заполнение STEP2 */
                     dataSorted.forEach(e=>{
                         i++;
 
@@ -71,28 +89,197 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         }else{
                             viewDataWindow2.innerHTML += `${i}) ${String(e.date).substr(4,11)}::${e.value}<br>`; // запись в окно 2 шага
                         }
-
-
-                        numbersArrForChart.push(Math.round(e.value)); 
-                        labelsArrForChart.push(String(e.date).substr(4,11));
-                        if (e.level == "Н"){
-                            backgroundColorsArrForChart.push(redColorA);
-                            borderColorsArrForChart.push(redColor);
-                        }
-                        else if (e.level == "С") {
-                            backgroundColorsArrForChart.push(yellowColorA);
-                            borderColorsArrForChart.push(yellowColor);
-                        }
-                        else {
-                            backgroundColorsArrForChart.push(greenColorA);
-                            borderColorsArrForChart.push(greenColor);
-                        }
                     })
+
+                    /** 1 ЭТАП::: Цвето-Разграфка */
+                    //Задаём цвета
+                        const red = ["rgb(150,0,0)", "rgb(150,0,0,0.5)"];
+                        const yellow = ["rgb(255,215,0)", "rgb(255,215,0,0.5)"];
+                        const green = ["rgb(0,100,0)", "rgb(0,100,0,0.5)"];
+                        const colors = [red, yellow, green];
+                        /**Добвляем цвета к элементам*/
+                        var graphData = curObj.sortedData.map((element) => {
+                        let color;
+                        let bcolor;
+                        if (element.level == 'Н') { color = colors[0][0]; bcolor = colors[0][1]; } else
+                            if (element.level == 'С') { color = colors[1][0]; bcolor = colors[1][1]; } else
+                            if (element.level == 'В') { color = colors[2][0]; bcolor = colors[2][1]; }
+                            return {
+                                ...element,
+                                "color": color,
+                                "bcolor": bcolor
+                            }
+                        })
+                        
+                        let labels = [];
+                        let values = [];
+                        let bColors = [];
+                        let Colors = [];
+                        //Заполняем данные для графика
+                        Object.values(graphData).forEach(element => {
+                            const date = element["date"].getDate() + "/" + element["date"].getMonth() + "/" + element["date"].getFullYear()
+                            labels.push(date);
+                            const value = element["value"];
+                            values.push(value);
+                            const color = element["color"];
+                            Colors.push(color);
+                            const bcolor = element["bcolor"];
+                            bColors.push(bcolor);
+                        });
+
+
+                        console.log(labels);
+                        console.log(values);
+                        //Построение графиков
+                        if (curObjK) {
+                            var chart1 = new Chart (ctx1,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [{
+                                    type:"bar",
+                                    label:"Значение ",
+                                    showLegend:false,
+                          
+                                    data: values,
+                          
+                                    backgroundColor: bColors,
+                          
+                                    borderColor: Colors,
+                          
+                                    borderWidth: 1,
+                                    
+                                  },
+                                {label:"Высокий",
+                                  type:'line',
+                                  data:curObj.FootPoints['В'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: green[0],
+                                  xAxisID:'x',
+                                  
+                                },{
+                                  label:"Средний",
+                                  type:'line',
+                                  data:curObj.FootPoints['С'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: yellow[0],
+                                  xAxisID:'x',
+                                  
+                                },
+                                {
+                                  label:"Низкий",
+                                  type:'line',
+                                  data:curObj.FootPoints['Н'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: red[0],
+                                  xAxisID:'x',
+                                  
+                                },]
+                          
+                                },
+                          
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        y: {
+                                        min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,
+                                        
+                                        display:true,
+                                        },
+                                        
+                                        x:{beginAtZero: true,min:0,max:values.length,},
+                                        
+                                    }
+                          
+                                }
+                          
+                              });
+                        } else{
+                            var chart2 = new Chart (ctx2,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [{
+                                    type:"bar",
+                                    label:"Значение ",
+                                    showLegend:false,
+                          
+                                    data: values,
+                          
+                                    backgroundColor: bColors,
+                          
+                                    borderColor: Colors,
+                          
+                                    borderWidth: 1,
+                                    
+                                  },
+                                {label:"Высокий",
+                                  type:'line',
+                                  data:curObj.FootPoints['В'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: green[0],
+                                  xAxisID:'x',
+                                  
+                                },{
+                                  label:"Средний",
+                                  type:'line',
+                                  data:curObj.FootPoints['С'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: yellow[0],
+                                  xAxisID:'x',
+                                  
+                                },
+                                {
+                                  label:"Низкий",
+                                  type:'line',
+                                  data:curObj.FootPoints['Н'].sort((a,b)=>{return a.index-b.index}),
+                                  borderColor: red[0],
+                                  xAxisID:'x',
+                                  
+                                },]
+                          
+                                },
+                          
+                                options: {
+                                  responsive: true,
+                                  maintainAspectRatio: false,
+                                  scales: {
+                                    y: {
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
+                                      display:true,
+                                    },
+                                    x:{beginAtZero: true,min:0,max:values.length,},  
+                                  }
+                          
+                                }
+                          
+                            });
+                        }
+                        ctx1.onclick = async (e) => {
+                            const res = chart1.getElementsAtEventForMode(
+                              e,
+                              'nearest',
+                              { intersect: true },
+                              true
+                            );
+                            if (res.length == 0) return;
+                            curObj.dataSorted[res[0].index].level = selectedLevel.value;
+                            curObj.FootPoints[selectedLevel.value].push({x:chart1.curObj.dataSorted.labels[res[0].index],y:curObj.dataSorted[res[0].index].value,index:res[0].index});
+                            [curObj.dataSorted,curObj.FootPoints]=curObj.FootPointsLevels(curObj.dataSorted,curObj.FootPoints);
+                            chart1.destroy();
+                            curObj.dataSorted = await curObj.Recalculate(curObj.dataSorted);
+                            
+                            getValues(curObj.dataSorted,curObj.FootPoints);
+                            
+                          }
 
 
                     /** 2 ЭТАП::: Заполнение таблиц переходов */
                     let configNumber = 1;
-                    console.log(transitions);
                     for (let i of curObj.counts){
                         if (curObjK){
                             transitions[0].insertAdjacentHTML('beforeend', `
@@ -262,37 +449,126 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             }
                         }
                     }
-                    
 
-                    if (curObjK) {
-                        new Chart (ctx1,config);
-                        labelsArrForChart = [];
-                        numbersArrForChart = [];
-                        backgroundColorsArrForChart = [];
-                        borderColorsArrForChart = [];
-                    } else{
-                        new Chart (ctx2,config);
-                        labelsArrForChart = [];
-                        numbersArrForChart = [];
-                        backgroundColorsArrForChart = [];
-                        borderColorsArrForChart = [];
-                    }
+                    /** 4 ЭТАП::: Дефазификация */
+                        let movAvg = [];
+                        let initialValues = [];
+                        dataSorted.map((e)=>{
+                            initialValues.push(e.value);
+                        })
+                        for (let i=0; i<dataSorted.length-curObj.memoryDepth; i++){
+                            let sumArr=0;
+                            for (let j=0; j<curObj.memoryDepth; j++){
+                                sumArr+=Object.entries(dataSorted)[i+j][1].value;
+                            }
+                            movAvg.push(sumArr/curObj.memoryDepth);
+                        }
+
+                        if (curObjK){
+                            var defuzCh1 = new Chart (defuzChart1,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [
+                                    {label:"Sliding average",
+                                    type:'line',
+                                    data:movAvg,
+                                    borderColor: green[0],
+                                    xAxisID:'x',
+                                    },
+                                    // {label:"Дефазификация",
+                                    // type:'line',
+                                    // data:curObj.predictionList,
+                                    // borderColor: yellow[0],
+                                    // xAxisID:'x',
+                                    // },
+                                    {label:"Forecast",
+                                    type:'line',
+                                    data:initialValues,
+                                    borderColor: yellow[0],
+                                    xAxisID:'x',
+                                    }
+                                ]
+                                },
+                                options: {
+                                  responsive: true,
+                                  maintainAspectRatio: false,
+                                  scales: {
+                                    y: {
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
+                                      display:true,
+                                    },
+                                    x:{beginAtZero: true,min:0,max:values.length,},  
+                                  }
+                          
+                                }
+                          
+                            });
+                        }else{
+                            var defuzCh2 = new Chart (defuzChart2,{
+
+                                type: 'bar',
+                          
+                                data: {
+                          
+                                 labels: labels,
+                          
+                                  datasets: [
+                                    {label:"Sliding average",
+                                    type:'line',
+                                    data:movAvg,
+                                    borderColor: green[0],
+                                    xAxisID:'x',
+                                    },
+                                    // {label:"Дефазификация",
+                                    // type:'line',
+                                    // data:curObj.predictionList,
+                                    // borderColor: yellow[0],
+                                    // xAxisID:'x',
+                                    // },
+                                    {label:"Forecast",
+                                    type:'line',
+                                    data:initialValues,
+                                    borderColor: yellow[0],
+                                    xAxisID:'x',
+                                    }
+                                ]
+                                },
+                                options: {
+                                  responsive: true,
+                                  maintainAspectRatio: false,
+                                  scales: {
+                                    y: {
+                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
+                                      display:true,
+                                    },
+                                    x:{beginAtZero: true,min:0,max:values.length,},  
+                                  }
+                          
+                                }
+                          
+                            });
+                        }
+                        
 
 
                     curObjK=0;
             }
 
             fR1.onload = async (e) => { // Обработка первого объекта
-                console.log(e);
                     object1.LoadData(e.target.result); 
                     object1.placeLevel();
                     await object1.countLevelCombinations();
                     object1.Validation();
+                    object1.defuzzyfication();
                     getValues(object1);
             }
 
             fR2.onload = async (e) => { // Обработка второго объекта
-                console.log(e);
                 object2.LoadData(e.target.result); 
                 object2.placeLevel();
                 await object2.countLevelCombinations();
@@ -302,6 +578,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
             if (file.files.length==1){
                 fR1.readAsText(file.files[0], "UTF-8"); // Чтение первого объекта
+                document.querySelector(".programCalculate").style.justifyContent = "center";
+                document.querySelector(".programCalculate>div").style.width="100%";
             }else{
                 globalObjectCount = 2;
 
@@ -316,6 +594,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
                 fR1.readAsText(file.files[0], "UTF-8"); // Чтение первого объекта
                 fR2.readAsText(file.files[1], "UTF-8"); // Чтение второго объекта
+
+                // Добавление колонки в Calculate
+                document.querySelector(".programCalculate>div:nth-child(2)").style.display="flex";
             }
 
         }
@@ -352,42 +633,6 @@ msgboxExit.addEventListener('click', ()=>{
     msgbox.classList.remove('active');
 })
 
-//конфигурации графика--------------------------------------------
-var config = {
-    type: 'bar',
-    data: {
-        labels: labelsArrForChart,
-        datasets: [
-            {
-                label: [''],
-                data: numbersArrForChart,
-                backgroundColor: backgroundColorsArrForChart,
-                borderColor: borderColorsArrForChart,
-                borderWidth: 2,
-                order:2
-            },
-            {
-                type: 'line',
-                label: 'HighLevel',
-                data: minLine,
-                fill: false,
-                borderColor: 'rgb(54, 162, 235)',
-                borderWidth: 2,
-                order:1
-            },
-        ]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y:{
-                min:200,
-                max:350
-            },
-        },
-    }
-};
 
 })
 

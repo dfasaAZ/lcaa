@@ -623,6 +623,10 @@ body .welcome_section main .programCalculate {
   height: auto;
 }
 
+body .welcome_section main .programCalculate > div:nth-child(2) {
+  display: none;
+}
+
 body .welcome_section main .programCalculate > div {
   width: 49%;
   height: auto;
@@ -687,6 +691,27 @@ body .welcome_section main .programCalculate > div .chartWindow .chart #chartMod
   height: 100% !important;
 }
 
+body .welcome_section main .programCalculate > div .chartWindow select {
+  width: 100px;
+  height: 40px;
+  background-color: transparent;
+  border: 2px solid #E4E4E4;
+  font-family: BeVietnam-SB;
+  font-size: 15px;
+  line-height: 15px;
+  color: #E4E4E4;
+  font-size: 15px;
+  margin: 25px 0;
+  text-align: center;
+  border-radius: 10px;
+  -webkit-transition: .5s;
+  transition: .5s;
+}
+
+body .welcome_section main .programCalculate > div .chartWindow select:focus {
+  background-color: #020512;
+}
+
 body .welcome_section main .programCalculate > div .transitionsWindow {
   position: relative;
   display: -webkit-box;
@@ -733,6 +758,7 @@ body .welcome_section main .programCalculate > div .transitionsWindow .hidderBut
 }
 
 body .welcome_section main .programCalculate > div .transitionsWindow .transitions {
+  display: none;
   width: 95%;
   height: auto;
   background-color: #111833;
@@ -958,9 +984,7 @@ body .welcome_section main .programCalculate > div .validation .hidderBut.active
 }
 
 body .welcome_section main .programCalculate > div .validation .terms {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: none;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -1105,6 +1129,64 @@ body .welcome_section main .programCalculate > div .validation .terms .termsLine
 
 body .welcome_section main .programCalculate > div .validation .terms .termsLine .instance .contain > div:last-child.true {
   background-color: rgba(0, 168, 28, 0.5);
+}
+
+body .welcome_section main .programCalculate > div .defuzzification {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  min-height: 100px;
+  height: auto;
+  background-color: #020512;
+  border-radius: 30px;
+}
+
+body .welcome_section main .programCalculate > div .defuzzification .hidderBut {
+  position: absolute;
+  top: 35px;
+  left: 30px;
+  width: 30px;
+  height: 30px;
+  background: url("../../img/arrow.png") no-repeat;
+  background-size: contain;
+  z-index: 1;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  cursor: pointer;
+  -webkit-transition: .5s;
+  transition: .5s;
+}
+
+body .welcome_section main .programCalculate > div .defuzzification .hidderBut.active {
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
+body .welcome_section main .programCalculate > div .defuzzification .chart {
+  display: none;
+  width: 95%;
+  height: 280px;
+  background-color: #111833;
+  margin-bottom: 50px;
+}
+
+body .welcome_section main .programCalculate > div .defuzzification .chart #defuzModel {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 body .welcome_section footer {
