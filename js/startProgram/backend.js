@@ -37,11 +37,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let labelsArrForChart = [];  //для графика легенды
     let backgroundColorsArrForChart = [];  //для background-color столбцов
     let borderColorsArrForChart = [];  //для border-color столбцов
-    // let minNumbersArrForChart; 
-    // let maxNumbersArrForChart; 
-    // let minDotsArrForChartLine = [];
-    // let mediumDotsArrForChartLine = [];
-    // let maxDotsArrForChartLine = [];
     let minLine = [];
 
     let termsLine = document.querySelectorAll('.validation .termsLine');
@@ -52,17 +47,32 @@ document.addEventListener("DOMContentLoaded", ()=>{
             let curObjK=1; //если 0, то сигнал о втором объекте
 
             function getValues(curObj){
-                    console.log(object1.predictionList);
 
+                    /** Очистка::: все таблицы */
+                    if (document.querySelectorAll(".transitions .transitionsLine").length){ //Таблица Переходов
+                        for (let i =0; i<document.querySelectorAll(".transitions .transitionsLine").length; i++){
+                            document.querySelectorAll(".transitions .transitionsLine")[i].remove();
+                        }
+                    }
 
-                        /** *@param {Number} i Перменная для разграфки первого этапа*/
+                    if (document.querySelectorAll(".termsLine .instance").length){ //Таблица Валидации
+                        for (let i =0; i<document.querySelectorAll(".termsLine .instance").length; i++){
+                            document.querySelectorAll(".termsLine .instance")[i].remove();
+                        }
+                    }
+
+                    if (document.querySelectorAll(".termsLine .instance").length){ //Таблица Валидации
+                        for (let i =0; i<document.querySelectorAll(".termsLine .instance").length; i++){
+                            document.querySelectorAll(".termsLine .instance")[i].remove();
+                        }
+                    }
+
+                    /** *@param {Number} i Перменная для разграфки первого этапа*/
                     let i=0;
                     let dataSorted = []; //Для 1 ЭТАПА
                     for (let i of curObj.sortedData){ // Инициализация dataSorted
                         dataSorted.push(i); 
                     }
-    
-
 
                     /** 1 ЭТАП::: Цвето-Разграфка */
                     dataSorted.forEach(e=>{
@@ -94,7 +104,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
                     /** 2 ЭТАП::: Заполнение таблиц переходов */
                     let configNumber = 1;
-                    console.log(transitions);
                     for (let i of curObj.counts){
                         if (curObjK){
                             transitions[0].insertAdjacentHTML('beforeend', `
