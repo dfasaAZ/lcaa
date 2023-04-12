@@ -127,9 +127,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             bColors.push(bcolor);
                         });
 
-
-                        console.log(labels);
-                        console.log(values);
                         //Построение графиков
                         if (curObjK) {
                             var chart1 = new Chart (ctx1,{
@@ -451,18 +448,30 @@ document.addEventListener("DOMContentLoaded", ()=>{
                     }
 
                     /** 4 ЭТАП::: Дефазификация */
-                        let movAvg = [];
-                        let initialValues = [];
-                        dataSorted.map((e)=>{
+                        let movAvg = []; //скользящая средняя
+                        let initialValues = []; //начальные значения
+                        let indexes_X=[]; //индексы для оси Х
+                        let defuzPoints = []; //точки прогноза
+
+                        dataSorted.map((e,index)=>{ //наполнение оси х индексами и отбор начальных значений
                             initialValues.push(e.value);
+                            indexes_X.push(index);
                         })
-                        for (let i=0; i<dataSorted.length-curObj.memoryDepth; i++){
+
+                        
+                        for (let i=0; i<dataSorted.length-curObj.memoryDepth; i++){ //формирование data для графика вида [x,y] скользящей
                             let sumArr=0;
                             for (let j=0; j<curObj.memoryDepth; j++){
                                 sumArr+=Object.entries(dataSorted)[i+j][1].value;
                             }
-                            movAvg.push(sumArr/curObj.memoryDepth);
+                            movAvg.push([i+curObj.memoryDepth,sumArr/curObj.memoryDepth]);
                         }
+
+                        curObj.predictionList.map((e,index)=>{ //формирование data для графика вида [x,y] прогнозирования
+                            defuzPoints.push([index+curObj.memoryDepth,e]);
+                        })
+
+                        console.log(defuzPoints);
 
                         if (curObjK){
                             var defuzCh1 = new Chart (defuzChart1,{
@@ -471,7 +480,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                                 data: {
                           
-                                 labels: labels,
+                                 labels: indexes_X,
                           
                                   datasets: [
                                     {label:"Sliding average",
@@ -480,16 +489,16 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                     borderColor: green[0],
                                     xAxisID:'x',
                                     },
-                                    // {label:"Дефазификация",
-                                    // type:'line',
-                                    // data:curObj.predictionList,
-                                    // borderColor: yellow[0],
-                                    // xAxisID:'x',
-                                    // },
-                                    {label:"Forecast",
+                                    {label:"Defuzzification",
                                     type:'line',
-                                    data:initialValues,
+                                    data:defuzPoints,
                                     borderColor: yellow[0],
+                                    xAxisID:'x',
+                                    },
+                                    {label:"Initial values",
+                                    type: 'line',
+                                    data:initialValues,
+                                    borderColor: red[0],
                                     xAxisID:'x',
                                     }
                                 ]
@@ -502,7 +511,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                       min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
                                       display:true,
                                     },
-                                    x:{beginAtZero: true,min:0,max:values.length,},  
+                                    x:{beginAtZero: true,min:0,max:values.length},  
                                   }
                           
                                 }
@@ -515,7 +524,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                                 data: {
                           
-                                 labels: labels,
+                                 labels: indexes_X,
                           
                                   datasets: [
                                     {label:"Sliding average",
@@ -524,16 +533,16 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                     borderColor: green[0],
                                     xAxisID:'x',
                                     },
-                                    // {label:"Дефазификация",
-                                    // type:'line',
-                                    // data:curObj.predictionList,
-                                    // borderColor: yellow[0],
-                                    // xAxisID:'x',
-                                    // },
-                                    {label:"Forecast",
+                                    {label:"Defuzzification",
+                                    type:'line',
+                                    data:defuzPoints,
+                                    borderColor: yellow[0],
+                                    xAxisID:'x',
+                                    },
+                                    {label:"Initial values",
                                     type:'line',
                                     data:initialValues,
-                                    borderColor: yellow[0],
+                                    borderColor: red[0],
                                     xAxisID:'x',
                                     }
                                 ]
@@ -573,6 +582,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                 object2.placeLevel();
                 await object2.countLevelCombinations();
                 object2.Validation();
+                object2.defuzzyfication();
                 getValues(object2);
             }
 
