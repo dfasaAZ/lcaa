@@ -174,17 +174,18 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                 },
                           
                                 options: {
-                                  responsive: true,
-                                  scales: {
-                                    y: {
-                                      min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,
-                                     
-                                      display:true,
-                                    },
-                                    
-                                    x:{beginAtZero: true,min:0,max:values.length,},
-                                    
-                                  }
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    scales: {
+                                        y: {
+                                        min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,
+                                        
+                                        display:true,
+                                        },
+                                        
+                                        x:{beginAtZero: true,min:0,max:values.length,},
+                                        
+                                    }
                           
                                 }
                           
@@ -239,6 +240,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                                 options: {
                                   responsive: true,
+                                  maintainAspectRatio: false,
                                   scales: {
                                     y: {
                                       min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,
@@ -447,6 +449,18 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         }
                     }
 
+                    /** 4 ЭТАП::: Дефазификация */
+                        // console.log(curObj.predictionList);
+                        // console.log(curObj.memoryDepth);
+                        let movAvg = [];
+                        for (let i=curObj.memoryDepth+1; i<dataSorted.length-curObj.memoryDepth; i++){
+                            let sumArr=0;
+                            for (let j=0; j<curObj.memoryDepth; j++){
+                                sumArr+=Object.entries(dataSorted)[i+j][1].value;
+                            }
+                            movAvg.push(Math.round(sumArr/curObj.memoryDepth));
+                        }
+                        console.log(movAvg);
 
                     curObjK=0;
             }

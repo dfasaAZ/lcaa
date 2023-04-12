@@ -726,15 +726,16 @@ body .welcome_section main .programCalculate > div .defuzzification .hidderBut {
 body .welcome_section main .programCalculate > div .defuzzification .hidderBut.active {
   transform: rotate(0deg);
 }
-body .welcome_section main .programCalculate > div .defuzzification .table {
+body .welcome_section main .programCalculate > div .defuzzification .chart {
   display: none;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
   width: 95%;
-  height: auto;
+  height: 280px;
   background-color: #111833;
   margin-bottom: 50px;
+}
+body .welcome_section main .programCalculate > div .defuzzification .chart #defuzModel {
+  width: 100% !important;
+  height: 100% !important;
 }
 body .welcome_section footer {
   position: relative;
