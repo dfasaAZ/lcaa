@@ -52,6 +52,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
             let curObjK=1; //если 0, то сигнал о втором объекте
 
             function getValues(curObj){
+                    console.log(object1.predictionList);
+
 
                         /** *@param {Number} i Перменная для разграфки первого этапа*/
                     let i=0;
@@ -283,16 +285,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
             }
 
             fR1.onload = async (e) => { // Обработка первого объекта
-                console.log(e);
                     object1.LoadData(e.target.result); 
                     object1.placeLevel();
                     await object1.countLevelCombinations();
                     object1.Validation();
+                    object1.defuzzyfication();
                     getValues(object1);
             }
 
             fR2.onload = async (e) => { // Обработка второго объекта
-                console.log(e);
                 object2.LoadData(e.target.result); 
                 object2.placeLevel();
                 await object2.countLevelCombinations();

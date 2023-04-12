@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         if (e.target.classList.contains("hidderBut") && e.target.parentNode.classList.contains("transitionsWindow")) {
             if (e.target.classList.contains("active")) {
                 e.target.classList.remove("active");
-                e.target.parentNode.lastElementChild.style.display="";
+                e.target.parentNode.lastElementChild.style.display="block";
             }else{
                 e.target.classList.add("active");
                 e.target.parentNode.lastElementChild.style.display="none";
@@ -49,12 +49,25 @@ document.addEventListener("DOMContentLoaded", ()=>{
         if (e.target.classList.contains("hidderBut") && e.target.parentNode.classList.contains("validation")) {
             if (e.target.classList.contains("active")) {
                 e.target.classList.remove("active");
-                e.target.parentNode.lastElementChild.style.display="";
+                e.target.parentNode.lastElementChild.style.display="flex";
             }else{
                 e.target.classList.add("active");
                 e.target.parentNode.lastElementChild.style.display="none";
             }
         }
     })
+
+/**Для кнопки скрытия разделов IV.Defuzzification */
+event.target.addEventListener("click", (e)=>{
+    if (e.target.classList.contains("hidderBut") && e.target.parentNode.classList.contains("defuzzification")) {
+        if (e.target.classList.contains("active")) {
+            e.target.classList.remove("active");
+            e.target.parentNode.lastElementChild.style.display="flex";
+        }else{
+            e.target.classList.add("active");
+            e.target.parentNode.lastElementChild.style.display="none";
+        }
+    }
+})
 
 })
