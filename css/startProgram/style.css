@@ -411,6 +411,9 @@ body .welcome_section main .programCalculate {
   width: 100%;
   height: auto;
 }
+body .welcome_section main .programCalculate > div:nth-child(2) {
+  display: none;
+}
 body .welcome_section main .programCalculate > div {
   width: 49%;
   height: auto;

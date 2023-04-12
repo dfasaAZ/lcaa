@@ -303,6 +303,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
             if (file.files.length==1){
                 fR1.readAsText(file.files[0], "UTF-8"); // Чтение первого объекта
+                document.querySelector(".programCalculate").style.justifyContent = "center";
+                document.querySelector(".programCalculate>div").style.width="100%";
             }else{
                 globalObjectCount = 2;
 
@@ -317,6 +319,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
                 fR1.readAsText(file.files[0], "UTF-8"); // Чтение первого объекта
                 fR2.readAsText(file.files[1], "UTF-8"); // Чтение второго объекта
+
+                // Добавление колонки в Calculate
+                document.querySelector(".programCalculate>div:nth-child(2)").style.display="flex";
             }
 
         }

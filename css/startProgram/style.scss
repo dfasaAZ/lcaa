@@ -477,6 +477,9 @@ body{
                 width:100%;
                 height:auto;
 
+                >div:nth-child(2){
+                    display:none;
+                }
 
                 >div{
                     width:49%;
