@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                                   datasets: [{
                                     type:"bar",
-                                    label:"Значение ",
+                                    label:"Values ",
                                     showLegend:false,
                           
                                     data: values,
@@ -151,14 +151,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                     borderWidth: 1,
                                     
                                   },
-                                {label:"Высокий",
+                                {label:"High",
                                   type:'line',
                                   data:curObj.FootPoints['В'].sort((a,b)=>{return a.index-b.index}),
                                   borderColor: green[0],
                                   xAxisID:'x',
                                   
                                 },{
-                                  label:"Средний",
+                                  label:"Medium",
                                   type:'line',
                                   data:curObj.FootPoints['С'].sort((a,b)=>{return a.index-b.index}),
                                   borderColor: yellow[0],
@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                   
                                 },
                                 {
-                                  label:"Низкий",
+                                  label:"Low",
                                   type:'line',
                                   data:curObj.FootPoints['Н'].sort((a,b)=>{return a.index-b.index}),
                                   borderColor: red[0],
@@ -216,14 +216,14 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                     borderWidth: 1,
                                     
                                   },
-                                {label:"Высокий",
+                                {label:"High",
                                   type:'line',
                                   data:curObj.FootPoints['В'].sort((a,b)=>{return a.index-b.index}),
                                   borderColor: green[0],
                                   xAxisID:'x',
                                   
                                 },{
-                                  label:"Средний",
+                                  label:"Medium",
                                   type:'line',
                                   data:curObj.FootPoints['С'].sort((a,b)=>{return a.index-b.index}),
                                   borderColor: yellow[0],
@@ -231,7 +231,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                   
                                 },
                                 {
-                                  label:"Низкий",
+                                  label:"Low",
                                   type:'line',
                                   data:curObj.FootPoints['Н'].sort((a,b)=>{return a.index-b.index}),
                                   borderColor: red[0],
@@ -467,11 +467,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             movAvg.push([i+curObj.memoryDepth,sumArr/curObj.memoryDepth]);
                         }
 
-                        curObj.predictionList.map((e,index)=>{ //формирование data для графика вида [x,y] прогнозирования
+                        curObj.predictionList.reverse().map((e,index)=>{ //формирование data для графика вида [x,y] прогнозирования
                             defuzPoints.push([index+curObj.memoryDepth,e]);
                         })
 
-                        console.log(defuzPoints);
 
                         if (curObjK){
                             var defuzCh1 = new Chart (defuzChart1,{

@@ -368,9 +368,9 @@ calculatePrediction(data=this.sortedData,odds,levels=this.cursors.map(cursor => 
   const oddsLow = odds.get("Н");
   const oddsMedium = odds.get("С");
   const oddsHigh = odds.get("В");
-  const avgMediums = (mediums / mediumc) * oddsMedium;  
-  const avgLows =(lows / !!lowc) * oddsLow ||0;
-  const avgHighs =(highs / highc)  ;
+  const avgMediums = (mediums / mediumc) || 0;  
+  const avgLows =(lows / lowc) ||0;
+  const avgHighs =(highs / highc) || 0;
   const maxOdds = Math.max(oddsLow, oddsMedium, oddsHigh);
 let totalAvg=0;
 
