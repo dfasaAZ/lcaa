@@ -512,13 +512,13 @@ body{
                         justify-content: flex-start;
                         align-items: center;
                         width:100%;
-                        height:400px;
+                        height:500px;
                         background-color:#020512;
                         border-radius: 30px;
     
                         .chart{
                             width:95%;
-                            height:70%;
+                            height:300px;
                             background-color: #111833;
     
                             #chartModel{
@@ -542,6 +542,19 @@ body{
                             &:focus{
                                 background-color:#020512;
                             }
+                        }
+
+                        .predicateError{
+                            display:flex;
+                            flex-direction: row;
+                            width:auto;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            @include fontSettings();
+                            font-size:20px;
+                            line-height: 20px;
+                            margin-bottom:25px;
                         }
                     }
     

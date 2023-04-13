@@ -204,6 +204,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                 }
                           
                               });
+                                document.querySelectorAll(".predicateError .percent")[0].innerHTML = `  ${Math.round(curObj.ForecastError*100)/100}%`;
                         } else{
                             globalDataCtx2 = curObj;
                             chart2 = new Chart (ctx2,{
@@ -267,6 +268,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                 }
                           
                             });
+                            document.querySelectorAll(".predicateError .percent")[1].innerHTML = `  ${Math.round(curObj.ForecastError*100)/100}%`;
                         }
 
 
@@ -314,6 +316,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             getValues(globalDataCtx2);
                         
                         }
+                        
 
                     /** 2 ЭТАП::: Заполнение таблиц переходов */
                     let configNumber = 1;
