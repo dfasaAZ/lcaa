@@ -26,8 +26,16 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let programCalculateTitle = document.querySelectorAll(`.titleWindow.main`);
 
     let ctx1 = document.querySelectorAll('#chartModel')[0]; //Диаграмма 1
-    let selectedLevel = document.querySelector('#levels');
+    let chart1 = null;
+    var defuzCh1 = null;
+    let globalDataCtx1 = 0;
+
+    let selectedLevel = document.querySelectorAll('#levels');
+
     let ctx2 = document.querySelectorAll('#chartModel')[1]; //Диаграмма 2
+    let globalDataCtx2 = 0;
+    var defuzCh2 = null;
+    let chart2 = null;
 
     let defuzChart1 = document.querySelectorAll('#defuzModel')[0]; //Дефазификация диаграмма 1
     let defuzChart2 = document.querySelectorAll('#defuzModel')[1]; //Дефазификация диаграмма 1
@@ -51,6 +59,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         try{
             /** Здесь происходят все основные вычисления массивов */
             let curObjK=1; //если 0, то сигнал о втором объекте
+
 
             function getValues(curObj){
 
@@ -129,7 +138,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
                         //Построение графиков
                         if (curObjK) {
-                            var chart1 = new Chart (ctx1,{
+                            globalDataCtx1 = curObj; //Присвоение объекта в глобальную переменную
+
+                            chart1 = new Chart (ctx1,{
 
                                 type: 'bar',
                           
@@ -194,7 +205,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                               });
                         } else{
-                            var chart2 = new Chart (ctx2,{
+                            globalDataCtx2 = curObj;
+                            chart2 = new Chart (ctx2,{
 
                                 type: 'bar',
                           
@@ -256,24 +268,52 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                             });
                         }
+
+
+                        //Обрабатываем клик по столбцу
                         ctx1.onclick = async (e) => {
+                            let data = globalDataCtx1.sortedData;
+                            let foot = globalDataCtx1.FootPoints;
                             const res = chart1.getElementsAtEventForMode(
-                              e,
-                              'nearest',
-                              { intersect: true },
-                              true
+                            e,
+                            'nearest',
+                            { intersect: true },
+                            true
                             );
                             if (res.length == 0) return;
-                            curObj.dataSorted[res[0].index].level = selectedLevel.value;
-                            curObj.FootPoints[selectedLevel.value].push({x:chart1.curObj.dataSorted.labels[res[0].index],y:curObj.dataSorted[res[0].index].value,index:res[0].index});
-                            [curObj.dataSorted,curObj.FootPoints]=curObj.FootPointsLevels(curObj.dataSorted,curObj.FootPoints);
+                            data[res[0].index].level = selectedLevel[0].value;
+                            foot[selectedLevel[0].value].push({x:chart1.data.labels[res[0].index],y:data[res[0].index].value,index:res[0].index});
+                            [data,foot]=globalDataCtx1.FootPointsLevels(data,foot);
                             chart1.destroy();
-                            curObj.dataSorted = await curObj.Recalculate(curObj.dataSorted);
+                            defuzCh1.destroy();
+                            data = await globalDataCtx1.Recalculate(data);
                             
-                            getValues(curObj.dataSorted,curObj.FootPoints);
-                            
-                          }
+                            curObjK = 1;
+                            getValues(globalDataCtx1);
+                        
+                        }
 
+                        ctx2.onclick = async (e) => {
+                            let data = globalDataCtx2.sortedData;
+                            let foot = globalDataCtx2.FootPoints;
+                            const res = chart2.getElementsAtEventForMode(
+                            e,
+                            'nearest',
+                            { intersect: true },
+                            true
+                            );
+                            if (res.length == 0) return;
+                            data[res[0].index].level = selectedLevel[1].value;
+                            foot[selectedLevel[1].value].push({x:chart2.data.labels[res[0].index],y:data[res[0].index].value,index:res[0].index});
+                            [data,foot]=globalDataCtx2.FootPointsLevels(data,foot);
+                            chart2.destroy();
+                            defuzCh2.destroy();
+                            data = await globalDataCtx2.Recalculate(data);
+                            
+                            curObjK = 0;
+                            getValues(globalDataCtx2);
+                        
+                        }
 
                     /** 2 ЭТАП::: Заполнение таблиц переходов */
                     let configNumber = 1;
@@ -473,7 +513,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 
                         if (curObjK){
-                            var defuzCh1 = new Chart (defuzChart1,{
+                            defuzCh1 = new Chart (defuzChart1,{
 
                                 type: 'bar',
                           
@@ -517,7 +557,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                             });
                         }else{
-                            var defuzCh2 = new Chart (defuzChart2,{
+                            defuzCh2 = new Chart (defuzChart2,{
 
                                 type: 'bar',
                           
@@ -561,10 +601,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
                           
                             });
                         }
+
+                        curObjK=0;
                         
-
-
-                    curObjK=0;
             }
 
             fR1.onload = async (e) => { // Обработка первого объекта
