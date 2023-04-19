@@ -365,26 +365,55 @@ calculatePrediction(data=this.sortedData,odds,levels=this.cursors.map(cursor => 
     }
   });
 
-  const oddsLow = odds.get("Н");
-  const oddsMedium = odds.get("С");
-  const oddsHigh = odds.get("В");
-  const avgMediums = (mediums / mediumc) || 0;  
+ 
+  let oddsLow = odds.get("Н");
+  let oddsMedium = odds.get("С");
+  let oddsHigh = odds.get("В");
+  const avgMediums = (mediums / mediumc) ||0;  
   const avgLows =(lows / lowc) ||0;
-  const avgHighs =(highs / highc) || 0;
+  const avgHighs =(highs / highc) ||0;
   const maxOdds = Math.max(oddsLow, oddsMedium, oddsHigh);
 let totalAvg=0;
 
-if (maxOdds === oddsLow &&avgLows!=0) {
-   totalAvg=avgLows;
-} else if (oddsMedium>oddsHigh&&avgMediums!=0||avgHighs==0) {
-  totalAvg=avgMediums;
-} else if (avgHighs!=0) {
-  totalAvg=avgHighs; 
-}
-  
+let totalOdds = oddsLow + oddsMedium + oddsHigh;
+let oddsSum = totalOdds; 
+prediction=0.0;
+// Reassign odds before performing calculations
+if (oddsLow === 0 && oddsMedium === 0 && oddsHigh === 0) {
+  // If all odds are zero, do nothing
+} else {
+  let oddsm = [oddsLow,oddsMedium,oddsHigh];
+  let oddsSum = oddsLow + oddsMedium + oddsHigh;
+  [avgLows, avgMediums, avgHighs].forEach((avg, index) => {
+  if (avg === 0) {
+    oddsSum -= oddsm[index];
+  }
+});
 
-  
-  prediction = totalAvg;
+  if (oddsLow && avgLows) {
+    oddsLow = oddsLow / oddsSum;
+  }
+  if (oddsMedium && avgMediums) {
+    oddsMedium = oddsMedium / oddsSum;
+  }
+  if (oddsHigh && avgHighs) {
+    oddsHigh = oddsHigh / oddsSum;
+  }
+}
+
+// Perform prediction calculation
+if (oddsLow && avgLows) {
+  prediction += oddsLow * avgLows;
+}
+
+if (oddsMedium && avgMediums) {
+  prediction += oddsMedium * avgMediums;
+}
+
+if (oddsHigh && avgHighs) {
+  prediction += oddsHigh * avgHighs;
+}
+
   return prediction;
 }
 
@@ -393,7 +422,7 @@ defuzzyfication(){
   let result=[];
   let sequence;
   let i=0;
-  for (i=0;i<this.validationTables.length-1;i++){
+  for (i=0;i<this.validationTables.length;i++){
   sequence=this.sortedData.slice(-this.memoryDepth-i,this.sortedData.length-i);
   const odds =new Map( this.validationTables[i].oddities);
  
@@ -403,9 +432,10 @@ result.push(this.calculatePrediction(sequence,odds));
 //console.log(result);
   }
   this.predictionList=result;
+  console.log(result);
   return result
 }
-isBelowLine(lineDot1,lineDot2,dot){
+isBelowLine(lineDot1,lineDot2,dot,equal=true){
   const x1=lineDot1.index;
   const y1=lineDot1.y;
   const x2=lineDot2.index;
@@ -414,7 +444,8 @@ isBelowLine(lineDot1,lineDot2,dot){
   const x=dot.index;
   const y = dot.value;
   const idealY=(((x-x1)/(x2-x1))*(y2-y1))+y1;
-  return y<=idealY
+  if (equal){
+    return y<=idealY}else return y<idealY
 }
 FootPointsLevels(data=this.sortedData,foot=this.FootPoints){
   
@@ -449,16 +480,28 @@ for (let level of levels) {
         const lineDot2 = points[j + 1];
         if(dot.index>=lineDot1.index&&dot.index<=lineDot2.index){
         
-        if (this.isBelowLine(lineDot1, lineDot2, dot)) {
-          console.log(`${dot.date} is below ${level} line`);
-          data[i].level=level;
-          isUnder = true;
-          break;
-        }}else continue;
+          if (level === 'В' && !this.isBelowLine(lineDot1, lineDot2, dot,false)) {
+            console.log(`${dot.date} is above В line`);
+            data[i].level = 'В';
+            isUnder = true; 
+            break; 
+          }
+          else if (level === 'В' && this.isBelowLine(lineDot1, lineDot2, dot)) {
+            console.log(`${dot.date} is below В line`);
+            data[i].level = 'С';
+            isUnder = true;
+            break;  
+          }
+          else if (level === 'Н' && this.isBelowLine(lineDot1, lineDot2, dot)) {
+            console.log(`${dot.date} is below Н line`);
+            data[i].level = 'Н';
+            isUnder = true;
+            break; 
+          }}else continue;
       }
       if (isUnder) break;
     }
-    if (!isUnder) console.log(`${dot.date} is not under any lines`);
+   // if (!isUnder) console.log(`${dot.date} is not under any lines`);
   }
   // Remove first and last points 
 for (let level of levels) {
