@@ -41,46 +41,35 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let defuzChart2 = document.querySelectorAll('#defuzModel')[1]; //Дефазификация диаграмма 1
 
     let transitions = document.querySelectorAll('.transitions'); //Внутреннее окно Transitions
-    let greenColorA = "rgb(0, 100, 0, 0.5)";
-    let greenColor = "rgb(0, 100, 0)";
-    let yellowColorA = "rgb(255, 215, 0, 0.5)";
-    let yellowColor = "rgb(255, 215, 0)";
-    let redColorA = "rgb(150, 0, 0, 0.5)";
-    let redColor = "rgb(150, 0, 0)";
-    let numbersArrForChart = []; //для графика значения
-    let labelsArrForChart = [];  //для графика легенды
-    let backgroundColorsArrForChart = [];  //для background-color столбцов
-    let borderColorsArrForChart = [];  //для border-color столбцов
-    let minLine = [];
 
     let termsLine = document.querySelectorAll('.validation .termsLine');
+
+// Функция очистки таблиц
+function clearTable(numObj){
+  
+    Array.from(document.querySelectorAll('.transitionsWindow .transitions')[numObj].children).map(e=>{
+        e.remove();
+    })
+    
+    Array.from(document.querySelectorAll(".termsLine")[numObj].children).map(e=>{
+        e.remove();
+    })
+
+}
+
+
 /**событие по нажатии кнопки upload--------------------------------------------*/
     file.addEventListener("change", function(){
         try{
             /** Здесь происходят все основные вычисления массивов */
+
             let curObjK=1; //если 0, то сигнал о втором объекте
-
-
             function getValues(curObj){
 
                     /** Очистка::: все таблицы */
-                    if (document.querySelectorAll(".transitions .transitionsLine").length){ //Таблица Переходов
-                        for (let i =0; i<document.querySelectorAll(".transitions .transitionsLine").length; i++){
-                            document.querySelectorAll(".transitions .transitionsLine")[i].remove();
-                        }
-                    }
-
-                    if (document.querySelectorAll(".termsLine .instance").length){ //Таблица Валидации
-                        for (let i =0; i<document.querySelectorAll(".termsLine .instance").length; i++){
-                            document.querySelectorAll(".termsLine .instance")[i].remove();
-                        }
-                    }
-
-                    if (document.querySelectorAll(".termsLine .instance").length){ //Таблица Валидации
-                        for (let i =0; i<document.querySelectorAll(".termsLine .instance").length; i++){
-                            document.querySelectorAll(".termsLine .instance")[i].remove();
-                        }
-                    }
+                    if (curObjK) {
+                        clearTable(0);
+                    } else {clearTable(1)};
 
                     /** *@param {Number} i Перменная для разграфки первого этапа*/
                     let i=0;
@@ -289,7 +278,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                             chart1.destroy();
                             defuzCh1.destroy();
                             data = await globalDataCtx1.Recalculate(data);
-                            
+
                             curObjK = 1;
                             getValues(globalDataCtx1);
                         
@@ -341,6 +330,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                 </div>
                             </div>
                             `)
+
                         }else{
                             transitions[1].insertAdjacentHTML('beforeend', `
                             <div class="transitionsLine">
@@ -361,35 +351,33 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                 </div>
                             </div>
                             `)
+
+                            // let t = 0;
+                            // let totalTrans = 0;
+                            // for (t = 0; t<Object.entries(i).length; t+=3){
+                            //     totalTrans = Object.entries(i)[t][1]+Object.entries(i)[t+1][1]+Object.entries(i)[t+2][1];
+                            //     document.querySelectorAll('.transitionsLine .table .row .contains')[document.querySelectorAll('.transitionsLine .table .row').length-1].insertAdjacentHTML('beforeend', 
+                            //     `
+                            //             <div class="contain">
+                            //                 <div class="transFrom">${Object.entries(i)[t][0].slice(0,Object.entries(i)[t][0].length-1)}</div>
+                            //                 <div class="transTo">
+                            //                     <div>${Object.entries(i)[t][0].slice(-1)}</div>
+                            //                     <div>${Object.entries(i)[t+1][0].slice(-1)}</div>
+                            //                     <div>${Object.entries(i)[t+2][0].slice(-1)}</div>
+                            //                 </div>
+                            //                 <div class="countTrans">
+                            //                     <div>${Object.entries(i)[t][1]}</div>
+                            //                     <div>${Object.entries(i)[t+1][1]}</div>
+                            //                     <div>${Object.entries(i)[t+2][1]}</div>
+                            //                 </div>
+                            //                 <div class="totalTrans">${totalTrans}</div>
+                            //             </div>
+                            //     `)
+
+                            //     totalTrans = 0;
+                            // }
                         }
-
-
-                        let t = 0;
-                        let totalTrans = 0;
-                        for (t = 0; t<Object.entries(i).length; t+=3){
-                            totalTrans = Object.entries(i)[t][1]+Object.entries(i)[t+1][1]+Object.entries(i)[t+2][1];
-                            document.querySelectorAll('.transitionsLine .table .row .contains')[document.querySelectorAll('.transitionsLine .table .row').length-1].insertAdjacentHTML('beforeend', 
-                            `
-                                    <div class="contain">
-                                        <div class="transFrom">${Object.entries(i)[t][0].slice(0,Object.entries(i)[t][0].length-1)}</div>
-                                        <div class="transTo">
-                                            <div>${Object.entries(i)[t][0].slice(-1)}</div>
-                                            <div>${Object.entries(i)[t+1][0].slice(-1)}</div>
-                                            <div>${Object.entries(i)[t+2][0].slice(-1)}</div>
-                                        </div>
-                                        <div class="countTrans">
-                                            <div>${Object.entries(i)[t][1]}</div>
-                                            <div>${Object.entries(i)[t+1][1]}</div>
-                                            <div>${Object.entries(i)[t+2][1]}</div>
-                                        </div>
-                                        <div class="totalTrans">${totalTrans}</div>
-                                    </div>
-                            `)
-
-                            totalTrans = 0;
-                        }
-
-
+                    
                         configNumber++;
                     }
 
@@ -407,7 +395,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
                         if (curObjK) {
                             termsLine[0].insertAdjacentHTML('beforeend', `
-                            <div class="instance">
+                            <div class="instance first_obj">
                                 <div class="header">
                                     <div class="num">№ point</div>
                                     <div class="num">Configuration</div>
@@ -553,7 +541,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                       min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
                                       display:true,
                                     },
-                                    x:{type:'linear',beginAtZero: true,min:0,max:indexes_X.length,},  
+                                    x:{type:'linear',beginAtZero: true,min:0,max:indexes_X.length+5},  
                                   }
                           
                                 }
@@ -597,7 +585,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                       min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
                                       display:true,
                                     },
-                                    x:{type:'linear',beginAtZero: true,min:0,max:indexes_X.length,},  
+                                    x:{type:'linear',beginAtZero: true,min:0,max:indexes_X.length+5},  
                                   }
                           
                                 }

@@ -432,7 +432,7 @@ result.push(this.calculatePrediction(sequence,odds));
 //console.log(result);
   }
   this.predictionList=result;
-  console.log(result);
+
   return result
 }
 isBelowLine(lineDot1,lineDot2,dot,equal=true){
@@ -481,19 +481,19 @@ for (let level of levels) {
         if(dot.index>=lineDot1.index&&dot.index<=lineDot2.index){
         
           if (level === 'В' && !this.isBelowLine(lineDot1, lineDot2, dot,false)) {
-            console.log(`${dot.date} is above В line`);
+         
             data[i].level = 'В';
             isUnder = true; 
             break; 
           }
           else if (level === 'В' && this.isBelowLine(lineDot1, lineDot2, dot)) {
-            console.log(`${dot.date} is below В line`);
+       
             data[i].level = 'С';
             isUnder = true;
             break;  
           }
           else if (level === 'Н' && this.isBelowLine(lineDot1, lineDot2, dot)) {
-            console.log(`${dot.date} is below Н line`);
+       
             data[i].level = 'Н';
             isUnder = true;
             break; 
