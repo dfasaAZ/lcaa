@@ -51,17 +51,69 @@ function clearTable(numObj){
         e.remove();
     })
     
-    Array.from(document.querySelectorAll(".termsLine")[numObj].children).map(e=>{
+    Array.from(document.querySelectorAll(".terms .termsLine")[numObj].children).map(e=>{
         e.remove();
     })
 
 }
 
-
 /**событие по нажатии кнопки upload--------------------------------------------*/
     file.addEventListener("change", function(){
         try{
             /** Здесь происходят все основные вычисления массивов */
+
+            //Обрабатываем клик по столбцу на графиках
+        ctx1.onclick = async (e) => {
+            let data = globalDataCtx1.sortedData;
+            let foot = globalDataCtx1.FootPoints;
+            const res = chart1.getElementsAtEventForMode(
+            e,
+            'nearest',
+            { intersect: true },
+            true
+            );
+            if (res.length == 0) return;
+            data[res[0].index].level = selectedLevel[0].value;
+            foot[selectedLevel[0].value].push({x:chart1.data.labels[res[0].index],y:data[res[0].index].value,index:res[0].index});
+            [data,foot]=globalDataCtx1.FootPointsLevels(data,foot);
+            data = await globalDataCtx1.Recalculate(data);
+
+            curObjK = 1;
+            chart1.destroy();
+            defuzCh1.destroy();
+            getValues(globalDataCtx1);
+            chart2.destroy();
+            defuzCh2.destroy();
+            getValues(globalDataCtx2);
+
+        }
+
+        ctx2.onclick = async (e) => {
+            let data = globalDataCtx2.sortedData;
+            let foot = globalDataCtx2.FootPoints;
+            const res = chart2.getElementsAtEventForMode(
+            e,
+            'nearest',
+            { intersect: true },
+            true
+            );
+            if (res.length == 0) return;
+            data[res[0].index].level = selectedLevel[1].value;
+            foot[selectedLevel[1].value].push({x:chart2.data.labels[res[0].index],y:data[res[0].index].value,index:res[0].index});
+            [data,foot]=globalDataCtx2.FootPointsLevels(data,foot);
+            chart2.destroy();
+            defuzCh2.destroy();
+            data = await globalDataCtx2.Recalculate(data);
+            
+            curObjK = 1;
+            chart1.destroy();
+            defuzCh1.destroy();
+            getValues(globalDataCtx1);
+            chart2.destroy();
+            defuzCh2.destroy();
+            getValues(globalDataCtx2);
+
+        }
 
             let curObjK=1; //если 0, то сигнал о втором объекте
             function getValues(curObj){
@@ -260,51 +312,6 @@ function clearTable(numObj){
                             document.querySelectorAll(".predicateError .percent")[1].innerHTML = `  ${Math.round(curObj.ForecastError*100)/100}%`;
                         }
 
-
-                        //Обрабатываем клик по столбцу
-                        ctx1.onclick = async (e) => {
-                            let data = globalDataCtx1.sortedData;
-                            let foot = globalDataCtx1.FootPoints;
-                            const res = chart1.getElementsAtEventForMode(
-                            e,
-                            'nearest',
-                            { intersect: true },
-                            true
-                            );
-                            if (res.length == 0) return;
-                            data[res[0].index].level = selectedLevel[0].value;
-                            foot[selectedLevel[0].value].push({x:chart1.data.labels[res[0].index],y:data[res[0].index].value,index:res[0].index});
-                            [data,foot]=globalDataCtx1.FootPointsLevels(data,foot);
-                            chart1.destroy();
-                            defuzCh1.destroy();
-                            data = await globalDataCtx1.Recalculate(data);
-
-                            curObjK = 1;
-                            getValues(globalDataCtx1);
-                        
-                        }
-
-                        ctx2.onclick = async (e) => {
-                            let data = globalDataCtx2.sortedData;
-                            let foot = globalDataCtx2.FootPoints;
-                            const res = chart2.getElementsAtEventForMode(
-                            e,
-                            'nearest',
-                            { intersect: true },
-                            true
-                            );
-                            if (res.length == 0) return;
-                            data[res[0].index].level = selectedLevel[1].value;
-                            foot[selectedLevel[1].value].push({x:chart2.data.labels[res[0].index],y:data[res[0].index].value,index:res[0].index});
-                            [data,foot]=globalDataCtx2.FootPointsLevels(data,foot);
-                            chart2.destroy();
-                            defuzCh2.destroy();
-                            data = await globalDataCtx2.Recalculate(data);
-                            
-                            curObjK = 0;
-                            getValues(globalDataCtx2);
-                        
-                        }
                         
 
                     /** 2 ЭТАП::: Заполнение таблиц переходов */
@@ -352,32 +359,32 @@ function clearTable(numObj){
                             </div>
                             `)
 
-                            // let t = 0;
-                            // let totalTrans = 0;
-                            // for (t = 0; t<Object.entries(i).length; t+=3){
-                            //     totalTrans = Object.entries(i)[t][1]+Object.entries(i)[t+1][1]+Object.entries(i)[t+2][1];
-                            //     document.querySelectorAll('.transitionsLine .table .row .contains')[document.querySelectorAll('.transitionsLine .table .row').length-1].insertAdjacentHTML('beforeend', 
-                            //     `
-                            //             <div class="contain">
-                            //                 <div class="transFrom">${Object.entries(i)[t][0].slice(0,Object.entries(i)[t][0].length-1)}</div>
-                            //                 <div class="transTo">
-                            //                     <div>${Object.entries(i)[t][0].slice(-1)}</div>
-                            //                     <div>${Object.entries(i)[t+1][0].slice(-1)}</div>
-                            //                     <div>${Object.entries(i)[t+2][0].slice(-1)}</div>
-                            //                 </div>
-                            //                 <div class="countTrans">
-                            //                     <div>${Object.entries(i)[t][1]}</div>
-                            //                     <div>${Object.entries(i)[t+1][1]}</div>
-                            //                     <div>${Object.entries(i)[t+2][1]}</div>
-                            //                 </div>
-                            //                 <div class="totalTrans">${totalTrans}</div>
-                            //             </div>
-                            //     `)
-
-                            //     totalTrans = 0;
-                            // }
                         }
                     
+                            let t = 0;
+                            let totalTrans = 0;
+                            for (t = 0; t<Object.entries(i).length; t+=3){
+                                totalTrans = Object.entries(i)[t][1]+Object.entries(i)[t+1][1]+Object.entries(i)[t+2][1];
+                                document.querySelectorAll('.transitionsLine .table .row .contains')[document.querySelectorAll('.transitionsLine .table .row').length-1].insertAdjacentHTML('beforeend', 
+                                `
+                                        <div class="contain">
+                                            <div class="transFrom">${Object.entries(i)[t][0].slice(0,Object.entries(i)[t][0].length-1)}</div>
+                                            <div class="transTo">
+                                                <div>${Object.entries(i)[t][0].slice(-1)}</div>
+                                                <div>${Object.entries(i)[t+1][0].slice(-1)}</div>
+                                                <div>${Object.entries(i)[t+2][0].slice(-1)}</div>
+                                            </div>
+                                            <div class="countTrans">
+                                                <div>${Object.entries(i)[t][1]}</div>
+                                                <div>${Object.entries(i)[t+1][1]}</div>
+                                                <div>${Object.entries(i)[t+2][1]}</div>
+                                            </div>
+                                            <div class="totalTrans">${totalTrans}</div>
+                                        </div>
+                                `)
+
+                                totalTrans = 0;
+                            }
                         configNumber++;
                     }
 
@@ -436,7 +443,7 @@ function clearTable(numObj){
                             }
                         }else{
                             termsLine[1].insertAdjacentHTML('beforeend', `
-                            <div class="instance">
+                            <div class="instance second_obj">
                                 <div class="header">
                                     <div class="num">№ point</div>
                                     <div class="num">Configuration</div>
@@ -593,7 +600,7 @@ function clearTable(numObj){
                             });
                         }
 
-                        curObjK=0;
+                    curObjK=0;
                         
             }
 
