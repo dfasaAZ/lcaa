@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                             <div>Depth</div>
                                             <div>Transition from</div>
                                             <div>Transition to</div>
-                                            <div>Count of transition</div>s
+                                            <div>Count of transition</div>
                                             <div>Total transitions</div>
                                         </div>
                                         <div class="row">
