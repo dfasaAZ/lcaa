@@ -511,7 +511,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                         }
 
                         curObj.predictionList.reverse().map((e,index)=>{ //формирование data для графика вида [x,y] прогнозирования
-                            defuzPoints.push([index+curObj.memoryDepth,e]);
+                            defuzPoints.push([index+curObj.memoryDepth+2,e]);
                         })
 
 
@@ -553,7 +553,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                       min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
                                       display:true,
                                     },
-                                    x:{beginAtZero: true,min:0,max:values.length},  
+                                    x:{type:'linear',beginAtZero: true,min:0,max:indexes_X.length,},  
                                   }
                           
                                 }
@@ -597,7 +597,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
                                       min:Math.min(...values)-(Math.max(...values)-Math.min(...values))*0.2,   
                                       display:true,
                                     },
-                                    x:{beginAtZero: true,min:0,max:values.length,},  
+                                    x:{type:'linear',beginAtZero: true,min:0,max:indexes_X.length,},  
                                   }
                           
                                 }
