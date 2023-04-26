@@ -456,9 +456,9 @@ function clearTable(numObj){
                             `)
 
                             if(Object.entries(i)[6][1]===true){
-                                document.querySelectorAll('.instance .term')[document.querySelectorAll('.instance .term').length-1].classList.add('true');
+                                document.querySelectorAll('.instance.first_obj .term')[document.querySelectorAll('.instance.first_obj .term').length-1].classList.add('true');
                             }else{
-                                document.querySelectorAll('.instance .term')[document.querySelectorAll('.instance .term').length-1].classList.add('false');
+                                document.querySelectorAll('.instance.first_obj .term')[document.querySelectorAll('.instance.first_obj .term').length-1].classList.add('false');
                             }
                         }else{
                             termsLine[1].insertAdjacentHTML('beforeend', `
@@ -497,9 +497,9 @@ function clearTable(numObj){
                             `)
 
                             if(Object.entries(i)[6][1]===true){
-                                document.querySelectorAll('.instance .term')[document.querySelectorAll('.instance .term').length-1].classList.add('true');
+                                document.querySelectorAll('.instance.second_obj .term')[document.querySelectorAll('.instance.second_obj .term').length-1].classList.add('true');
                             }else{
-                                document.querySelectorAll('.instance .term')[document.querySelectorAll('.instance .term').length-1].classList.add('false');
+                                document.querySelectorAll('.instance.second_obj .term')[document.querySelectorAll('.instance.second_obj .term').length-1].classList.add('false');
                             }
                         }
                     }
