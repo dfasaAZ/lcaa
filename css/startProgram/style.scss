@@ -699,6 +699,15 @@ body{
                                                         width:calc(100% / 4);
                                                         height:100%;
                                                         border:1px solid #020512; 
+
+                                                        p{
+                                                            text-align: center;
+                                                            vertical-align: bottom;
+                                                            align-items: center;
+                                                            width:100%;
+                                                            height:auto;
+                                                            word-wrap: break-word;
+                                                        }
                                                     }
         
                                                     
@@ -813,6 +822,15 @@ body{
                                             height:100%;
                                             @include fontSettings();
                                             border:1px solid #020512;
+
+                                            p{
+                                                text-align: center;
+                                                vertical-align: bottom;
+                                                align-items: center;
+                                                width:100%;
+                                                height:auto;
+                                                word-wrap: break-word;
+                                            }
                                         }
     
                                         &>div:last-child.false{

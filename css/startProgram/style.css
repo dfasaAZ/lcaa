@@ -620,6 +620,14 @@ body .welcome_section main .programCalculate > div .transitionsWindow .transitio
   height: 100%;
   border: 1px solid #020512;
 }
+body .welcome_section main .programCalculate > div .transitionsWindow .transitions .transitionsLine .section .table .row .contains .contain > div p {
+  text-align: center;
+  vertical-align: bottom;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
+}
 body .welcome_section main .programCalculate > div .validation {
   position: relative;
   display: flex;
@@ -722,6 +730,14 @@ body .welcome_section main .programCalculate > div .validation .terms .termsLine
   line-height: 15px;
   color: #E4E4E4;
   border: 1px solid #020512;
+}
+body .welcome_section main .programCalculate > div .validation .terms .termsLine .instance .contain > div p {
+  text-align: center;
+  vertical-align: bottom;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  word-wrap: break-word;
 }
 body .welcome_section main .programCalculate > div .validation .terms .termsLine .instance .contain > div:last-child.false {
   background-color: rgba(168, 0, 0, 0.5);

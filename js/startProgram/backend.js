@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     let fR2 = new FileReader();
     let object1 = new CellularAutomaton();
     let object2 = new CellularAutomaton();
-    let globalObjectCount=1;
 
     let file = document.querySelector("#uploadButton>input");
 
@@ -76,14 +75,16 @@ function clearTable(numObj){
             data[res[0].index].level = selectedLevel[0].value;
             foot[selectedLevel[0].value].push({x:chart1.data.labels[res[0].index],y:data[res[0].index].value,index:res[0].index});
             [data,foot]=globalDataCtx1.FootPointsLevels(data,foot);
-            data = await globalDataCtx1.Recalculate(data);
+            await globalDataCtx1.Recalculate(data);
 
-            curObjK = 1;
             chart1.destroy();
             defuzCh1.destroy();
-            getValues(globalDataCtx1);
             chart2.destroy();
             defuzCh2.destroy();
+            document.querySelector(".programCalculate>div:nth-child(2)").style.display="none";
+            curObjK = 1;
+            getValues(globalDataCtx1);
+            document.querySelector(".programCalculate>div:nth-child(2)").style.display="flex";
             getValues(globalDataCtx2);
 
         }
@@ -103,14 +104,16 @@ function clearTable(numObj){
             [data,foot]=globalDataCtx2.FootPointsLevels(data,foot);
             chart2.destroy();
             defuzCh2.destroy();
-            data = await globalDataCtx2.Recalculate(data);
+            await globalDataCtx2.Recalculate(data);
             
-            curObjK = 1;
             chart1.destroy();
             defuzCh1.destroy();
-            getValues(globalDataCtx1);
             chart2.destroy();
             defuzCh2.destroy();
+            document.querySelector(".programCalculate>div:nth-child(2)").style.display="none";
+            curObjK = 1;
+            getValues(globalDataCtx1);
+            document.querySelector(".programCalculate>div:nth-child(2)").style.display="flex";
             getValues(globalDataCtx2);
 
         }
@@ -249,26 +252,17 @@ function clearTable(numObj){
                         } else{
                             globalDataCtx2 = curObj;
                             chart2 = new Chart (ctx2,{
-
                                 type: 'bar',
-                          
                                 data: {
-                          
                                  labels: labels,
-                          
                                   datasets: [{
                                     type:"bar",
                                     label:"Значение ",
                                     showLegend:false,
-                          
                                     data: values,
-                          
                                     backgroundColor: bColors,
-                          
                                     borderColor: Colors,
-                          
                                     borderWidth: 1,
-                                    
                                   },
                                 {label:"High",
                                   type:'line',
@@ -319,7 +313,7 @@ function clearTable(numObj){
                     for (let i of curObj.counts){
                         if (curObjK){
                             transitions[0].insertAdjacentHTML('beforeend', `
-                            <div class="transitionsLine">
+                            <div class="transitionsLine first_obj">
                                 <div class="section">
                                     <div class="table">
                                         <div class="head">
@@ -338,37 +332,15 @@ function clearTable(numObj){
                             </div>
                             `)
 
-                        }else{
-                            transitions[1].insertAdjacentHTML('beforeend', `
-                            <div class="transitionsLine">
-                                <div class="section">
-                                    <div class="table">
-                                        <div class="head">
-                                            <div>Depth</div>
-                                            <div>Transition from</div>
-                                            <div>Transition to</div>
-                                            <div>Count of transition</div>
-                                            <div>Total transitions</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="confColumn"><div>${configNumber} config</div></div>
-                                            <div class="contains"></div>
-                                        </div>   
-                                    </div>
-                                </div>
-                            </div>
-                            `)
-
-                        }
-                    
                             let t = 0;
                             let totalTrans = 0;
                             for (t = 0; t<Object.entries(i).length; t+=3){
                                 totalTrans = Object.entries(i)[t][1]+Object.entries(i)[t+1][1]+Object.entries(i)[t+2][1];
-                                document.querySelectorAll('.transitionsLine .table .row .contains')[document.querySelectorAll('.transitionsLine .table .row').length-1].insertAdjacentHTML('beforeend', 
+
+                                document.querySelectorAll('.transitionsLine.first_obj .table .row .contains')[document.querySelectorAll('.transitionsLine.first_obj .table .row').length-1].insertAdjacentHTML('beforeend', 
                                 `
                                         <div class="contain">
-                                            <div class="transFrom">${Object.entries(i)[t][0].slice(0,Object.entries(i)[t][0].length-1)}</div>
+                                            <div class="transFrom"><p>${Object.entries(i)[t][0].slice(0,Object.entries(i)[t][0].length-1)}</p></div>
                                             <div class="transTo">
                                                 <div>${Object.entries(i)[t][0].slice(-1)}</div>
                                                 <div>${Object.entries(i)[t+1][0].slice(-1)}</div>
@@ -385,6 +357,53 @@ function clearTable(numObj){
 
                                 totalTrans = 0;
                             }
+                        }else{
+                            transitions[1].insertAdjacentHTML('beforeend', `
+                            <div class="transitionsLine second_obj">
+                                <div class="section">
+                                    <div class="table">
+                                        <div class="head">
+                                            <div>Depth</div>
+                                            <div>Transition from</div>
+                                            <div>Transition to</div>
+                                            <div>Count of transition</div>
+                                            <div>Total transitions</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="confColumn"><div>${configNumber} config</div></div>
+                                            <div class="contains"></div>
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>
+                            `)
+
+                            let t = 0;
+                            let totalTrans = 0;
+                            for (t = 0; t<Object.entries(i).length; t+=3){
+                                totalTrans = Object.entries(i)[t][1]+Object.entries(i)[t+1][1]+Object.entries(i)[t+2][1];
+                                document.querySelectorAll('.transitionsLine.second_obj .table .row .contains')[document.querySelectorAll('.transitionsLine.second_obj .table .row').length-1].insertAdjacentHTML('beforeend', 
+                                `
+                                        <div class="contain">
+                                            <div class="transFrom"><p>${Object.entries(i)[t][0].slice(0,Object.entries(i)[t][0].length-1)}</p></div>
+                                            <div class="transTo">
+                                                <div>${Object.entries(i)[t][0].slice(-1)}</div>
+                                                <div>${Object.entries(i)[t+1][0].slice(-1)}</div>
+                                                <div>${Object.entries(i)[t+2][0].slice(-1)}</div>
+                                            </div>
+                                            <div class="countTrans">
+                                                <div>${Object.entries(i)[t][1]}</div>
+                                                <div>${Object.entries(i)[t+1][1]}</div>
+                                                <div>${Object.entries(i)[t+2][1]}</div>
+                                            </div>
+                                            <div class="totalTrans">${totalTrans}</div>
+                                        </div>
+                                `)
+
+                                totalTrans = 0;
+                            }
+                        }
+                    
                         configNumber++;
                     }
 
@@ -414,7 +433,7 @@ function clearTable(numObj){
                                 </div>
                                 <div class="contain">
                                     <div class="numberLine">${Object.entries(i)[0][1]}</div>
-                                    <div class="config">${Object.entries(i)[1][1]}</div>
+                                    <div class="config"><p>${Object.entries(i)[1][1]}</p></div>
                                     <div class="transitions">
                                         <div class="div">${lowArr[0]}</div>
                                         <div class="div">${middleArr[0]}</div>
@@ -425,7 +444,7 @@ function clearTable(numObj){
                                         <div class="div">${Math.round(middleArr[1]*100)/100}</div>
                                         <div class="div">${Math.round(highArr[1]*100)/100}</div>
                                     </div>
-                                    <div class="eps">${Object.entries(i)[3][1]}</div>
+                                    <div class="eps">${Math.round(Object.entries(i)[3][1]*100)/100}</div>
                                     <div class="propability">
                                         <div class="div">${Math.round(lowArrP[1]*100)/100}</div>
                                         <div class="div">${Math.round(middleArrP[1]*100)/100}</div>
@@ -455,7 +474,7 @@ function clearTable(numObj){
                                 </div>
                                 <div class="contain">
                                     <div class="numberLine">${Object.entries(i)[0][1]}</div>
-                                    <div class="config">${Object.entries(i)[1][1]}</div>
+                                    <div class="config"><p>${Object.entries(i)[1][1]}</p></div>
                                     <div class="transitions">
                                         <div class="div">${lowArr[0]}</div>
                                         <div class="div">${middleArr[0]}</div>
@@ -466,7 +485,7 @@ function clearTable(numObj){
                                         <div class="div">${Math.round(middleArr[1]*100)/100}</div>
                                         <div class="div">${Math.round(highArr[1]*100)/100}</div>
                                     </div>
-                                    <div class="eps">${Object.entries(i)[3][1]}</div>
+                                    <div class="eps">${Math.round(Object.entries(i)[3][1]*100)/100}</div>
                                     <div class="propability">
                                         <div class="div">${Math.round(lowArrP[1]*100)/100}</div>
                                         <div class="div">${Math.round(middleArrP[1]*100)/100}</div>
@@ -627,8 +646,6 @@ function clearTable(numObj){
                 document.querySelector(".programCalculate").style.justifyContent = "center";
                 document.querySelector(".programCalculate>div").style.width="100%";
             }else{
-                globalObjectCount = 2;
-
                 // Добавление окна STEP 2
                 viewDataWindow2.style.display="flex";
                 for (let i=0; i<viewDataWindowAll.length;i++){
