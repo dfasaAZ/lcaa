@@ -79,14 +79,8 @@ function clearTable(numObj){
 
             chart1.destroy();
             defuzCh1.destroy();
-            chart2.destroy();
-            defuzCh2.destroy();
-            document.querySelector(".programCalculate>div:nth-child(2)").style.display="none";
             curObjK = 1;
             getValues(globalDataCtx1);
-            document.querySelector(".programCalculate>div:nth-child(2)").style.display="flex";
-            getValues(globalDataCtx2);
-
         }
 
         ctx2.onclick = async (e) => {
@@ -106,16 +100,10 @@ function clearTable(numObj){
             defuzCh2.destroy();
             await globalDataCtx2.Recalculate(data);
             
-            chart1.destroy();
-            defuzCh1.destroy();
             chart2.destroy();
             defuzCh2.destroy();
-            document.querySelector(".programCalculate>div:nth-child(2)").style.display="none";
-            curObjK = 1;
-            getValues(globalDataCtx1);
-            document.querySelector(".programCalculate>div:nth-child(2)").style.display="flex";
+            curObjK = 0;
             getValues(globalDataCtx2);
-
         }
 
             let curObjK=1; //если 0, то сигнал о втором объекте
