@@ -1,0 +1,6 @@
+{
+    "builds": [
+       { "src": "js\\index.js", "use": "@vercel/node" }
+    ]
+    
+ }
