@@ -1,0 +1,6 @@
+{
+    "builds": [
+       { "src": "js\\startProgram\\CellularAutomaton.mjs", "use": "@vercel/node" }
+    ]
+    
+ }

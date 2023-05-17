@@ -513,7 +513,7 @@ function clearTable(numObj){
                         }
 
                         curObj.predictionList.reverse().map((e,index)=>{ //формирование data для графика вида [x,y] прогнозирования
-                            defuzPoints.push([index+curObj.memoryDepth+2,e]);
+                            defuzPoints.push([index+curObj.memoryDepth,e]);
                         })
 
 

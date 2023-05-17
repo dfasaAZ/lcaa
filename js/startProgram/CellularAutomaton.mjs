@@ -425,14 +425,9 @@ defuzzyfication(){
   for (i=0;i<this.validationTables.length;i++){
   sequence=this.sortedData.slice(-this.memoryDepth-i,this.sortedData.length-i);
   const odds =new Map( this.validationTables[i].oddities);
- 
-
-
-result.push(this.calculatePrediction(sequence,odds));
-//console.log(result);
+ result.push(this.calculatePrediction(sequence,odds));
   }
   this.predictionList=result;
-
   return result
 }
 isBelowLine(lineDot1,lineDot2,dot,equal=true){
@@ -449,7 +444,7 @@ isBelowLine(lineDot1,lineDot2,dot,equal=true){
 }
 FootPointsLevels(data=this.sortedData,foot=this.FootPoints){
   
-// Get all level names (N, C, B)
+// Get all level names 
 let levels = Object.keys(foot);
 
 // Loop through each level 
@@ -501,7 +496,7 @@ for (let level of levels) {
       }
       if (isUnder) break;
     }
-   // if (!isUnder) console.log(`${dot.date} is not under any lines`);
+   
   }
   // Remove first and last points 
 for (let level of levels) {
